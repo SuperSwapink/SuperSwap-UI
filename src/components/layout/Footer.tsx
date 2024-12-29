@@ -12,7 +12,7 @@ function Footer() {
       <h2 className="text-xl font-bold text-[#1f1d1a]">SuperSwap</h2>
       <div className="flex items-center gap-4">
         <Link
-          href={"https://toob.dog"}
+          href={"https://superswap.ink"}
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-center w-10 h-10 bg-[#ebd8bb] rounded-full text-[#1F1D1A] hover:bg-[#e2cdae] transition-all"
@@ -20,7 +20,7 @@ function Footer() {
           <Globe className="w-5 h-5" />
         </Link>
         <Link
-          href={"https://x.com/thetoobdog?s=21&t=QYd3sdnmj6S0oEl_tQzGqg"}
+          href={"https://x.com/superswapink"}
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-center w-10 h-10 bg-[#ebd8bb] rounded-full text-[#1F1D1A] hover:bg-[#e2cdae] transition-all"
@@ -28,7 +28,7 @@ function Footer() {
           <X className="w-5 h-5" />
         </Link>
         <Link
-          href={"https://t.me/tooobdog"}
+          href={"https://t.me/SuperSwapink"}
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-center w-10 h-10 bg-[#ebd8bb] rounded-full text-[#1F1D1A] hover:bg-[#e2cdae] transition-all"
@@ -36,7 +36,7 @@ function Footer() {
           <Telegram className="w-5 h-5" />
         </Link>
         <Link
-          href={"https://github.com/Toobdog"}
+          href={"https://github.com/SuperSwapink"}
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-center w-10 h-10 bg-[#ebd8bb] rounded-full text-[#1F1D1A] hover:bg-[#e2cdae] transition-all"
