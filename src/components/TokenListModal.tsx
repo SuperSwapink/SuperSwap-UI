@@ -70,29 +70,30 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
             name: tokenInfo[0]?.result,
             symbol: tokenInfo[1]?.result,
             decimals: tokenInfo[2]?.result ?? 18,
-            isCustom: true,
+            isCustom: 1,
           }),
         ]
       : []),
-    // ...(filter.length >= 3
-    //   ? TOKEN_LIST.filter((item) =>
-    //       item.name?.match(
-    //         new RegExp(filter, "i") ||
-    //           item.symbol?.match(new RegExp(filter, "i"))
-    //       )
-    //     ).map(
-    //       (item) =>
-    //         new Token({
-    //           address: item.address,
-    //           name: item.name,
-    //           symbol: item.symbol,
-    //           chainId: ChainId.INK,
-    //           decimals: item.decimals,
-    //           icon: item.icon,
-    //         })
-    //     )
-    //   : []
-    // ),
+    ...(filter.length >= 0
+      ? TOKEN_LIST.filter((item) =>
+          item.name?.match(
+            new RegExp(filter, "i") ||
+              item.symbol?.match(new RegExp(filter, "i"))
+          )
+        ).map(
+          (item) =>
+            new Token({
+              address: item.address,
+              name: item.name,
+              symbol: item.symbol,
+              chainId: ChainId.INK,
+              decimals: item.decimals,
+              icon: item.icon,
+              isCustom: 2
+            })
+        )
+      : []
+    ),
   ];
 
   return (
@@ -104,50 +105,46 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
           onClose={onClose}
         >
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur"
+            className="fixed inset-0 bg-black/10 backdrop-blur"
             aria-hidden="true"
           />
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
             <div className="flex min-h-full items-center justify-center">
-              <DialogPanel className="relative w-full max-w-md bg-[#e9e1d4] rounded-2xl backdrop-blur-2xl overflow-hidden">
-                <h3 className="px-6 py-4 text-xl font-semibold text-[#1A202B]">
+              <DialogPanel className="relative w-full max-w-md bg-white dark:bg-[#131823] rounded-2xl backdrop-blur-2xl overflow-hidden">
+                <h3 className="px-6 py-4 text-xl font-semibold text-[#222] dark:text-white">
                   Select a token
                 </h3>
                 <button
                   className="flex items-center justify-center absolute w-10 h-10 top-2 right-3"
                   onClick={onClose}
                 >
-                  <Close className="w-3 h-3 text-[#1f1d1a]" />
+                  <Close className="w-3 h-3 text-[#222] dark:text-white" />
                 </button>
                 <div className="relative mx-4">
                   <div className="absolute flex items-center justify-center min-w-12 w-12 h-12">
-                    <Magnifier className="w-4 h-4 text-[#1f1d1a]" />
+                    <Magnifier className="w-4 h-4 text-[#6c86ad]" />
                   </div>
                   <input
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
                     placeholder="Search by name, symbol or address"
-                    className="w-full h-12 text-lg outline-none bg-transparent text-[#1A202B] border border-[#b19f85] hover:border-[#CBD5E0] rounded-xl transition-all bg-white focus:border-[#e9bd7a] focus:shadow-[#e9bd7a_0px_0px_0px_1px] pl-10 pr-4"
+                    className="w-full h-12 text-lg outline-none bg-transparent text-[#222] dark:text-white rounded-xl transition-all bg-[#f3f5fa] focus:border-[#f3f5fa] focus:shadow-[#2f8af5_0px_0px_0px_1px] pl-10 pr-4 placeholder:text-[#6c86ad]"
                   />
                 </div>
-                <div className="flex items-center mx-4 text-xs text-[#1f1d1a] my-2 font-medium">
-                  <span>List Your Token</span>
+                <div className="flex items-center mx-4 text-xs text-[#222] dark:text-white my-2 font-medium">
+                  <span>Whitelist Your Token</span>
                   <HelpToolTip className="ml-1">
                     <div className="whitespace-nowrap">Please contact:</div>
                     <Link
-                      href={"mailto:team@toob.finance"}
-                      className="underline text-[#6666f1]"
+                      href={"mailto:team@superswap.ink"}
+                      className="underline text-[#2f8af5]"
                     >
-                      team@toob.finance
+                      team@superswap.ink
                     </Link>
                   </HelpToolTip>
                 </div>
-                <div className="flex flex-col bg-[#f3f3f3] rounded-es-2xl rounded-ee-2xl p-4 space-y-2 h-[66vh] overflow-y-auto">
-                  {tokens
-                    .sort((a, b) =>
-                      (a.symbol ?? "") > (b.symbol ?? "") ? 1 : -1
-                    )
-                    .map((item) => (
+                <div className="flex flex-col rounded-es-2xl rounded-ee-2xl p-4 space-y-2 h-[66vh] overflow-y-auto">
+                  {tokens.map((item) => (
                       <TokenListItem
                         key={item.id}
                         token={item}

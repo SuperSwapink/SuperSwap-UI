@@ -37,6 +37,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
   const { data: walletClient } = useWalletClient();
   const { switchChainAsync } = useSwitchChain();
   const [loading, setLoading] = useState(false);
+  const [approving, setApproving] = useState(false)
 
   const parsedAmount = tryParseAmount(amountIn, tokenIn);
 
@@ -137,11 +138,14 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
     }
   };
 
-  const onApprove = () => {
+  const onApprove = async () => {
     try {
-      approve(approvalRequest);
+      setApproving(true)
+      await approve(approvalRequest);
     } catch (err) {
       console.log(err);
+    } finally {
+      setApproving(false)
     }
   };
 
@@ -179,12 +183,12 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
       (approvalState === ApprovalState.NOT_APPROVED ||
         approvalState === ApprovalState.PENDING) ? (
         <button
-          className="flex items-center justify-center h-12 w-full bg-[#d8c7ad] text-[#1F1D1A] border-b-2 border-[#d1bc9c] enabled:hover:bg-[#d1bc9c] enabled:hover:border-[#c0ac8e] transition-all rounded-full mt-8 font-semibold disabled:opacity-70 disabled:cursor-not-allowed"
+          className="flex items-center justify-center h-12 w-full bg-[#2f8af529] text-[#2f8af5] enabled:hover:bg-[#2f8af51f] transition-all rounded-full mt-8 font-semibold disabled:opacity-70 disabled:cursor-not-allowed"
           onClick={onApprove}
-          disabled={approvalState === ApprovalState.PENDING}
+          disabled={approving}
         >
           <>
-            {approvalState === ApprovalState.PENDING ? (
+            {approving ? (
               <Spinner className="w-5 h-5 mr-2" />
             ) : null}
             Approve {tokenIn?.symbol}
@@ -192,7 +196,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
         </button>
       ) : null}
       <button
-        className="flex items-center justify-center h-12 w-full bg-[#d8c7ad] text-[#1F1D1A] border-b-2 border-[#d1bc9c] enabled:hover:bg-[#d1bc9c] enabled:hover:border-[#c0ac8e] transition-all rounded-full font-semibold disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+        className="flex items-center justify-center h-12 w-full bg-[#2f8af529] text-[#2f8af5] enabled:hover:bg-[#2f8af51f] transition-all rounded-full font-semibold disabled:opacity-70 disabled:cursor-not-allowed mt-4"
         onClick={onSwap}
         disabled={
           (address &&

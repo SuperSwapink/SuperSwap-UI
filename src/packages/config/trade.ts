@@ -8,7 +8,7 @@ export const ROUTE_PROCESSOR_3_ADDRESS: Record<
   RouteProcessor3ChainId,
   `0x${string}`
 > = {
-  [ChainId.INK]: "0x78e7Bb4D66505D25Cef212Ce49A64261d6f1CddB",
+  [ChainId.INK]: "0x5839389261D1F38aac7c8E91DcDa85646bEcB414",
 } as const;
 export const isRouteProcessor3ChainId = (
   chainId: ChainId

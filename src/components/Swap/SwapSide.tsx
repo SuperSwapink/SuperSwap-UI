@@ -14,6 +14,7 @@ import { DEFAULT_IMAGE_URL, NATIVE_GAS_FEE } from "@/constants";
 import Image from "next/image";
 import { useAccount, useBalance } from "wagmi";
 import { ChainId, isChainId } from "@/packages/chain";
+import { usePrice } from "@/packages/prices";
 
 interface SwapSideProps {
   side: "From" | "To";
@@ -25,7 +26,6 @@ interface SwapSideProps {
   hideSide?: boolean;
   hideBalance?: boolean;
   disabled?: boolean;
-  price?: string;
   primaryTokens?: boolean;
 }
 
@@ -34,7 +34,6 @@ const SwapSide: React.FC<SwapSideProps> = ({
   amount,
   setAmount,
   token,
-  price,
   setToken,
   hideBalance,
   hideSide,
@@ -57,6 +56,12 @@ const SwapSide: React.FC<SwapSideProps> = ({
       enabled: Boolean(address) && Boolean(token),
       refetchInterval: 30000,
     },
+  });
+
+  const { data: price } = usePrice({
+    address: token?.wrapped?.address,
+    chainId: ChainId.INK,
+    enabled: Number(amount) > 0,
   });
 
   const onMax = () => {
@@ -99,15 +104,14 @@ const SwapSide: React.FC<SwapSideProps> = ({
       <div className={className ?? ""}>
         <div className="flex items-start justify-between">
           {!hideSide && (
-            <h2 className="text-[#afa392] font-semibold">{side}</h2>
+            <h2 className="text-[#6c86ad] font-semibold">{side}</h2>
           )}
           {!hideBalance && balance && token ? (
             <button
-              className="text-xs text-[#31291e] px-2 h-6 font-semibold rounded-full hover:bg-[#EDF2F7] transition-all"
-              disabled={side === "To"}
+              className="text-xs text-[#6c86ad] px-2 h-6 font-semibold rounded-full hover:bg-[#2f8af51f] transition-all"
               onClick={onMax}
             >
-              <span className="text-[#afa392] mr-1">Balance:</span>
+              <span className="text-[#6c86ad] mr-1">Balance:</span>
               {Number(balance.formatted).toLocaleString("en-US", {
                 maximumFractionDigits: 9,
               })}
@@ -118,13 +122,12 @@ const SwapSide: React.FC<SwapSideProps> = ({
           <input
             type="text"
             inputMode="decimal"
-            value={amount ?? ''}
+            value={amount ?? ""}
             pattern="^[0-9]*[.,]?[0-9]*$"
             onChange={(e) => onAmountInput(e.target.value)}
-            disabled={disabled}
             ref={amountInputRef}
             data-fast={fastTokens}
-            className="w-full h-12 max-sm:data-[fast=true]:h-[72px] outline-none text-[30px] bg-transparent text-[#31291e] font-semibold placeholder:text-[#afa392]"
+            className="w-full h-12 max-sm:data-[fast=true]:h-[72px] outline-none text-[30px] bg-transparent text-[#222] dark:text-white font-semibold placeholder:text-[#6c86ad]"
             placeholder="0.0"
           />
           <div
@@ -134,7 +137,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
           >
             {balance && side === "From" ? (
               <button
-                className="text-[#31291e] text-xs font-semibold bg-[#f3f0ee] rounded-full h-6 px-2 py-1 hover:bg-[#e6e0d8] transition-all"
+                className="text-[#6c86ad] text-xs font-semibold bg-[#2f8af51f] rounded-full h-6 px-2 py-1 hover:bg-[#2f8af529] transition-all"
                 onClick={onMax}
               >
                 MAX
@@ -149,7 +152,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
                     width={32}
                     height={32}
                     alt="arb"
-                    className="w-8 h-8 rounded-full bg-[#f3f0ee] p-1 hover:bg-[#f1eadf] active:bg-[#e6e1d9] transition-all cursor-pointer"
+                    className="w-8 h-8 rounded-full bg-[#2f8af51f] p-1 hover:bg-[#2f8af529] active:bg-[#2f8af529] transition-all cursor-pointer"
                     onClick={() => setToken(item)}
                   />
                 ))}
@@ -157,7 +160,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
             ) : null}
             <div
               onClick={() => setIsModalOpen(true)}
-              className="flex border border-[#e2cdae] h-10 sm:h-12 px-4 rounded-2xl items-center font-semibold text-[#31291e] hover:bg-[#dfcaaa]/60 transition-all cursor-pointer"
+              className="flex h-10 sm:h-12 px-4 rounded-2xl items-center font-semibold text-[#222] dark:text-white hover:bg-[#2f8af51f] transition-all cursor-pointer"
             >
               {token ? (
                 <>
@@ -177,9 +180,9 @@ const SwapSide: React.FC<SwapSideProps> = ({
             </div>
           </div>
         </div>
-        {amount && price ? (
-          <p className="text-[#afa392] text-sm mt-1">
-            ~${Number(price).toFixed(2)}
+        {amount && price !== undefined ? (
+          <p className="text-[#6c86ad] text-sm mt-1">
+            ~${(Number(price) * Number(amount)).toFixed(2)}
           </p>
         ) : null}
       </div>

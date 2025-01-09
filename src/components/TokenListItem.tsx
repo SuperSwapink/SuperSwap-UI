@@ -37,7 +37,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
   return (
     <>
       <div
-        className={`flex items-center justify-between w-full px-4 py-3 rounded-xl hover:bg-[#e9e1d4] transition-all cursor-pointer ${
+        className={`flex items-center justify-between w-full px-4 py-3 rounded-xl hover:bg-[#f8f9fd] dark:hover:bg-[#060a1080] transition-all cursor-pointer ${
           className ?? ""
         }`}
         onClick={
@@ -54,17 +54,17 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
           />
           <div className="ml-4">
             <div className="flex items-center">
-              <span className="text-[#1f1d1a] font-semibold">{token.name}</span>
-              <span className="text-[#1f1d1a] text-sm ml-2">
-                {token.symbol}
-              </span>
+              <span className="text-[#222] dark:text-white font-semibold">{token.name}</span>
+              <span className="text-[#222] dark:text-white text-sm ml-2">{token.symbol}</span>
             </div>
             <div className="text-sm text-[#a0a0a0]">{token.category}</div>
           </div>
         </div>
-        {balance && balance.value > 0n ? (
+        {token.isCustom ? (
+          <button className="bg-[#2f8af529] text-[#2f8af5] enabled:hover:bg-[#2f8af51f] transition-all rounded-full text-sm py-1.5 px-4">Import</button>
+        ) : balance && balance.value > 0n ? (
           <div className="flex flex-col items-end">
-            <span className="text-[#1f1d1a] text-sm font-semibold">
+            <span className="text-[#222] dark:text-white text-sm font-semibold">
               {Number(balance.formatted).toLocaleString("en-US", {
                 maximumFractionDigits: 9,
               })}
@@ -84,6 +84,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
           onClose={() => setWarningOpen(false)}
           onConfirm={onSelectItem(token)}
           token={token.wrapped.address}
+          isCustom={token.isCustom}
         />
       ) : null}
     </>

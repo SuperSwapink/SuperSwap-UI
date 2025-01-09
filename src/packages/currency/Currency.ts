@@ -37,7 +37,7 @@ export abstract class Currency {
 
   public readonly category?: string | undefined;
 
-  public readonly isCustom?: boolean;
+  public readonly isCustom?: number;
 
   /**
    * Constructs an instance of the abstract class `Currency`.
@@ -62,7 +62,7 @@ export abstract class Currency {
     name?: string | undefined;
     icon?: string | undefined;
     category?: string | undefined;
-    isCustom?: boolean | undefined;
+    isCustom?: number | undefined;
   }) {
     const chainId = Number(_chainId) as ChainId;
     const decimals = Number(_decimals);

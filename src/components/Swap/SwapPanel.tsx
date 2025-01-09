@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import Exchange from "../svgs/Exchange";
 import SwapSide from "./SwapSide";
 import useSwapParams from "../../hooks/useSwapParams";
 import SwapButton from "./SwapButton";
 import useSwapTrade from "@/hooks/useSwapTrade";
-import { Amount, tryParseAmount } from "@/packages/currency";
-import SettingPopup from "../SettingPopup";
+import { Amount } from "@/packages/currency";
 import SwapDetails from "./SwapDetails";
-import SwapTrades from "./SwapTrades";
 
 const SwapPanel = () => {
   const {
@@ -25,25 +23,24 @@ const SwapPanel = () => {
   const trade = useSwapTrade();
 
   return (
-    <div className="bg-[#e4e4e4] relative p-4 md:p-8 mt-4 border border-[#e2cdae] rounded-lg md:rounded-[32px]">
+    <div className="bg-white dark:bg-[#131823] relative p-4 md:p-8 mt-4 rounded-lg md:rounded-[32px] shadow-[0_12px_24px_#e2e9f6] dark:shadow-none">
       <SwapSide
         side="From"
         token={tokenIn}
         setToken={setTokenIn}
         amount={amountIn}
         setAmount={setAmountIn}
-        price={trade?.data?.amountInValue?.toString()}
       />
 
       <div className="flex items-center w-full justify-center">
-        <div className="border border-[#e2cdae] w-full"></div>
+        <div className="border border-[#e3e7ee] dark:border-[#202835] w-full"></div>
         <button
-          className="flex items-center justify-center rounded-full h-10 min-w-10 w-10 hover:bg-[#E2E8F0] transition-all mx-1"
+          className="flex items-center justify-center rounded-full h-10 min-w-10 w-10 border border-[#e3e7ee] dark:border-[#202835] hover:rotate-180 transition-all mx-1"
           onClick={switchToken}
         >
-          <Exchange className="h-4 w-4 text-[#1f1d1a]" />
+          <Exchange className="h-4 w-4 text-[#2f8af5]" />
         </button>
-        <div className="border border-[#e2cdae] w-full"></div>
+        <div className="border border-[#e3e7ee] dark:border-[#202835] w-full"></div>
       </div>
 
       <SwapSide
@@ -53,13 +50,9 @@ const SwapPanel = () => {
         disabled
         amount={
           trade?.data?.amountOut && tokenOut && amountIn.length > 0
-            ? Amount.fromRawAmount(
-                tokenOut,
-                trade.data?.amountOut
-              ).toExact()
+            ? Amount.fromRawAmount(tokenOut, trade.data?.amountOut).toExact()
             : undefined
         }
-        price={trade?.data?.amountOutValue?.toString()}
       />
       <SwapDetails trade={trade} />
       {/* <SwapTrades trades={trade.data} /> */}

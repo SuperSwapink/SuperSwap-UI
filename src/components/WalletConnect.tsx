@@ -13,7 +13,7 @@ const WalletConnect = () => {
 
   return (
     <button
-      className="flex items-center bg-transparent font-semibold hover:bg-[#dfcaaa]/60 rounded-xl border border-[#e2cdae] text-[#1f1d1a] px-4 py-3 outline-none transition-all"
+      className="flex items-center font-semibold bg-[#2f8af529] hover:bg-[#2f8af51f] rounded-xl text-[#2f8af5] px-4 py-3 outline-none transition-all"
       onClick={onConnect}
     >
       <Wallet className="mr-2" />{" "}

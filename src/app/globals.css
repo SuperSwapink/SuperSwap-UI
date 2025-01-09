@@ -9,5 +9,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 body {
-  background-color: #ddd;
+  background-color: #f4f6fc;
+}
+
+.dark body {
+  background-color: #080D15;
+  color: white;
 }

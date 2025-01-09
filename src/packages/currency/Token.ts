@@ -36,7 +36,7 @@ export class Token extends Currency {
     name?: string | undefined;
     icon?: string | undefined;
     category?: string | undefined;
-    isCustom?: boolean | undefined;
+    isCustom?: number | undefined;
   }) {
     super({
       chainId,

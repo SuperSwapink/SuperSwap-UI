@@ -15,6 +15,7 @@ import {
   DyorSwapProvider,
 } from ".";
 import { InkySwapProvider } from "./liquidity-providers/InkySwap";
+import { ReservoirSwapProvider } from "./liquidity-providers/ReservoirSwap";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -101,6 +102,15 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.InkySwap, providers)) {
       try {
         const provider = new InkySwapProvider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+    
+    if (this._providerIsIncluded(LiquidityProviders.ReservoirSwap, providers)) {
+      try {
+        const provider = new ReservoirSwapProvider(this.chainId, this.web3Client);
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

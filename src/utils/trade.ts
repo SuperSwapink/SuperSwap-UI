@@ -3,9 +3,11 @@ import { ChainId } from "@/packages/chain";
 import { ROUTE_PROCESSOR_3_ADDRESS } from "@/packages/config";
 import { Amount, Token, Type } from "@/packages/currency";
 import { Percent } from "@/packages/math";
-import { PoolCode, Router } from "@/packages/router";
+import { LiquidityProviders, PoolCode, Router } from "@/packages/router";
 import { RouteStatus } from "@/packages/tines";
 import { Address, encodeFunctionData } from "viem";
+
+const FEE_ENABLED = false;
 
 export const getXFusionTrade = async (
   tokenIn: Type,
@@ -16,17 +18,46 @@ export const getXFusionTrade = async (
   poolsCodeMap?: Map<string, PoolCode>
 ) => {
   if (!poolsCodeMap) return undefined;
+  const parsedAmountIn =
+    tokenIn.wrapped.address === tokenOut.wrapped.address
+      ? BigInt(amountIn)
+      : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n;
   const route = Router.findBestRoute(
     poolsCodeMap,
     ChainId.INK,
     tokenIn,
-    BigInt(amountIn),
+    parsedAmountIn,
     tokenOut,
     10000000,
     100
   );
 
   if (route && route.status === RouteStatus.Success) {
+    const routes = [
+      LiquidityProviders.InkSwap,
+      LiquidityProviders.InkySwap,
+      LiquidityProviders.SquidSwap,
+      LiquidityProviders.DyorSwap,
+      LiquidityProviders.ReservoirSwap,
+    ]
+      .map((provider) => ({
+        ...Router.findBestRoute(
+          poolsCodeMap,
+          ChainId.INK,
+          tokenIn,
+          parsedAmountIn,
+          tokenOut,
+          10000000,
+          100,
+          [provider]
+        ),
+        provider,
+      }))
+      .filter((item) => item.status === "Success")
+      .toSorted((a, b) => (a.amountOut > b.amountOut ? -1 : 1));
+
+      console.log(routes)
+
     const amountIn = Amount.fromRawAmount(tokenIn, route.amountInBI.toString());
     const amountOut = Amount.fromRawAmount(
       tokenOut,
@@ -60,6 +91,7 @@ export const getXFusionTrade = async (
         ).toFixed(6)
       ),
       data: args,
+      bestRoute: routes?.[0],
       type: "SuperSwap",
     };
   }

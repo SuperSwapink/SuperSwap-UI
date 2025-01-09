@@ -9,6 +9,7 @@ export enum LiquidityProviders {
   InkySwap = "InkySwap",
   SquidSwap = "SquidSwap",
   DyorSwap = "DyorSwap",
+  ReservoirSwap = "ReservoirSwap",
   NativeWrap = "NativeWrap",
 }
 

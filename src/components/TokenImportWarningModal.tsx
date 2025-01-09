@@ -16,6 +16,7 @@ interface TokenImportWarningModalProps {
   onConfirm: any;
   open: boolean;
   onClose: any;
+  isCustom?: number;
   className?: string;
 }
 
@@ -24,6 +25,7 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
   onConfirm,
   open,
   onClose,
+  isCustom,
   className,
 }) => {
   const { chainId } = useAccount();
@@ -39,29 +41,39 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
         onClose={() => {}}
       >
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur"
+          className="fixed inset-0 bg-black/10 backdrop-blur"
           aria-hidden="true"
         />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
-            <DialogPanel className="w-full max-w-lg rounded-xl bg-[#F3F3F3] p-6 backdrop-blur-2xl px-10 py-8">
+            <DialogPanel className="w-full max-w-lg rounded-xl bg-white dark:bg-[#131823] p-6 backdrop-blur-2xl px-10 py-8">
               <div className="flex justify-center">
                 <Alert className="w-8 h-8" />
               </div>
-              <h3 className="font-bold text-lg text-[#31291e] text-center mt-2">
-                Buy at your own risk!
+              <h3 className="font-bold text-lg text-[#222] dark:text-white text-center mt-2">
+                Trade at your own risk!
               </h3>
-              <p className="mt-2 text-sm text-[#31291e] text-center">
-                Anyone can create a token, including creating fake versions of
-                existing tokens that claim to represent projects.
-                <br />
-                <br />
-                <strong>
-                  If you purchase this token, you may not be able to sell it
-                  back or it might be a scam.
-                </strong>
+              <p className="mt-2 text-sm text-[#222] dark:text-white text-center">
+                {isCustom === 1 ? (
+                  <>
+                    Anyone can create a token, including creating fake versions
+                    of existing tokens that claim to represent projects.
+                    <br />
+                    <br />
+                    <strong>
+                      If you purchase this token, you may not be able to sell it
+                      back or it might be a scam.
+                    </strong>
+                  </>
+                ) : (
+                  <>
+                    You are importing this token from the CoinGecko list. While
+                    CoinGecko is a trusted source, Always do your own research
+                    and be aware of the risks associated with this or any token.
+                  </>
+                )}
               </p>
-              <div className="flex overflow-hidden cursor-pointer bg-[#ebd8bb]/30 py-1 px-2 rounded-lg text-[#866f4d] mt-3">
+              <div className="flex overflow-hidden cursor-pointer bg-[#2f8af529] py-1 px-2 rounded-lg text-[#6c86ad] mt-3">
                 <Link
                   href={`${Chain.fromChainId(ChainId.INK).getTokenUrl(token)}`}
                   target="_blank"
@@ -83,7 +95,7 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
                 </button>
               </div>
               <button
-                className="w-full bg-[#ebd8bb]/50 py-3 rounded-xl mt-4 hover:brightness-75 transition-all"
+                className="w-full bg-[#2f8af529] text-[#2f8af5] hover:bg-[#2f8af51f] py-3 rounded-xl mt-4 hover:brightness-75 transition-all"
                 onClick={() => {
                   onConfirm();
                   onClose();

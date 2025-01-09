@@ -1,54 +1,54 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Ink from "@/assets/network/ink.png"
-import { useAccount, useSwitchChain } from "wagmi"
+import Image from "next/image";
+import Ink from "@/assets/network/ink.png";
+import { useAccount, useSwitchChain } from "wagmi";
 import {
   Menu,
   MenuButton,
   MenuItem,
   MenuItems,
   Transition,
-} from "@headlessui/react"
-import { CHAIN_IFNO } from "@/constants"
-import { ChainId } from "@/packages/chain"
+} from "@headlessui/react";
+import { CHAIN_IFNO } from "@/constants";
+import { ChainId } from "@/packages/chain";
 
 interface NetworkSelectorProps {
-  className?: string
+  className?: string;
 }
 
 const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
-  const { address, chainId } = useAccount()
-  const { switchChainAsync } = useSwitchChain()
+  const { address, chainId } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
 
   const onSwitchChain = (chainId: ChainId) => {
-    switchChainAsync?.({ chainId })
-  }
+    switchChainAsync?.({ chainId });
+  };
 
   const activeChain =
     chainId &&
     Object.keys(CHAIN_IFNO).findIndex((k) => Number(k) === chainId) > -1
       ? CHAIN_IFNO[chainId as ChainId]
-      : undefined
+      : undefined;
 
-  return (
+  return address ? (
     <Menu>
       <MenuButton
         data-wrong={activeChain === undefined}
-        className={`flex items-center bg-transparent border rounded-xl border-[#e2cdae] data-[wrong=true]:border-[#ff9b9b] px-4 py-3 outline-none hover:bg-[#dfcaaa]/60 transition-all ${
+        className={`flex items-center text-[#2f8af5] bg-[#2f8af529] rounded-xl px-4 py-3 outline-none hover:bg-[#2f8af51f] transition-all ${
           className ?? ""
         }`}
       >
         {activeChain ? (
-          <div className="flex items-center max-sm:hidden">
+          <div className="flex items-center">
             <Image
               src={activeChain.image.src}
               width={activeChain.image.width}
               height={activeChain.image.blurHeight}
               alt={activeChain.name}
-              className="w-5 h-5"
+              className="w-5 h-5 rounded-full"
             />
-            <span className="text-[#1f1d1a] font-semibold ml-2">
+            <span className="text-[#2f8af5] font-semibold ml-2">
               {activeChain.name}
             </span>
           </div>
@@ -66,15 +66,12 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <MenuItems
-          anchor="bottom"
-          className="border border-[#e2cdae] rounded-xl mt-2 bg-[#ddd]"
-        >
+        <MenuItems anchor="bottom" className="rounded-xl mt-2 bg-white dark:bg-[#131823]">
           {Object.values(CHAIN_IFNO).map((item) => (
             <MenuItem
               as={"button"}
               key={item.name}
-              className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#dfcaaa]/60 transition-all w-full"
+              className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
               onClick={() => onSwitchChain(item.id)}
             >
               <Image
@@ -82,9 +79,9 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
                 width={item.image.width}
                 height={item.image.blurHeight}
                 alt={item.name}
-                className="w-5 h-5"
+                className="w-5 h-5 rounded-full"
               />
-              <span className="text-[#1f1d1a] font-semibold ml-2">
+              <span className="text-[#222] dark:text-white font-semibold ml-2">
                 {item.name}
               </span>
             </MenuItem>
@@ -92,7 +89,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         </MenuItems>
       </Transition>
     </Menu>
-  )
-}
+  ) : null;
+};
 
-export default NetworkSelector
+export default NetworkSelector;

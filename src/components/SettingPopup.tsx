@@ -23,7 +23,7 @@ const SettingPopup = () => {
 
   return (
     <Menu>
-      <MenuButton className="flex items-center justify-center w-12 h-12 text-[#31291e] rounded-full border border-[#e2cdae] hover:bg-[#E3E6EB] transition-all">
+      <MenuButton className="flex items-center justify-center w-12 h-12 text-[#222] dark:text-white rounded-full bg-white dark:bg-[#131823] transition-all">
         <TwoLine />
       </MenuButton>
       <Transition
@@ -36,37 +36,37 @@ const SettingPopup = () => {
       >
         <MenuItems
           anchor="bottom"
-          className="relative mt-2 rounded-xl bg-[#E3E6EB] border border-[#e2cdae] shadow-[0px_8px_24px_-8px_rgba(175,178,237,0.24)] w-[375px]"
+          className="relative mt-2 rounded-xl bg-white dark:bg-[#131823] shadow-[0px_8px_24px_-8px_rgba(175,178,237,0.24)] dark:shadow-none w-[375px]"
         >
           <MenuItem>
             {({ close }) => (
               <>
-                <h4 className="px-3 py-2 text-[#31291e] border-b border-[#e2cdae]">
+                <h4 className="px-3 py-2 text-[#222] dark:text-white">
                   Settings
                 </h4>
                 <button
-                  className="flex items-center justify-center absolute top-2 right-2 w-6 h-6 hover:bg-black/5 transition-all rounded-md text-[#31291e]"
+                  className="flex items-center justify-center absolute top-2 right-2 w-6 h-6 hover:bg-black/5 transition-all rounded-md text-[#222] dark:text-white"
                   onClick={close}
                 >
                   <Close className="w-2.5 h-2.5" />
                 </button>
                 <div className="flex flex-col py-4 px-3 space-y-4">
                   <div className="flex flex-col space-y-2">
-                    <h4 className="text-[#afa69c] text-sm">
+                    <h4 className="text-[#222] dark:text-white text-sm">
                       Slippage Tolerance
                     </h4>
                     <div className="flex items-center justify-between space-x-2">
                       <div className="flex items-center space-x-1">
                         <button
                           data-active={slippage === 0.1}
-                          className="data-[active=true]:bg-[#e2d0b4] rounded-xl font-semibold h-10 w-[70px] border border-[#e2cdae] hover:bg-[#e2cdae] focus:bg-[#e2d0b4] transition-all"
+                          className="data-[active=true]:bg-[#e8edfa] dark:data-[active=true]:bg-[#324054] rounded-xl font-semibold h-10 w-[70px] hover:bg-[#e8edfa] dark:hover:bg-[#324054] focus:bg-[#e8edfa] dark:focus:bg-[#324054] transition-all"
                           onClick={() => setSlippage(0.1)}
                         >
                           0.1%
                         </button>
                         <button
                           data-active={slippage === 0.5}
-                          className="data-[active=true]:bg-[#e2d0b4] rounded-xl font-semibold h-10 w-[70px] border border-[#e2cdae] hover:bg-[#e2cdae] focus:bg-[#e2d0b4] transition-all"
+                          className="data-[active=true]:bg-[#e8edfa] dark:data-[active=true]:bg-[#324054] rounded-xl font-semibold h-10 w-[70px] hover:bg-[#e8edfa] dark:hover:bg-[#324054] focus:bg-[#e8edfa] dark:focus:bg-[#324054] transition-all"
                           onClick={() => setSlippage(0.5)}
                         >
                           0.5%
@@ -74,7 +74,7 @@ const SettingPopup = () => {
                         <button
                           data-active={slippage === 1}
                           onClick={() => setSlippage(1)}
-                          className="data-[active=true]:bg-[#e2d0b4] rounded-xl font-semibold h-10 w-[70px] border border-[#e2cdae] hover:bg-[#e2cdae] focus:bg-[#e2d0b4] transition-all"
+                          className="data-[active=true]:bg-[#e8edfa] dark:data-[active=true]:bg-[#324054] rounded-xl font-semibold h-10 w-[70px] hover:bg-[#e8edfa] dark:hover:bg-[#324054] focus:bg-[#e8edfa] dark:focus:bg-[#324054] transition-all"
                         >
                           1%
                         </button>
@@ -90,9 +90,9 @@ const SettingPopup = () => {
                             )
                           }
                           placeholder="0.5"
-                          className="w-full h-10 px-4 border font-semibold border-[#e2cdae] hover:border-[#b19f85] rounded-2xl transition-all bg-transparent focus:border-[#e9bd7a] focus:shadow-[0px_0px_0px_1px_#e9bd7a] outline-none placeholder:font-normal"
+                          className="w-full h-10 px-4 border font-semibold border-[#e8edfa] hover:border-[#e8edfa] rounded-2xl transition-all bg-transparent focus:border-[#e8edfa] focus:shadow-[0px_0px_0px_1px_#e8edfa] outline-none placeholder:font-normal"
                         />
-                        <span className="absolute top-0 right-0 w-10 h-10 flex justify-center items-center text-[#31291e]">
+                        <span className="absolute top-0 right-0 w-10 h-10 flex justify-center items-center text-[#31291e] dark:text-white">
                           %
                         </span>
                       </div>
@@ -100,7 +100,7 @@ const SettingPopup = () => {
                     {warning ? (
                       <p
                         className={`${
-                          slippage >= 50 ? "text-[#E53E3E]" : "text-[#D69E2E]"
+                          slippage >= 50 ? "text-[#E53E3E]" : "text-[#dbb053]"
                         } text-sm`}
                       >
                         {warning}
@@ -108,7 +108,7 @@ const SettingPopup = () => {
                     ) : null}
                   </div>
                   <div className="flex flex-col space-y-2">
-                    <h4 className="text-[#afa69c] text-sm">
+                    <h4 className="text-[#222] dark:text-white text-sm">
                       Transaction Deadline
                     </h4>
                     <div className="relative w-[210px]">
@@ -117,9 +117,9 @@ const SettingPopup = () => {
                         placeholder="30"
                         value={deadline}
                         onChange={(e) => setDeadline(e.target.valueAsNumber)}
-                        className="w-full h-10 px-4 border font-semibold border-[#e2cdae] hover:border-[#b19f85] rounded-2xl transition-all bg-transparent focus:border-[#e9bd7a] focus:shadow-[0px_0px_0px_1px_#e9bd7a] outline-none placeholder:font-normal"
+                        className="w-full h-10 px-4 border font-semibold border-[#e8edfa] hover:border-[#e8edfa] rounded-2xl transition-all bg-transparent focus:border-[#e8edfa] focus:shadow-[0px_0px_0px_1px_#e8edfa] outline-none placeholder:font-normal"
                       />
-                      <span className="absolute top-0 right-4 h-10 flex justify-center items-center text-[#31291e]">
+                      <span className="absolute top-0 right-4 h-10 flex justify-center items-center text-[#06070a] dark:text-white">
                         minutes
                       </span>
                     </div>
