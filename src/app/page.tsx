@@ -15,7 +15,7 @@ export default function Home() {
           <SettingPopup />
         </div>
         <SwapPanel />
-        <SwapComp />
+        {/* <SwapComp /> */}
       </div>
     </div>
   );
