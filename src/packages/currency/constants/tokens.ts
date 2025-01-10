@@ -27,8 +27,8 @@ export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
     {
       decimals: 6,
-      symbol: "USDC",
-      name: "USD Coin",
+      symbol: "USDC.e",
+      name: "USDC (Stargate)",
       icon: "/media/usdc.png",
     },
     USDC_ADDRESS

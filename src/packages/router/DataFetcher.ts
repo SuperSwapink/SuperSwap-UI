@@ -107,10 +107,13 @@ export class DataFetcher {
         console.warn(e);
       }
     }
-    
+
     if (this._providerIsIncluded(LiquidityProviders.ReservoirSwap, providers)) {
       try {
-        const provider = new ReservoirSwapProvider(this.chainId, this.web3Client);
+        const provider = new ReservoirSwapProvider(
+          this.chainId,
+          this.web3Client
+        );
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

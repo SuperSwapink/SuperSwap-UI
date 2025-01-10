@@ -5,13 +5,12 @@ import { tryParseAmount } from "@/packages/currency";
 import { ZERO } from "@/packages/math";
 import useSettings from "./useSettings";
 import { useQuery } from "@tanstack/react-query";
-import { getXFusionTrade } from "@/utils/trade";
+import { getBestSwap, getXFusionTrade } from "@/utils/trade";
 import { usePoolsCodeMap } from "@/packages/pools";
 import { ChainId } from "@/packages/chain";
 
-const useSwapTrade = () => {
+const useEachSwapTrade = () => {
   const { amountIn, tokenIn, tokenOut } = useSwapParams();
-  const { address } = useAccount();
   const { slippage } = useSettings();
 
   const parsedAmount = useDebounce(tryParseAmount(amountIn, tokenIn), 200);
@@ -25,7 +24,7 @@ const useSwapTrade = () => {
 
   const trade = useQuery({
     queryKey: [
-      "smart-router",
+      "best-swap",
       tokenIn,
       tokenOut,
       parsedAmount,
@@ -43,16 +42,15 @@ const useSwapTrade = () => {
           return undefined;
         }
 
-        const trades = await getXFusionTrade(
+        const bestSwap = await getBestSwap(
           tokenIn,
           tokenOut,
-          address ?? "0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8",
           slippage,
           parsedAmount.quotient.toString(),
           poolsCodeMap
         );
 
-        return trades;
+        return bestSwap;
       } catch (err) {
         console.log(err);
       }
@@ -67,4 +65,4 @@ const useSwapTrade = () => {
   return trade;
 };
 
-export default useSwapTrade;
+export default useEachSwapTrade;

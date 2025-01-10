@@ -12,8 +12,8 @@ export const PRIMARY_TOKEN_LIST = [
   },
   {
     address: "0xF1815bd50389c46847f0Bda824eC8da914045D14",
-    symbol: "USDC",
-    name: "USD Coin",
+    symbol: "USDC.e",
+    name: "USDC (Stargate)",
     decimals: 6,
     icon: "/media/usdc.png",
     category: "Stablecoin",

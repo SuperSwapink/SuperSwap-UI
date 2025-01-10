@@ -45,7 +45,7 @@ function Footer() {
           <Github className="w-5 h-5" />
         </Link>
         <Link
-          href={"/"}
+          href={"https://docs.superswap.ink"}
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-center w-10 h-10 bg-[#2f8af529] rounded-full text-[#2f8af5] hover:bg-[#2f8af51f] transition-all"

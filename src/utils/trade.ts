@@ -1,10 +1,11 @@
 import { routeProcessor3Abi } from "@/packages/abi";
 import { ChainId } from "@/packages/chain";
 import { ROUTE_PROCESSOR_3_ADDRESS } from "@/packages/config";
-import { Amount, Token, Type } from "@/packages/currency";
+import { Amount, Token, Type, USDC, USDC_ADDRESS } from "@/packages/currency";
 import { Percent } from "@/packages/math";
 import { LiquidityProviders, PoolCode, Router } from "@/packages/router";
 import { RouteStatus } from "@/packages/tines";
+import axios from "axios";
 import { Address, encodeFunctionData } from "viem";
 
 const FEE_ENABLED = false;
@@ -22,6 +23,7 @@ export const getXFusionTrade = async (
     tokenIn.wrapped.address === tokenOut.wrapped.address
       ? BigInt(amountIn)
       : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n;
+  console.log(slippage);
   const route = Router.findBestRoute(
     poolsCodeMap,
     ChainId.INK,
@@ -33,31 +35,6 @@ export const getXFusionTrade = async (
   );
 
   if (route && route.status === RouteStatus.Success) {
-    const routes = [
-      LiquidityProviders.InkSwap,
-      LiquidityProviders.InkySwap,
-      LiquidityProviders.SquidSwap,
-      LiquidityProviders.DyorSwap,
-      LiquidityProviders.ReservoirSwap,
-    ]
-      .map((provider) => ({
-        ...Router.findBestRoute(
-          poolsCodeMap,
-          ChainId.INK,
-          tokenIn,
-          parsedAmountIn,
-          tokenOut,
-          10000000,
-          100,
-          [provider]
-        ),
-        provider,
-      }))
-      .filter((item) => item.status === "Success")
-      .toSorted((a, b) => (a.amountOut > b.amountOut ? -1 : 1));
-
-      console.log(routes)
-
     const amountIn = Amount.fromRawAmount(tokenIn, route.amountInBI.toString());
     const amountOut = Amount.fromRawAmount(
       tokenOut,
@@ -91,10 +68,95 @@ export const getXFusionTrade = async (
         ).toFixed(6)
       ),
       data: args,
-      bestRoute: routes?.[0],
       type: "SuperSwap",
     };
   }
+};
+
+export const getBestSwap = async (
+  tokenIn: Type,
+  tokenOut: Type,
+  slippage: number,
+  amountIn: string,
+  poolsCodeMap?: Map<string, PoolCode>
+) => {
+  if (!poolsCodeMap) return undefined;
+  const parsedAmountIn =
+    tokenIn.wrapped.address === tokenOut.wrapped.address
+      ? BigInt(amountIn)
+      : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n;
+  console.log(slippage);
+
+  const reservoirSwap = await axios
+    .post("https://apiv2.staging.reservoir.w3us.site/quote", {
+      tokenInChainId: 57073,
+      tokenIn: tokenIn.wrapped.address,
+      tokenOutChainId: 57073,
+      tokenOut: tokenOut.wrapped.address,
+      amount: parsedAmountIn.toString(),
+      sendPortionEnabled: true,
+      type: "EXACT_INPUT",
+      intent: "quote",
+      configs: [
+        {
+          enableUniversalRouter: true,
+          protocols: ["V2", "V3", "MIXED"],
+          routingType: "CLASSIC",
+          enableFeeOnTransferFeeFetching: true,
+        },
+      ],
+      useUniswapX: false,
+      slippageTolerance: slippage.toString(),
+    })
+    .catch((err) => {});
+
+  let routes = [
+    { provider: LiquidityProviders.InkSwap, protocolFee: 0n },
+    { provider: LiquidityProviders.InkySwap, protocolFee: 0n },
+    { provider: LiquidityProviders.SquidSwap, protocolFee: 0n },
+    { provider: LiquidityProviders.DyorSwap, protocolFee: 3n },
+  ]
+    .map((provider) => ({
+      ...Router.findBestRoute(
+        poolsCodeMap,
+        ChainId.INK,
+        tokenIn,
+        parsedAmountIn,
+        tokenOut,
+        10000000,
+        100,
+        [provider.provider],
+        tokenIn === USDC[ChainId.INK] || tokenOut === USDC[ChainId.INK]
+          ? undefined
+          : (pool) =>
+              pool.token0.address.toLowerCase() !==
+                USDC[ChainId.INK].address.toLowerCase() &&
+              pool.token1.address.toLowerCase() !==
+                USDC[ChainId.INK].address.toLowerCase()
+      ),
+      ...provider,
+    }))
+    .filter((item) => item.status === "Success")
+    .map((route) => ({
+      provider: route.provider,
+      amountOut:
+        (BigInt(route.amountOutBI) * (1000n - route.protocolFee)) / 1000n,
+      legs: route.legs,
+    }));
+
+  console.log(routes);
+
+  if (reservoirSwap?.data?.quote) {
+    routes.push({
+      provider: LiquidityProviders.ReservoirSwap,
+      amountOut: BigInt(reservoirSwap?.data?.quote?.quote ?? "0"),
+      legs: [],
+    });
+  }
+
+  routes.sort((a, b) => (a.amountOut < b.amountOut ? 1 : -1));
+
+  return routes?.[0];
 };
 
 export const getXFusionTxData = async (trade: any) => {
