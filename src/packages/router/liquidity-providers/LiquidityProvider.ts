@@ -11,6 +11,8 @@ export enum LiquidityProviders {
   DyorSwap = "DyorSwap",
   ReservoirSwap = "ReservoirSwap",
   NativeWrap = "NativeWrap",
+  VelodromeSwapV2 = "VelodromeSwapV2",
+  VelodromeSwapV3 = "VelodromeSwapV3",
 }
 
 export abstract class LiquidityProvider {

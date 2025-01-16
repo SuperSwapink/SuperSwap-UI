@@ -23,7 +23,6 @@ export const getXFusionTrade = async (
     tokenIn.wrapped.address === tokenOut.wrapped.address
       ? BigInt(amountIn)
       : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n;
-  console.log(slippage);
   const route = Router.findBestRoute(
     poolsCodeMap,
     ChainId.INK,
@@ -33,6 +32,8 @@ export const getXFusionTrade = async (
     10000000,
     100
   );
+
+  console.log(route);
 
   if (route && route.status === RouteStatus.Success) {
     const amountIn = Amount.fromRawAmount(tokenIn, route.amountInBI.toString());
@@ -111,10 +112,17 @@ export const getBestSwap = async (
     .catch((err) => {});
 
   let routes = [
-    { provider: LiquidityProviders.InkSwap, protocolFee: 0n },
-    { provider: LiquidityProviders.InkySwap, protocolFee: 0n },
-    { provider: LiquidityProviders.SquidSwap, protocolFee: 0n },
-    { provider: LiquidityProviders.DyorSwap, protocolFee: 3n },
+    { provider: [LiquidityProviders.InkSwap], protocolFee: 0n },
+    { provider: [LiquidityProviders.InkySwap], protocolFee: 0n },
+    { provider: [LiquidityProviders.SquidSwap], protocolFee: 0n },
+    { provider: [LiquidityProviders.DyorSwap], protocolFee: 3n },
+    {
+      provider: [
+        LiquidityProviders.VelodromeSwapV2,
+        LiquidityProviders.VelodromeSwapV3,
+      ],
+      protocolFee: 0n,
+    },
   ]
     .map((provider) => ({
       ...Router.findBestRoute(
@@ -125,7 +133,7 @@ export const getBestSwap = async (
         tokenOut,
         10000000,
         100,
-        [provider.provider],
+        provider.provider,
         tokenIn === USDC[ChainId.INK] || tokenOut === USDC[ChainId.INK]
           ? undefined
           : (pool) =>
@@ -138,7 +146,7 @@ export const getBestSwap = async (
     }))
     .filter((item) => item.status === "Success")
     .map((route) => ({
-      provider: route.provider,
+      provider: route.provider[0],
       amountOut:
         (BigInt(route.amountOutBI) * (1000n - route.protocolFee)) / 1000n,
       legs: route.legs,

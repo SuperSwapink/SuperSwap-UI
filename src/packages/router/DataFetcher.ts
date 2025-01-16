@@ -16,6 +16,8 @@ import {
 } from ".";
 import { InkySwapProvider } from "./liquidity-providers/InkySwap";
 import { ReservoirSwapProvider } from "./liquidity-providers/ReservoirSwap";
+import { VelodromeSwapV2Provider } from "./liquidity-providers/VelodromeSwapV2";
+import { VelodromeSwapV3Provider } from "./liquidity-providers/VelodromeSwapV3";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -111,6 +113,34 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.ReservoirSwap, providers)) {
       try {
         const provider = new ReservoirSwapProvider(
+          this.chainId,
+          this.web3Client
+        );
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (
+      this._providerIsIncluded(LiquidityProviders.VelodromeSwapV2, providers)
+    ) {
+      try {
+        const provider = new VelodromeSwapV2Provider(
+          this.chainId,
+          this.web3Client
+        );
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (
+      this._providerIsIncluded(LiquidityProviders.VelodromeSwapV3, providers)
+    ) {
+      try {
+        const provider = new VelodromeSwapV3Provider(
           this.chainId,
           this.web3Client
         );

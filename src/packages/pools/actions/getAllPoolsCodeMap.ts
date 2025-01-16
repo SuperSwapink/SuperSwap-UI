@@ -20,6 +20,8 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.SquidSwap,
         LiquidityProviders.InkySwap,
         LiquidityProviders.ReservoirSwap,
+        LiquidityProviders.VelodromeSwapV2,
+        LiquidityProviders.VelodromeSwapV3
       ];
 
   const dataFetcher = DataFetcher.onChain(chainId);

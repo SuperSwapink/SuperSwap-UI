@@ -4,6 +4,7 @@ import InkySwapImg from "../../assets/swap/InkySwap.png";
 import SquidSwapImg from "../../assets/swap/SquidSwap.png";
 import DyorSwapImg from "../../assets/swap/DyorSwap.png";
 import ReservoirSwapImg from "../../assets/swap/ReservoirSwap.png";
+import VelodromeSwapImg from "../../assets/swap/VelodromeSwap.png";
 import LogoDark from "../../assets/logo-mb-dark.png";
 import LogoLight from "../../assets/logo-mb-light.png";
 import Image from "next/image";
@@ -19,6 +20,7 @@ const images = {
   [LiquidityProviders.SquidSwap]: SquidSwapImg,
   [LiquidityProviders.DyorSwap]: DyorSwapImg,
   [LiquidityProviders.ReservoirSwap]: ReservoirSwapImg,
+  [LiquidityProviders.VelodromeSwapV2]: VelodromeSwapImg,
 } as any;
 
 const SwapComp = () => {
@@ -55,7 +57,7 @@ const SwapComp = () => {
             className=""
           />
         </div>
-        &nbsp; {bestTrade.data.provider}
+        &nbsp; {bestTrade.data.provider.replaceAll('V2', '')}
       </div>
     </div>
   ) : trade.data &&

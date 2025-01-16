@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getXFusionTrade } from "@/utils/trade";
 import { usePoolsCodeMap } from "@/packages/pools";
 import { ChainId } from "@/packages/chain";
+import { LiquidityProviders } from "@/packages/router";
 
 const useSwapTrade = () => {
   const { amountIn, tokenIn, tokenOut } = useSwapParams();
