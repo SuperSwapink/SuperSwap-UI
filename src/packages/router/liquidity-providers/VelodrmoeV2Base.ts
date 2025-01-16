@@ -54,7 +54,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
   blockListener?: () => void;
   unwatchBlockNumber?: () => void;
 
-  fee = 0.03;
+  fee = 0;
   isInitialized = false;
   factory: Record<number, Address> = {};
   implementation: Record<number, Address> = {};
