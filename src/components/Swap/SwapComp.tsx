@@ -14,13 +14,19 @@ import { Amount } from "@/packages/currency";
 import { LiquidityProviders } from "@/packages/router";
 import useEachSwapTrade from "@/hooks/useEachSwapTrade";
 
-const images = {
-  [LiquidityProviders.InkSwap]: InkSwapImg,
-  [LiquidityProviders.InkySwap]: InkySwapImg,
-  [LiquidityProviders.SquidSwap]: SquidSwapImg,
-  [LiquidityProviders.DyorSwap]: DyorSwapImg,
-  [LiquidityProviders.ReservoirSwap]: ReservoirSwapImg,
-  [LiquidityProviders.VelodromeSwapV2]: VelodromeSwapImg,
+const metadata = {
+  [LiquidityProviders.InkSwap]: { image: InkSwapImg, name: "InkSwap" },
+  [LiquidityProviders.InkySwap]: { image: InkySwapImg, name: "InkySwap" },
+  [LiquidityProviders.SquidSwap]: { image: SquidSwapImg, name: "SquidSwap" },
+  [LiquidityProviders.DyorSwap]: { image: DyorSwapImg, name: "DyorSwap" },
+  [LiquidityProviders.ReservoirSwap]: {
+    image: ReservoirSwapImg,
+    name: "ReservoirSwap",
+  },
+  [LiquidityProviders.VelodromeSwapV2]: {
+    image: VelodromeSwapImg,
+    name: "Velodrome",
+  },
 } as any;
 
 const SwapComp = () => {
@@ -50,14 +56,14 @@ const SwapComp = () => {
         {tokenOut?.symbol} for the same swap compared to &nbsp;
         <div className="inline-flex items-center justify-center border border-[#e3e7ee] dark:border-[#202835] w-5 h-5 p-0.5 rounded-md translate-y-1">
           <Image
-            src={images[bestTrade.data.provider].src}
-            width={images[bestTrade.data.provider].width}
-            height={images[bestTrade.data.provider].height}
+            src={metadata[bestTrade.data.provider].image.src}
+            width={metadata[bestTrade.data.provider].image.width}
+            height={metadata[bestTrade.data.provider].image.height}
             alt="swap"
             className=""
           />
         </div>
-        &nbsp; {bestTrade.data.provider.replaceAll('V2', '')}
+        &nbsp; {metadata[bestTrade.data.provider].name}
       </div>
     </div>
   ) : trade.data &&
