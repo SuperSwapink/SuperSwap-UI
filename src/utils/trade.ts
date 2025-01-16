@@ -30,8 +30,7 @@ export const getXFusionTrade = async (
     parsedAmountIn,
     tokenOut,
     10000000,
-    100,
-    [LiquidityProviders.VelodromeSwapV3]
+    100
   );
 
   console.log(route);
