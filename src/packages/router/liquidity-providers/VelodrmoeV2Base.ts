@@ -1,5 +1,5 @@
 import { BASES_TO_CHECK_TRADES_AGAINST } from "../../config";
-import { ConstantProductRPool, RToken } from "../../tines";
+import { ConstantProductRPool, RToken, VeloRPool } from "../../tines";
 import { add, getUnixTime } from "date-fns";
 import { getReservesAbi } from "../../abi";
 import { ChainId } from "../../chain";
@@ -24,9 +24,9 @@ import {
   filterTopPools,
   mapToken,
 } from "../lib/api";
-import { ConstantProductPoolCode } from "../pools/ConstantProductPool";
 import type { PoolCode } from "../pools/PoolCode";
 import { LiquidityProvider } from "./LiquidityProvider";
+import { VeloPoolCode } from "../pools/VeloPool";
 interface PoolInfo {
   poolCode: PoolCode;
   validUntilTimestamp: number;
@@ -54,7 +54,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
   blockListener?: () => void;
   unwatchBlockNumber?: () => void;
 
-  fee = 0;
+  fee = 0.003;
   isInitialized = false;
   factory: Record<number, Address> = {};
   implementation: Record<number, Address> = {};
@@ -140,7 +140,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
       if (res0 && res1) {
         const token0 = mapToken(this.chainId, pool.token0) as RToken;
         const token1 = mapToken(this.chainId, pool.token1) as RToken;
-        const rPool = new ConstantProductRPool(
+        const rPool = new VeloRPool(
           pool.address,
           token0,
           token1,
@@ -148,7 +148,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           res0,
           res1
         );
-        const pc = new ConstantProductPoolCode(
+        const pc = new VeloPoolCode(
           rPool,
           this.getType(),
           this.getPoolProviderName()
@@ -224,7 +224,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           0n,
           0n
         );
-        const pc = new ConstantProductPoolCode(
+        const pc = new VeloPoolCode(
           rPool,
           this.getType(),
           this.getPoolProviderName()
@@ -418,7 +418,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           0n,
           0n
         );
-        const pc = new ConstantProductPoolCode(
+        const pc = new VeloPoolCode(
           rPool,
           this.getType(),
           this.getPoolProviderName()
