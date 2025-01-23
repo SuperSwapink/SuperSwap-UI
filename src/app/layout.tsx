@@ -25,6 +25,16 @@ export const metadata: Metadata = {
   title: "SuperSwap",
   description:
     "SuperSwap is a DEX aggregator on Ink Chain, uniting liquidity across DEXs to ensure the best rates, low slippage, and high returns. Simple, secure, and user-friendly trading at its best!",
+  openGraph: {
+    images: [
+      {
+        url: "/metadata.jpg",
+        width: 1280,
+        height: 426,
+        alt: "SuperSwap",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
