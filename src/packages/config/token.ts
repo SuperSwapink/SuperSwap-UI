@@ -29,6 +29,15 @@ export const PRIMARY_TOKEN_LIST = [
     chainId: ChainId.INK,
   },
   {
+    address: "0xbf0cAfCbaaF0be8221Ae8d630500984eDC908861",
+    symbol: "SQUIDS",
+    name: "Squidswap",
+    decimals: 18,
+    icon: "/media/squids.png",
+    category: "DeFi",
+    chainId: ChainId.INK,
+  },
+  {
     address: "0x2a1bce657F919ac3f9aB50b2584CFC77563A02Ec",
     symbol: "AK47",
     name: "Andru Kollor",
@@ -44,15 +53,6 @@ export const PRIMARY_TOKEN_LIST = [
     decimals: 18,
     icon: "/media/purple.svg",
     category: "Meme",
-    chainId: ChainId.INK,
-  },
-  {
-    address: "0xbf0cAfCbaaF0be8221Ae8d630500984eDC908861",
-    symbol: "SQUIDS",
-    name: "Squidswap",
-    decimals: 18,
-    icon: "/media/squids.png",
-    category: "DeFi",
     chainId: ChainId.INK,
   },
   {
