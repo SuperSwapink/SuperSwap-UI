@@ -5,6 +5,7 @@ import { addressMapToTokenMap } from "../functions/address-map-to-token-map";
 
 import {
   USDC_ADDRESS,
+  USDT_ADDRESS,
   WETH9_ADDRESS,
   WNATIVE_ADDRESS,
 } from "./token-addresses";
@@ -33,4 +34,16 @@ export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {
     },
     USDC_ADDRESS
   ) as Record<keyof typeof USDC_ADDRESS, Token>),
+} as const;
+
+export const USDT: Record<keyof typeof USDT_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 6,
+      symbol: "USDT0",
+      name: "USDT0",
+      icon: "/media/usdt0.svg",
+    },
+    USDT_ADDRESS
+  ) as Record<keyof typeof USDT_ADDRESS, Token>),
 } as const;

@@ -1,18 +1,18 @@
-import Coin from "../svgs/Coin";
-import InkSwapImg from "../../assets/swap/InkSwap.png";
-import InkySwapImg from "../../assets/swap/InkySwap.png";
-import SquidSwapImg from "../../assets/swap/SquidSwap.png";
-import DyorSwapImg from "../../assets/swap/DyorSwap.png";
-import ReservoirSwapImg from "../../assets/swap/ReservoirSwap.png";
-import VelodromeSwapImg from "../../assets/swap/VelodromeSwap.png";
-import LogoDark from "../../assets/logo-mb-dark.png";
-import LogoLight from "../../assets/logo-mb-light.png";
-import Image from "next/image";
-import useSwapTrade from "@/hooks/useSwapTrade";
-import useSwapParams from "@/hooks/useSwapParams";
-import { Amount } from "@/packages/currency";
-import { LiquidityProviders } from "@/packages/router";
-import useEachSwapTrade from "@/hooks/useEachSwapTrade";
+import Coin from "../svgs/Coin"
+import InkSwapImg from "../../assets/swap/InkSwap.png"
+import InkySwapImg from "../../assets/swap/InkySwap.png"
+import SquidSwapImg from "../../assets/swap/SquidSwap.png"
+import DyorSwapImg from "../../assets/swap/DyorSwap.png"
+import ReservoirSwapImg from "../../assets/swap/ReservoirSwap.png"
+import VelodromeSwapImg from "../../assets/swap/VelodromeSwap.png"
+import LogoDark from "../../assets/logo-mb-dark.png"
+import LogoLight from "../../assets/logo-mb-light.png"
+import Image from "next/image"
+import useSwapTrade from "@/hooks/useSwapTrade"
+import useSwapParams from "@/hooks/useSwapParams"
+import { Amount } from "@/packages/currency"
+import { LiquidityProviders } from "@/packages/router"
+import useEachSwapTrade from "@/hooks/useEachSwapTrade"
 
 const metadata = {
   [LiquidityProviders.InkSwap]: { image: InkSwapImg, name: "InkSwap" },
@@ -27,12 +27,12 @@ const metadata = {
     image: VelodromeSwapImg,
     name: "Velodrome",
   },
-} as any;
+} as any
 
 const SwapComp = () => {
-  const { tokenIn, tokenOut } = useSwapParams();
-  const trade = useSwapTrade();
-  const bestTrade = useEachSwapTrade();
+  const { tokenIn, tokenOut } = useSwapParams()
+  const trade = useSwapTrade()
+  const bestTrade = useEachSwapTrade()
 
   const tradeProfit =
     tokenIn &&
@@ -44,7 +44,7 @@ const SwapComp = () => {
       ? Amount.fromRawAmount(tokenOut, trade.data.amountOut).subtract(
           Amount.fromRawAmount(tokenOut, bestTrade.data.amountOut.toString())
         )
-      : undefined;
+      : undefined
 
   return trade.data && bestTrade.data && tradeProfit ? (
     <div className="flex items-center bg-white dark:bg-[#131823] relative p-4 mt-4 rounded-lg md:rounded-[32px] shadow-[0_12px_24px_#e2e9f6] dark:shadow-none">
@@ -60,7 +60,11 @@ const SwapComp = () => {
             width={metadata[bestTrade.data.provider].image.width}
             height={metadata[bestTrade.data.provider].image.height}
             alt="swap"
-            className=""
+            className={
+              metadata[bestTrade.data.provider].image === InkySwapImg
+                ? "invert dark:invert-0"
+                : ""
+            }
           />
         </div>
         &nbsp; {metadata[bestTrade.data.provider].name}
@@ -76,7 +80,7 @@ const SwapComp = () => {
         <Coin className="text-[#2f8af5]" />
       </div>
       <div className="text-sm font-semibold text-[#6c86ad] max-w-[400px]">
-        This swap is available only on{" "}
+        The best price for this swap is on{" "}
         <div className="inline-flex items-center justify-center border border-[#e3e7ee] dark:border-[#202835] w-5 h-5 p-0.5 rounded-md translate-y-1">
           <Image
             src={LogoDark.src}
@@ -96,7 +100,7 @@ const SwapComp = () => {
         SuperSwap!
       </div>
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default SwapComp;
+export default SwapComp
