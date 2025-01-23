@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/metadata.jpg",
+        url: "https://raw.githubusercontent.com/SuperSwapink/SuperSwap-UI/refs/heads/main/public/metadata.jpg",
         width: 1280,
         height: 426,
         alt: "SuperSwap",

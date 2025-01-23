@@ -81,23 +81,25 @@ const SwapComp = () => {
       </div>
       <div className="text-sm font-semibold text-[#6c86ad] max-w-[400px]">
         The best price for this swap is on{" "}
-        <div className="inline-flex items-center justify-center border border-[#e3e7ee] dark:border-[#202835] w-5 h-5 p-0.5 rounded-md translate-y-1">
-          <Image
-            src={LogoDark.src}
-            width={LogoDark.width}
-            height={LogoDark.height}
-            alt="swap"
-            className="hidden dark:block"
-          />
-          <Image
-            src={LogoLight.src}
-            width={LogoLight.width}
-            height={LogoLight.height}
-            alt="swap"
-            className="dark:hidden"
-          />
-        </div>{" "}
-        SuperSwap!
+        <div className="inline-flex items-center translate-y-[3px]">
+          <div className="inline-flex items-center justify-center border border-[#e3e7ee] dark:border-[#202835] w-5 h-5 p-0.5 rounded-md">
+            <Image
+              src={LogoDark.src}
+              width={LogoDark.width}
+              height={LogoDark.height}
+              alt="swap"
+              className="hidden dark:block"
+            />
+            <Image
+              src={LogoLight.src}
+              width={LogoLight.width}
+              height={LogoLight.height}
+              alt="swap"
+              className="dark:hidden"
+            />
+          </div>{" "}
+          SuperSwap!
+        </div>
       </div>
     </div>
   ) : null
