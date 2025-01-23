@@ -23,7 +23,8 @@ const roobert = localFont({
 
 export const metadata: Metadata = {
   title: "SuperSwap",
-  description: "SuperSwap",
+  description:
+    "SuperSwap is a DEX aggregator on Ink Chain, uniting liquidity across DEXs to ensure the best rates, low slippage, and high returns. Simple, secure, and user-friendly trading at its best!",
 }
 
 export default function RootLayout({

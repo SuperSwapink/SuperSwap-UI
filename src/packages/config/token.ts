@@ -34,7 +34,7 @@ export const PRIMARY_TOKEN_LIST = [
     name: "Andru Kollor",
     decimals: 18,
     icon: "/media/ak47.svg",
-    category: "Top",
+    category: "Meme",
     chainId: ChainId.INK,
   },
   {
@@ -43,7 +43,7 @@ export const PRIMARY_TOKEN_LIST = [
     name: "Purple",
     decimals: 18,
     icon: "/media/purple.svg",
-    category: "Top",
+    category: "Meme",
     chainId: ChainId.INK,
   },
   {
@@ -52,16 +52,16 @@ export const PRIMARY_TOKEN_LIST = [
     name: "Squidswap",
     decimals: 18,
     icon: "/media/squids.png",
-    category: "Top",
+    category: "DeFi",
     chainId: ChainId.INK,
   },
   {
     address: "0x75e7A5316e44755FF4ad724ee45337D1Eef6895e",
-    symbol: "RPL",
+    symbol: "PRL",
     name: "Pearl",
     decimals: 18,
-    icon: "/media/rpl.svg",
-    category: "Top",
+    icon: "/media/prl.svg",
+    category: "Meme",
     chainId: ChainId.INK,
   },
   {
@@ -70,7 +70,7 @@ export const PRIMARY_TOKEN_LIST = [
     name: "MystInk",
     decimals: 18,
     icon: "/media/myst.svg",
-    category: "Top",
+    category: "Meme",
     chainId: ChainId.INK,
   },
   {
@@ -79,7 +79,7 @@ export const PRIMARY_TOKEN_LIST = [
     name: "DickButt on INK",
     decimals: 18,
     icon: "/media/dbi.png",
-    category: "Top",
+    category: "Meme",
     chainId: ChainId.INK,
   },
   {
@@ -88,7 +88,7 @@ export const PRIMARY_TOKEN_LIST = [
     name: "Cat Call Agent",
     decimals: 18,
     icon: "/media/cat.png",
-    category: "Top",
+    category: "AI Meme",
     chainId: ChainId.INK,
   },
 ];
