@@ -82,7 +82,7 @@ const SwapComp = () => {
       <div className="text-sm font-semibold text-[#6c86ad] max-w-[400px]">
         The best price for this swap is on{" "}
         <div className="inline-flex items-center translate-y-[3px]">
-          <div className="inline-flex items-center justify-center border border-[#e3e7ee] dark:border-[#202835] w-5 h-5 p-0.5 rounded-md">
+          <div className="inline-flex items-center justify-center border border-[#e3e7ee] dark:border-[#202835] w-5 h-5 p-0.5 rounded-md mr-0.5">
             <Image
               src={LogoDark.src}
               width={LogoDark.width}
