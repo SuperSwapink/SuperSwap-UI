@@ -30,8 +30,8 @@ export const PRIMARY_TOKEN_LIST = [
   },
   {
     address: "0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81",
-    symbol: "XVELO",
-    name: "Superchain Velodrome",
+    symbol: "xVELO",
+    name: "Velodrome",
     decimals: 18,
     icon: "/media/xvelo.svg",
     category: "DeFi",
