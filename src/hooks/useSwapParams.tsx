@@ -1,20 +1,22 @@
-"use client";
+"use client"
 
-import { ChainId, isChainId } from "@/packages/chain";
-import { Native, Type } from "@/packages/currency";
-import React, { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { ChainId, isChainId } from "@/packages/chain"
+import { Native, Type } from "@/packages/currency"
+import { getTokenInfo } from "@/utils/token"
+import { useSearchParams, useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
+import { useAccount, usePublicClient } from "wagmi"
 
 interface SwapParamsType {
-  amountIn: string;
-  amountOut: string;
-  tokenIn?: Type;
-  tokenOut?: Type;
-  setTokenIn: any;
-  setTokenOut: any;
-  setAmountIn: any;
-  setAmountOut: any;
-  switchToken: any;
+  amountIn: string
+  amountOut: string
+  tokenIn?: Type
+  tokenOut?: Type
+  setTokenIn: any
+  setTokenOut: any
+  setAmountIn: any
+  setAmountOut: any
+  switchToken: any
 }
 
 const defaultVal: SwapParamsType = {
@@ -27,53 +29,102 @@ const defaultVal: SwapParamsType = {
   setAmountIn: () => {},
   setAmountOut: () => {},
   switchToken: () => {},
-};
+}
 
-export const SwapParamsContext =
-  React.createContext<SwapParamsType>(defaultVal);
+export const SwapParamsContext = React.createContext<SwapParamsType>(defaultVal)
 
 export default function useSwapParams() {
-  return React.useContext(SwapParamsContext);
+  return React.useContext(SwapParamsContext)
 }
 
 export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { chainId } = useAccount();
-  const [amountIn, setAmountIn] = useState("");
-  const [amountOut, setAmountOut] = useState("");
+  const { chainId } = useAccount()
+  const [amountIn, setAmountIn] = useState("")
+  const [amountOut, setAmountOut] = useState("")
   const [tokenIn, setTokenIn] = useState<Type | undefined>(
     Native.onChain(ChainId.INK)
-  );
-  const [tokenOut, setTokenOut] = useState<Type | undefined>();
+  )
+  const [tokenOut, setTokenOut] = useState<Type | undefined>()
+  const params = useSearchParams()
+  const publicClient = usePublicClient()
+  const router = useRouter()
 
   useEffect(() => {
-    setTokenIn(Native.onChain(ChainId.INK));
-    setTokenOut(undefined);
-  }, [chainId]);
+    if (publicClient) {
+      const token0 = params.get("token0")
+      const token1 = params.get("token1")
+      const amount = params.get("amount")
+
+      getTokenInfo(token0 ?? "", publicClient).then((res) => {
+        console.log(res)
+        setTokenIn((token) => res ?? Native.onChain(ChainId.INK))
+      })
+      getTokenInfo(token1 ?? "", publicClient).then((res) =>
+        setTokenOut((token) => res)
+      )
+      setAmountIn(amount ?? "")
+    }
+  }, [publicClient])
 
   const switchToken = () => {
-    const newTokenIn = tokenOut;
-    const newTokenOut = tokenIn;
+    const newTokenIn = tokenOut
+    const newTokenOut = tokenIn
 
-    setAmountIn("0");
-    setTokenIn(newTokenIn);
-    setTokenOut(newTokenOut);
-  };
+    const current = new URLSearchParams(Array.from(params.entries()))
+    if (newTokenIn) {
+      current.set("token0", newTokenIn.isNative ? "NATIVE" : newTokenIn.address)
+    } else {
+      current.delete("token0")
+    }
+    if (newTokenOut)
+      current.set(
+        "token1",
+        newTokenOut.isNative ? "NATIVE" : newTokenOut.address
+      )
+    else current.delete("token1")
+
+    const newPathname = `${window.location.pathname}?${current.toString()}`
+    router.replace(newPathname, undefined)
+
+    setAmountIn("0")
+    setTokenIn(newTokenIn)
+    setTokenOut(newTokenOut)
+  }
 
   const _setTokenIn = (token: Type) => {
+    const current = new URLSearchParams(Array.from(params.entries()))
+    current.set("token0", token.isNative ? "NATIVE" : token.address)
+
+    const newPathname = `${window.location.pathname}?${current.toString()}`
+    router.replace(newPathname, undefined)
     if (tokenOut?.equals(token)) {
-      setTokenOut(tokenIn);
+      setTokenOut(tokenIn)
     }
-    setTokenIn(token);
-  };
+    setTokenIn(token)
+  }
 
   const _setTokenOut = (token: Type) => {
+    const current = new URLSearchParams(Array.from(params.entries()))
+    current.set("token1", token.isNative ? "NATIVE" : token.address)
+
+    const newPathname = `${window.location.pathname}?${current.toString()}`
+    router.replace(newPathname, undefined)
     if (tokenIn?.equals(token)) {
-      setTokenIn(tokenOut);
+      setTokenIn(tokenOut)
     }
-    setTokenOut(token);
-  };
+    setTokenOut(token)
+  }
+
+  const _setAmountIn = (amount: string) => {
+    const current = new URLSearchParams(Array.from(params.entries()))
+    current.set("amount", amount)
+
+    const newPathname = `${window.location.pathname}?${current.toString()}`
+    router.replace(newPathname, undefined)
+    setAmountIn(amount)
+  }
 
   return (
     <SwapParamsContext.Provider
@@ -84,12 +135,12 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
         tokenOut,
         setTokenIn: _setTokenIn,
         setTokenOut: _setTokenOut,
-        setAmountIn,
+        setAmountIn: _setAmountIn,
         setAmountOut,
         switchToken,
       }}
     >
       {children}
     </SwapParamsContext.Provider>
-  );
-};
+  )
+}
