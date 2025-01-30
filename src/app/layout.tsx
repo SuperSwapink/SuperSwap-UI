@@ -46,16 +46,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={roobert.className}>
-        <Provider>
-          <Header />
-          <Suspense>
+        <Suspense>
+          <Provider>
+            <Header />
             <main className="relative min-h-[calc(100vh-96px)] pb-[290px]">
               {children}
               <Footer />
             </main>
-          </Suspense>
-          <Toaster position="top-right" />
-        </Provider>
+            <Toaster position="top-right" />
+          </Provider>
+        </Suspense>
       </body>
     </html>
   )
