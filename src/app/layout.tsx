@@ -5,6 +5,7 @@ import Provider from "./providers"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import { Toaster } from "react-hot-toast"
+import { Suspense } from "react"
 
 const roobert = localFont({
   src: [
@@ -47,10 +48,12 @@ export default function RootLayout({
       <body className={roobert.className}>
         <Provider>
           <Header />
-          <main className="relative min-h-[calc(100vh-96px)] pb-[290px]">
-            {children}
-            <Footer />
-          </main>
+          <Suspense>
+            <main className="relative min-h-[calc(100vh-96px)] pb-[290px]">
+              {children}
+              <Footer />
+            </main>
+          </Suspense>
           <Toaster position="top-right" />
         </Provider>
       </body>
