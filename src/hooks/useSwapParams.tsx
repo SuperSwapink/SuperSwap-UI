@@ -88,6 +88,7 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
         newTokenOut.isNative ? "NATIVE" : newTokenOut.address
       )
     else current.delete("token1")
+    current.delete("amount")
 
     const newPathname = `${window.location.pathname}?${current.toString()}`
     router.replace(newPathname, undefined)
