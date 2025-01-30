@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={roobert.className}>
-        <Suspense>
+        <Suspense fallback={<div />}>
           <Provider>
             <Header />
             <main className="relative min-h-[calc(100vh-96px)] pb-[290px]">

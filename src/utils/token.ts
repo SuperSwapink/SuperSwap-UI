@@ -1,5 +1,5 @@
 import { ChainId } from "@/packages/chain"
-import { DEFAULT_TOKEN_LIST, TOKEN_LIST } from "@/packages/config"
+import { DEFAULT_TOKEN_LIST, TOKEN_LIST } from "../packages/config/token"
 import { Native, Token } from "@/packages/currency"
 import { erc20Abi, getAddress, isAddress, PublicClient } from "viem"
 

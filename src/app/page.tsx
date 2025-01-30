@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import SettingPopup from "@/components/SettingPopup";
-import SwapComp from "@/components/Swap/SwapComp";
-import SwapPanel from "@/components/Swap/SwapPanel";
+import SettingPopup from "@/components/SettingPopup"
+import SwapComp from "@/components/Swap/SwapComp"
+import SwapPanel from "@/components/Swap/SwapPanel"
 
 export default function Home() {
   return (
@@ -18,5 +18,5 @@ export default function Home() {
         <SwapComp />
       </div>
     </div>
-  );
+  )
 }
