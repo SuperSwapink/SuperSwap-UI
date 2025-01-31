@@ -72,6 +72,7 @@ export default function RootLayout({
           sizes="180x180"
           href="/apple-touch-icon-180x180.png"
         />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={roobert.className}>
         <Suspense fallback={<div />}>
