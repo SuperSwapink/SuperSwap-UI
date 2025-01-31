@@ -33,26 +33,16 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                 >
                   <Close className="w-3 h-3 text-[#222] dark:text-white" />
                 </button>
-                <p className="max-h-[500px] p-6 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
-                  And for safety page window text:
-                  <br />
-                  <br />
-                  SuperSwap Safety Guide
-                  <br />
+                <p className="max-h-[500px] pt-10 p-6 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+                  <h4 className="text-lg font-bold text-center">
+                    SuperSwap Safety Guide
+                  </h4>
                   <br />
                   Your security is our top priority! Follow these steps to avoid
                   phishing scams, fake sites, and malicious contracts.
                   <br />
                   <br />
-                  Beware of scams! Always use the official site:
-                  <br />
-                  <br />
-                  <a href="https://SuperSwap.ink" className="text-[#2f8af5]">
-                    SuperSwap.ink/...........
-                  </a>
-                  <br />
-                  <br />
-                  ⚠️ Watch Out for Phishing Sites!
+                  <strong>⚠️ Watch Out for Phishing Sites!</strong>
                   <br />
                   <br />
                   ❌ Fake examples: SuperSwap.lnk (L instead of i) |
@@ -64,8 +54,7 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   </a>
                   <br />
                   <br />
-                  <br />
-                  Smart Contract:
+                  <strong>Smart Contract:</strong>
                   <br />
                   <br />
                   Swaps interact only with:
@@ -84,7 +73,7 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   <br />
                   <br />
                   <br />
-                  🔒 Stay Safe
+                  <strong>🔒 Stay Safe</strong>
                   <br />
                   <br />
                   ✔️ Verify contracts before signing
@@ -93,10 +82,13 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   <br />
                   ✔️ Use secure wallets (Rabby)
                   <br />
-                  ✔️ Check approvals with Revoke.cash (https://revoke.cash/)
+                  ✔️ Check approvals with{" "}
+                  <a href="https://revoke.cash/" className="text-[#2f8af5]">
+                    Revoke.cash
+                  </a>
                   <br />
                   <br />
-                  🚫 SuperSwap Will Never:
+                  <strong>🚫 SuperSwap Will Never:</strong>
                   <br />
                   <br />
                   ❌ Ask for your private keys
@@ -106,13 +98,15 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   ❌ Use any other contract
                   <br />
                   <br />
-                  ✉️ Our only official Email:
+                  <strong>✉️ Our only official Email:</strong>
                   <br />
                   <br />
                   <a
                     href="mailto:Team@SuperSwap.ink"
                     className="text-[#2f8af5]"
-                  >Team@SuperSwap.ink</a>
+                  >
+                    Team@SuperSwap.ink
+                  </a>
                   <br />
                   <br />
                   Stay safe & trade securely!

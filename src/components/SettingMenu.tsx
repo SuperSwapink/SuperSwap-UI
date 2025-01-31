@@ -9,6 +9,8 @@ import { useEffect, useState } from "react"
 import Sun from "./svgs/Sun"
 import SecurityAlertModal from "./SecurityAlertModal"
 import Alert from "./svgs/Alert"
+import Github from "./svgs/Github"
+import Docs from "./svgs/Docs"
 
 interface SettingMenuProps {
   className?: string
@@ -35,12 +37,12 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ className }) => {
             className ?? ""
           }`}
         >
-          <ThreeDots />
+          <ThreeDots className="size-6" />
         </MenuButton>
         <MenuItems
           anchor="bottom"
           className={
-            "mt-2 origin-top-right bg-[#2f8af529] hover:bg-[#2f8af51f] py-2 px-3 rounded-lg z-100 space-y-2"
+            "mt-2 origin-top-right bg-[#d5e4fa] dark:bg-[#0f2139] py-2 px-3 rounded-lg z-100 space-y-2"
           }
         >
           <MenuItem>
@@ -71,7 +73,29 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ className }) => {
               className="flex items-center text-[#2f8af5]"
             >
               <X className="size-4" />
-              <span className="ml-1.5">X</span>
+              <span className="ml-1.5">Twitter</span>
+            </a>
+          </MenuItem>
+          <MenuItem>
+            <a
+              href="https://github.com/SuperSwapink"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center text-[#2f8af5]"
+            >
+              <Github className="size-4" />
+              <span className="ml-1.5">Github</span>
+            </a>
+          </MenuItem>
+          <MenuItem>
+            <a
+              href="https://superswapink.gitbook.io/docs"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center text-[#2f8af5]"
+            >
+              <Docs className="size-4" />
+              <span className="ml-1.5">Docs</span>
             </a>
           </MenuItem>
           <MenuItem>
