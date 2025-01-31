@@ -12,6 +12,7 @@ export const getTokenInfo = async (
   const tokenInList = [...DEFAULT_TOKEN_LIST, ...TOKEN_LIST].find(
     (item) => item.address.toLowerCase() === address.toLowerCase()
   )
+
   if (tokenInList)
     return new Token({
       chainId: ChainId.INK,

@@ -47,24 +47,20 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
     Native.onChain(ChainId.INK)
   )
   const [tokenOut, setTokenOut] = useState<Type | undefined>()
-  const [searchParams, setSearchParams] = useState(new URLSearchParams())
   const params = useSearchParams()
   const publicClient = usePublicClient()
   const router = useRouter()
 
   useEffect(() => {
-    setSearchParams(params)
-  }, [params])
-
-  useEffect(() => {
     if (publicClient) {
-      const token0 = searchParams.get("token0")
-      const token1 = searchParams.get("token1")
-      const amount = searchParams.get("amount")
+      const token0 = params.get("token0")
+      const token1 = params.get("token1")
+      const amount = params.get("amount")
 
-      getTokenInfo(token0 ?? "", publicClient).then((res) =>
+      getTokenInfo(token0 ?? "", publicClient).then((res) => {
+        console.log(res)
         setTokenIn((token) => res ?? Native.onChain(ChainId.INK))
-      )
+      })
       getTokenInfo(token1 ?? "", publicClient).then((res) =>
         setTokenOut((token) => res)
       )
