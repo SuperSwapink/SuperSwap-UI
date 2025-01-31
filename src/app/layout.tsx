@@ -72,7 +72,18 @@ export default function RootLayout({
           sizes="180x180"
           href="/apple-touch-icon-180x180.png"
         />
-        <link rel="manifest" href="/manifest.json" />
+        <link
+          rel="icon"
+          href="/android-chrome-192x192.png"
+          sizes="192x192"
+          type="image/png"
+        />
+        <link
+          rel="icon"
+          href="/android-chrome-512x512.png"
+          sizes="512x512"
+          type="image/png"
+        />
       </head>
       <body className={roobert.className}>
         <Suspense fallback={<div />}>
