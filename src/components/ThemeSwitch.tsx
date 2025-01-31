@@ -16,12 +16,6 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
   const onSwitch = () => {
     setTheme(!theme)
     document.documentElement.classList.toggle("dark")
-    const favicon = document.querySelector("#favicon")
-    if (favicon)
-      favicon.setAttribute(
-        "href",
-        theme ? "favicon-light.png" : "favicon-dark.png"
-      )
   }
 
   return (
