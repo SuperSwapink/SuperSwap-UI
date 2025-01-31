@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import WalletConnect from "../WalletConnect";
-import NetworkSelector from "../NetworkSelector";
-import LogoLight from "../../assets/logo-light.png";
-import LogoDark from "../../assets/logo-dark.png";
-import LogoMbLight from '../../assets/logo-mb-light.png'
-import LogoMbDark from '../../assets/logo-mb-dark.png'
-import Image from "next/image";
-import ThemeSwitch from "../ThemeSwitch";
+import WalletConnect from "../WalletConnect"
+import NetworkSelector from "../NetworkSelector"
+import LogoLight from "../../assets/logo-light.png"
+import LogoDark from "../../assets/logo-dark.png"
+import LogoMbLight from "../../assets/logo-mb-light.png"
+import LogoMbDark from "../../assets/logo-mb-dark.png"
+import Image from "next/image"
+import SettingMenu from "../SettingMenu"
 
 const Header = () => {
   return (
@@ -42,13 +42,13 @@ const Header = () => {
           className="w-[160px] hidden dark:sm:block"
         />
         <div className="flex items-center">
-          <ThemeSwitch className="mr-2" />
+          <SettingMenu className="mr-2" />
           <NetworkSelector className="mr-2" />
           <WalletConnect />
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

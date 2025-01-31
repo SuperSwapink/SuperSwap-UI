@@ -154,6 +154,24 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Meme",
     chainId: ChainId.INK,
   },
+  {
+    address: "0x3379B82E2C225788e876b415B4F27CbB66EEC09B",
+    symbol: "FINK",
+    name: "The Finker",
+    decimals: 18,
+    icon: "/media/fink.png",
+    category: "Meme",
+    chainId: ChainId.INK,
+  },
+  {
+    address: "0x78aec6f27f440eef34CD995B17f6A347f08EaAb4",
+    symbol: "RCN",
+    name: "RaccoonFi",
+    decimals: 18,
+    icon: "/media/rcn.jpg",
+    category: "Meme",
+    chainId: ChainId.INK,
+  },
 ];
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];
