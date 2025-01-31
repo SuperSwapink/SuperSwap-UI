@@ -74,15 +74,6 @@ export const PRIMARY_TOKEN_LIST = [
     chainId: ChainId.INK,
   },
   {
-    address: "0x0c5E2D1C98cd265C751e02F8F3293bC5764F9111",
-    symbol: "SHROOMY",
-    name: "Shroomy",
-    decimals: 18,
-    icon: "/media/shroomy.jpg",
-    category: "Meme",
-    chainId: ChainId.INK,
-  },
-  {
     address: "0x75e7A5316e44755FF4ad724ee45337D1Eef6895e",
     symbol: "PRL",
     name: "Pearl",
@@ -134,6 +125,15 @@ export const PRIMARY_TOKEN_LIST = [
     decimals: 18,
     icon: "/media/cat.png",
     category: "AI Meme",
+    chainId: ChainId.INK,
+  },
+  {
+    address: "0x0c5E2D1C98cd265C751e02F8F3293bC5764F9111",
+    symbol: "SHROOMY",
+    name: "Shroomy",
+    decimals: 18,
+    icon: "/media/shroomy.jpg",
+    category: "Meme",
     chainId: ChainId.INK,
   },
   {

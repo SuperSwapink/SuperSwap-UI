@@ -51,7 +51,7 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ className }) => {
               onClick={() => setShowSecureModal(true)}
             >
               <Alert className="size-4" />
-              <span className="ml-1.5">Safety Check</span>
+              <span className="ml-1.5">Safety Guide</span>
             </button>
           </MenuItem>
           <MenuItem>
