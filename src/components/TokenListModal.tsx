@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Dialog,
@@ -6,27 +6,28 @@ import {
   DialogTitle,
   Transition,
   TransitionChild,
-} from "@headlessui/react";
-import Close from "./svgs/Close";
-import Magnifier from "./svgs/Magnifier";
-import TokenListItem from "./TokenListItem";
-import useTokenList from "../hooks/useTokenList";
-import { Token, Type } from "@/packages/currency";
-import { useState } from "react";
-import { useAccount, useReadContracts } from "wagmi";
-import { Address, erc20Abi, getAddress, isAddress } from "viem";
-import { ChainId } from "@/packages/chain";
-import { TOKEN_LIST } from "@/packages/config";
-import TokenImportWarningModal from "./TokenImportWarningModal";
-import HelpToolTip from "./HelpToolTip";
-import Link from "next/link";
+} from "@headlessui/react"
+import Close from "./svgs/Close"
+import Magnifier from "./svgs/Magnifier"
+import TokenListItem from "./TokenListItem"
+import useTokenList from "../hooks/useTokenList"
+import { Token, Type } from "@/packages/currency"
+import { useState } from "react"
+import { useAccount, useReadContracts } from "wagmi"
+import { Address, erc20Abi, getAddress, isAddress } from "viem"
+import { ChainId } from "@/packages/chain"
+import { TOKEN_LIST } from "@/packages/config"
+import TokenImportWarningModal from "./TokenImportWarningModal"
+import HelpToolTip from "./HelpToolTip"
+import Link from "next/link"
+import useLocalTokenStorage from "@/hooks/useLocalTokenStorage"
 
 interface TokenListModalProps {
-  currentToken?: Type;
-  setToken: any;
-  open: boolean;
-  onClose: any;
-  primaryTokens?: boolean;
+  currentToken?: Type
+  setToken: any
+  open: boolean
+  onClose: any
+  primaryTokens?: boolean
 }
 
 const TokenListModal: React.FC<TokenListModalProps> = ({
@@ -35,8 +36,9 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
   onClose,
   primaryTokens,
 }) => {
-  const tokenList = useTokenList(primaryTokens);
-  const [filter, setFilter] = useState("");
+  const tokenList = useTokenList(primaryTokens)
+  const [filter, setFilter] = useState("")
+  const { localTokenList } = useLocalTokenStorage()
 
   const { data: tokenInfo } = useReadContracts({
     contracts: [
@@ -47,22 +49,53 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
     query: {
       enabled: isAddress(filter),
     },
-  });
+  })
 
   const onSelectItem = (token: Type) => {
-    return () => {
-      setToken(token);
-      onClose();
-    };
-  };
+    setToken(token)
+    onClose()
+  }
 
   const tokens = [
-    ...tokenList.filter((item) =>
-      item.name?.match(
-        new RegExp(filter, "i") || item.symbol?.match(new RegExp(filter, "i"))
-      )
+    ...tokenList.filter(
+      (item) =>
+        item.name?.match(new RegExp(filter, "i")) ||
+        item.symbol?.match(new RegExp(filter, "i")) ||
+        (!item.isNative && item.address.toLowerCase() === filter.toLowerCase())
     ),
-    ...(isAddress(filter) && tokenInfo
+    ...(filter.length >= 0
+      ? localTokenList
+          .filter(
+            (item) =>
+              item.name?.match(new RegExp(filter, "i")) ||
+              item.symbol?.match(new RegExp(filter, "i")) ||
+              item.address.toLowerCase() === filter.toLowerCase()
+          )
+          .map(
+            (item) =>
+              new Token({
+                chainId: ChainId.INK,
+                address: item.address,
+                name: item.name,
+                symbol: item.symbol,
+                decimals: item.decimals,
+                category: item.category,
+                icon: item.icon,
+              })
+          )
+      : []),
+    ...(isAddress(filter) &&
+    tokenInfo &&
+    tokenList.findIndex(
+      (item) =>
+        !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
+    ) === -1 &&
+    TOKEN_LIST.findIndex(
+      (item) => item.address.toLowerCase() === filter.toLowerCase()
+    ) === -1 &&
+    localTokenList.findIndex(
+      (item) => item.address.toLowerCase() === filter.toLowerCase()
+    ) === -1
       ? [
           new Token({
             address: getAddress(filter),
@@ -75,11 +108,13 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
         ]
       : []),
     ...(filter.length >= 0
-      ? TOKEN_LIST.filter((item) =>
-          item.name?.match(
-            new RegExp(filter, "i") ||
-              item.symbol?.match(new RegExp(filter, "i"))
-          )
+      ? TOKEN_LIST.filter(
+          (item) =>
+            (item.name?.match(new RegExp(filter, "i")) ||
+              item.symbol?.match(new RegExp(filter, "i"))) &&
+            localTokenList.findIndex(
+              (k) => k.address.toLowerCase() === item.address.toLowerCase()
+            ) === -1
         ).map(
           (item) =>
             new Token({
@@ -89,12 +124,11 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
               chainId: ChainId.INK,
               decimals: item.decimals,
               icon: item.icon,
-              isCustom: 2
+              isCustom: 2,
             })
         )
-      : []
-    ),
-  ];
+      : []),
+  ]
 
   return (
     <>
@@ -145,12 +179,12 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                 </div>
                 <div className="flex flex-col rounded-es-2xl rounded-ee-2xl p-4 space-y-2 h-[66vh] overflow-y-auto">
                   {tokens.map((item) => (
-                      <TokenListItem
-                        key={item.id}
-                        token={item}
-                        onSelectItem={onSelectItem}
-                      />
-                    ))}
+                    <TokenListItem
+                      key={item.id}
+                      token={item}
+                      onSelectItem={onSelectItem}
+                    />
+                  ))}
                 </div>
               </DialogPanel>
             </div>
@@ -158,7 +192,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
         </Dialog>
       </Transition>
     </>
-  );
-};
+  )
+}
 
-export default TokenListModal;
+export default TokenListModal

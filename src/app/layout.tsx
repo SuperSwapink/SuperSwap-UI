@@ -45,6 +45,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link id="favicon" rel="icon" href="favicon-dark.png" />
+      </head>
       <body className={roobert.className}>
         <Suspense fallback={<div />}>
           <Provider>

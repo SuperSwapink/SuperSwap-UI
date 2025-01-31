@@ -6,7 +6,7 @@ const Help: React.FC<HelpProps> = ({ className }) => (
   <svg
     stroke="currentColor"
     fill="none"
-    stroke-width="2"
+    strokeWidth="2"
     viewBox="0 0 24 24"
     strokeLinecap="round"
     strokeLinejoin="round"

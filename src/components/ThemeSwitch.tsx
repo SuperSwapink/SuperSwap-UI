@@ -1,22 +1,28 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 interface ThemeSwitchProps {
-  className?: string;
+  className?: string
 }
 
 const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useState(true)
 
   useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
+    document.documentElement.classList.add("dark")
+  }, [])
 
   const onSwitch = () => {
-    setTheme(!theme);
-    document.documentElement.classList.toggle("dark");
-  };
+    setTheme(!theme)
+    document.documentElement.classList.toggle("dark")
+    const favicon = document.querySelector("#favicon")
+    if (favicon)
+      favicon.setAttribute(
+        "href",
+        theme ? "favicon-light.png" : "favicon-dark.png"
+      )
+  }
 
   return (
     <button
@@ -29,7 +35,7 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
         <svg
           stroke="currentColor"
           fill="currentColor"
-          stroke-width="0"
+          strokeWidth="0"
           viewBox="0 0 24 24"
           height="24px"
           width="24px"
@@ -41,7 +47,7 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
         <svg
           stroke="currentColor"
           fill="currentColor"
-          stroke-width="0"
+          strokeWidth="0"
           viewBox="0 0 24 24"
           height="24px"
           width="24px"
@@ -51,7 +57,7 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
         </svg>
       )}
     </button>
-  );
-};
+  )
+}
 
-export default ThemeSwitch;
+export default ThemeSwitch
