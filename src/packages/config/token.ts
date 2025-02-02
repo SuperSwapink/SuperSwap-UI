@@ -69,7 +69,7 @@ export const PRIMARY_TOKEN_LIST = [
     symbol: "PURPLE",
     name: "Purple",
     decimals: 18,
-    icon: "/media/purple.svg",
+    icon: "/media/purple.jpg",
     category: "Meme",
     chainId: ChainId.INK,
   },
@@ -169,7 +169,7 @@ export const PRIMARY_TOKEN_LIST = [
     name: "RaccoonFi",
     decimals: 18,
     icon: "/media/rcn.jpg",
-    category: "Meme",
+    category: "MemeFi",
     chainId: ChainId.INK,
   },
 ];
