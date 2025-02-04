@@ -172,6 +172,15 @@ export const PRIMARY_TOKEN_LIST = [
     category: "MemeFi",
     chainId: ChainId.INK,
   },
+  {
+    address: "0xb816F5951a2e568d6EAE351443c789C4F9Fb55A7",
+    symbol: "Arch",
+    name: "Archival Ink",
+    decimals: 18,
+    icon: "/media/arch.jpg",
+    category: "Meme",
+    chainId: ChainId.INK,
+  },
 ];
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];
