@@ -40,7 +40,7 @@ export const PRIMARY_TOKEN_LIST = [
   {
     address: "0x09D9420332bff75522a45FcFf4855F82a0a3ff50",
     symbol: "DINERO",
-    name: "Dinero OFT",
+    name: "Dinero",
     decimals: 18,
     icon: "/media/dinero.svg",
     category: "DeFi",

@@ -33,7 +33,7 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                 >
                   <Close className="w-3 h-3 text-[#222] dark:text-white" />
                 </button>
-                <p className="max-h-[500px] pt-10 p-6 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+                <p className="max-h-[500px] pt-10 p-6 overflow-y-scroll">
                   <h4 className="text-lg font-bold text-center">
                     SuperSwap Safety Guide
                   </h4>

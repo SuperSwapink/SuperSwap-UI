@@ -13,6 +13,16 @@ body {
 }
 
 .dark body {
-  background-color: #080D15;
+  background-color: #080d15;
   color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #fff2;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0004;
 }
