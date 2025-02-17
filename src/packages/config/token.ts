@@ -38,6 +38,15 @@ export const PRIMARY_TOKEN_LIST = [
     chainId: ChainId.INK,
   },
   {
+    address: "0x09D9420332bff75522a45FcFf4855F82a0a3ff50",
+    symbol: "DINERO",
+    name: "Dinero OFT",
+    decimals: 18,
+    icon: "/media/dinero.svg",
+    category: "DeFi",
+    chainId: ChainId.INK,
+  },
+  {
     address: "0x11476323D8DFCBAFac942588E2f38823d2Dd308e",
     symbol: "iETH",
     name: "Ink Staked ETH",
