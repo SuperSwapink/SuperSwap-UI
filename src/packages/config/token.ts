@@ -29,6 +29,15 @@ export const PRIMARY_TOKEN_LIST = [
     chainId: ChainId.INK,
   },
   {
+    address: "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+    symbol: "Kraken Wrapped Bitcoin",
+    name: "kBTC",
+    decimals: 8,
+    icon: "/media/kbtc.webp",
+    category: "Bitcoin",
+    chainId: ChainId.INK,
+  },
+  {
     address: "0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81",
     symbol: "xVELO",
     name: "Velodrome",
