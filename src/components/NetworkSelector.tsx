@@ -1,35 +1,34 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import Ink from "@/assets/network/ink.png";
-import { useAccount, useSwitchChain } from "wagmi";
+import Image from "next/image"
+import Ink from "@/assets/network/ink.png"
+import { useAccount, useSwitchChain } from "wagmi"
 import {
   Menu,
   MenuButton,
   MenuItem,
   MenuItems,
   Transition,
-} from "@headlessui/react";
-import { CHAIN_IFNO } from "@/constants";
-import { ChainId } from "@/packages/chain";
+} from "@headlessui/react"
+import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
 
 interface NetworkSelectorProps {
-  className?: string;
+  className?: string
 }
 
 const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
-  const { address, chainId } = useAccount();
-  const { switchChainAsync } = useSwitchChain();
+  const { address, chainId } = useAccount()
+  const { switchChainAsync } = useSwitchChain()
 
   const onSwitchChain = (chainId: ChainId) => {
-    switchChainAsync?.({ chainId });
-  };
+    switchChainAsync?.({ chainId })
+  }
 
   const activeChain =
     chainId &&
-    Object.keys(CHAIN_IFNO).findIndex((k) => Number(k) === chainId) > -1
-      ? CHAIN_IFNO[chainId as ChainId]
-      : undefined;
+    Object.keys(SUPPORTED_CHAINS).findIndex((k) => Number(k) === chainId) > -1
+      ? SUPPORTED_CHAINS[chainId as ChainId]
+      : undefined
 
   return address ? (
     <Menu>
@@ -42,9 +41,9 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         {activeChain ? (
           <div className="flex items-center">
             <Image
-              src={activeChain.image.src}
-              width={activeChain.image.width}
-              height={activeChain.image.blurHeight}
+              src={activeChain.icon.src}
+              width={activeChain.icon.width}
+              height={activeChain.icon.blurHeight}
               alt={activeChain.name}
               className="w-5 h-5 rounded-full"
             />
@@ -66,8 +65,11 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <MenuItems anchor="bottom" className="rounded-xl mt-2 bg-white dark:bg-[#131823]">
-          {Object.values(CHAIN_IFNO).map((item) => (
+        <MenuItems
+          anchor="bottom"
+          className="rounded-xl mt-2 bg-white dark:bg-[#131823]"
+        >
+          {Object.values(SUPPORTED_CHAINS).map((item) => (
             <MenuItem
               as={"button"}
               key={item.name}
@@ -75,9 +77,9 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
               onClick={() => onSwitchChain(item.id)}
             >
               <Image
-                src={item.image.src}
-                width={item.image.width}
-                height={item.image.blurHeight}
+                src={item.icon.src}
+                width={item.icon.width}
+                height={item.icon.blurHeight}
                 alt={item.name}
                 className="w-5 h-5 rounded-full"
               />
@@ -89,7 +91,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         </MenuItems>
       </Transition>
     </Menu>
-  ) : null;
-};
+  ) : null
+}
 
-export default NetworkSelector;
+export default NetworkSelector
