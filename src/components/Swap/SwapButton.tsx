@@ -135,6 +135,10 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             account: address,
             functionName: "sendSwapRequest",
             args: [
+              trade.data.tokenIn.isNative
+                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                : trade.data.tokenIn.address,
+              BigInt(trade.data.amountIn),
               trade.data.originalData.calldata,
               {
                 depositor: addressToBytes32(address),

@@ -62,6 +62,8 @@ export const acrossPortalAbi = [
   },
   {
     inputs: [
+      { internalType: "address", name: "tokenIn", type: "address" },
+      { internalType: "uint256", name: "amountIn", type: "uint256" },
       { internalType: "bytes", name: "originData", type: "bytes" },
       {
         components: [

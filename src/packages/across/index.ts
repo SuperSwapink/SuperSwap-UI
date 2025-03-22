@@ -45,8 +45,10 @@ export const fetchBestAcross = async ({
       10000000,
       100
     )
-    if (route.status !== RouteStatus.Success)
+    if (route.status !== RouteStatus.Success) {
+      console.log(poolsCodeMapIn)
       throw Error("No route in original chain")
+    }
 
     const args = Router.routeProcessor3Params(
       poolsCodeMapIn,
