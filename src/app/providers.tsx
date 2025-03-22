@@ -3,10 +3,10 @@
 import { LocalTokenStorageProvider } from "@/hooks/useLocalTokenStorage"
 import { SettingsProvider } from "@/hooks/useSettings"
 import { SwapParamsProvider } from "@/hooks/useSwapParams"
+import { ink } from "@/packages/config"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createWeb3Modal } from "@web3modal/wagmi/react"
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config"
-import { defineChain } from "viem"
 import { base } from "viem/chains"
 
 import { WagmiProvider, cookieStorage, createStorage } from "wagmi"
@@ -14,30 +14,6 @@ import { WagmiProvider, cookieStorage, createStorage } from "wagmi"
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
 if (!projectId) throw new Error("Project ID is not defined")
-
-export const ink = defineChain({
-  id: 57073,
-  name: "Ink",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: {
-    default: {
-      http: ["https://rpc-qnd.inkonchain.com"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Inkonchain Explorer",
-      url: "https://explorer.inkonchain.com/",
-      apiUrl: "https://explorer.inkonchain.com/api",
-    },
-  },
-  contracts: {
-    multicall3: {
-      address: "0xcA11bde05977b3631167028862bE2a173976CA11",
-      blockCreated: 956889,
-    },
-  },
-})
 
 const metadata = {
   name: "SuperSwap",
