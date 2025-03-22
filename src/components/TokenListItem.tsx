@@ -24,6 +24,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
   const { address, chainId } = useAccount()
   const { data: balance } = useBalance({
     address,
+    chainId: token.chainId,
     token: token instanceof Token ? token.address : undefined,
     query: { enabled: Boolean(address), refetchInterval: 30000 },
   })
@@ -32,7 +33,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
 
   const { data: price } = usePrice({
     address: token.wrapped.address,
-    chainId: ChainId.INK,
+    chainId: token.chainId,
     enabled: (balance?.value ?? 0n) > 0n,
   })
 

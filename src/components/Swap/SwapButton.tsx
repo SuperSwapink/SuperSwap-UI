@@ -47,7 +47,10 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
 
   const [approvalState, approve, approvalRequest] = useTokenApproval({
     amount: parsedAmount,
-    spender: ROUTE_PROCESSOR_3_ADDRESS[ChainId.INK],
+    spender:
+      tokenIn?.chainId === tokenOut?.chainId
+        ? ROUTE_PROCESSOR_3_ADDRESS[tokenIn?.chainId ?? ChainId.INK]
+        : ACROSS_PORTAL_ADDRESS[tokenIn?.chainId ?? ChainId.INK],
     enabled: Boolean(parsedAmount),
   })
 
