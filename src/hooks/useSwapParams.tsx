@@ -40,7 +40,6 @@ export default function useSwapParams() {
 export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { chainId } = useAccount()
   const [amountIn, setAmountIn] = useState("")
   const [amountOut, setAmountOut] = useState("")
   const [tokenIn, setTokenIn] = useState<Type | undefined>(
@@ -55,14 +54,18 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
     if (publicClient) {
       const token0 = params.get("token0")
       const token1 = params.get("token1")
+      const chain0 = Number(params.get("chain0"))
+      const chain1 = Number(params.get("chain1"))
       const amount = params.get("amount")
 
-      getTokenInfo(token0 ?? "", publicClient).then((res) => {
-        console.log(res)
-        setTokenIn((token) => res ?? Native.onChain(ChainId.INK))
-      })
-      getTokenInfo(token1 ?? "", publicClient).then((res) =>
-        setTokenOut((token) => res)
+      getTokenInfo(isChainId(chain0) ? chain0 : ChainId.INK, token0 ?? "").then(
+        (res) => {
+          console.log(res)
+          setTokenIn(() => res ?? Native.onChain(ChainId.INK))
+        }
+      )
+      getTokenInfo(isChainId(chain1) ? chain1 : ChainId.INK, token1 ?? "").then(
+        (res) => setTokenOut(() => res)
       )
       setAmountIn(amount ?? "")
     }
@@ -75,15 +78,21 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
     const current = new URLSearchParams(Array.from(params.entries()))
     if (newTokenIn) {
       current.set("token0", newTokenIn.isNative ? "NATIVE" : newTokenIn.address)
+      current.set("chain0", newTokenIn.chainId.toString())
     } else {
       current.delete("token0")
+      current.delete("chain0")
     }
-    if (newTokenOut)
+    if (newTokenOut) {
       current.set(
         "token1",
         newTokenOut.isNative ? "NATIVE" : newTokenOut.address
       )
-    else current.delete("token1")
+      current.set("chain1", newTokenOut.chainId.toString())
+    } else {
+      current.delete("token1")
+      current.delete("chain1")
+    }
     current.delete("amount")
 
     const newPathname = `${window.location.pathname}?${current.toString()}`
@@ -97,6 +106,7 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
   const _setTokenIn = (token: Type) => {
     const current = new URLSearchParams(Array.from(params.entries()))
     current.set("token0", token.isNative ? "NATIVE" : token.address)
+    current.set("chain0", token.chainId.toString())
 
     const newPathname = `${window.location.pathname}?${current.toString()}`
     router.replace(newPathname, undefined)
@@ -109,6 +119,7 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
   const _setTokenOut = (token: Type) => {
     const current = new URLSearchParams(Array.from(params.entries()))
     current.set("token1", token.isNative ? "NATIVE" : token.address)
+    current.set("chain1", token.chainId.toString())
 
     const newPathname = `${window.location.pathname}?${current.toString()}`
     router.replace(newPathname, undefined)

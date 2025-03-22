@@ -93,6 +93,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
           onConfirm={() => {
             importToken({
               address: token.wrapped.address,
+              chainId: token.chainId,
               name: token.name ?? "",
               symbol: token.symbol ?? "",
               decimals: token.decimals,
@@ -101,7 +102,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
             })
             onSelectItem(token)
           }}
-          token={token.wrapped.address}
+          token={token}
           isCustom={token.isCustom}
         />
       ) : null}

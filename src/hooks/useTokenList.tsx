@@ -1,20 +1,17 @@
-import { ChainId } from "@/packages/chain";
-import { DEFAULT_TOKEN_LIST, PRIMARY_TOKEN_LIST } from "@/packages/config";
-import { Native, Token } from "@/packages/currency";
-import { useAccount } from "wagmi";
+import { ChainId } from "@/packages/chain"
+import { DEFAULT_TOKEN_LIST, PRIMARY_TOKEN_LIST } from "@/packages/config"
+import { Native, Token } from "@/packages/currency"
 
-const useTokenList = (primaryTokens?: boolean) => {
-  const { chainId } = useAccount();
-
+const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
   const defaultTokens = [
-    Native.onChain(ChainId.INK),
+    Native.onChain(chainId),
     ...(primaryTokens ? PRIMARY_TOKEN_LIST : DEFAULT_TOKEN_LIST)
-      .filter((item) => item.chainId === ChainId.INK)
+      .filter((item) => item.chainId === chainId)
       .map((item) =>
         "native" in item
-          ? Native.onChain(ChainId.INK)
+          ? Native.onChain(chainId)
           : new Token({
-              chainId: ChainId.INK,
+              chainId: item.chainId,
               address: item.address,
               decimals: item.decimals,
               name: item.name,
@@ -23,9 +20,9 @@ const useTokenList = (primaryTokens?: boolean) => {
               category: item.category,
             })
       ),
-  ];
+  ]
 
-  return defaultTokens;
-};
+  return defaultTokens
+}
 
-export default useTokenList;
+export default useTokenList

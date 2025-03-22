@@ -1,8 +1,9 @@
-import { ink } from "@/app/providers";
-import { ChainId } from "../chain";
-import { http, type PublicClientConfig } from "viem";
+import { ink } from "@/app/providers"
+import { ChainId } from "../chain"
+import { http, type PublicClientConfig } from "viem"
+import { base } from "viem/chains"
 
-export { ink };
+export { ink }
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.INK]: [
@@ -11,4 +12,10 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
       transport: http(`https://rpc-gel.inkonchain.com`),
     },
   ],
-} as const;
+  [ChainId.BASE]: [
+    {
+      chain: base,
+      transport: http(`https://base.llamarpc.com`),
+    },
+  ],
+} as const

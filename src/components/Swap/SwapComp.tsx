@@ -12,7 +12,9 @@ import useSwapTrade from "@/hooks/useSwapTrade"
 import useSwapParams from "@/hooks/useSwapParams"
 import { Amount } from "@/packages/currency"
 import { LiquidityProviders } from "@/packages/router"
-import useEachSwapTrade from "@/hooks/useEachSwapTrade"
+import useEachSwapTrade, {
+  SUPPORTED_SWAPCOMP_NETWORKS,
+} from "@/hooks/useEachSwapTrade"
 
 const metadata = {
   [LiquidityProviders.InkSwap]: { image: InkSwapImg, name: "InkSwap" },
@@ -40,13 +42,18 @@ const SwapComp = () => {
     trade &&
     trade.data &&
     bestTrade.data &&
-    BigInt(trade.data.amountOut) > BigInt(bestTrade.data.amountOut.toString())
-      ? Amount.fromRawAmount(tokenOut, trade.data.amountOut).subtract(
+    !trade.data.isBridge &&
+    BigInt(trade.data.amountOut ?? "0") >
+      BigInt(bestTrade.data.amountOut.toString())
+      ? Amount.fromRawAmount(tokenOut, trade.data.amountOut ?? "0").subtract(
           Amount.fromRawAmount(tokenOut, bestTrade.data.amountOut.toString())
         )
       : undefined
 
-  return trade.data && bestTrade.data && tradeProfit ? (
+  return tokenIn?.chainId !== tokenOut?.chainId ||
+    !SUPPORTED_SWAPCOMP_NETWORKS.find(
+      (network) => network === tokenIn?.chainId
+    ) ? null : trade.data && bestTrade.data && tradeProfit ? (
     <div className="flex items-center bg-white dark:bg-[#131823] relative p-4 mt-4 rounded-lg md:rounded-[32px] shadow-[0_12px_24px_#e2e9f6] dark:shadow-none">
       <div className="rounded-full p-2.5 bg-[#2f8af529] w-fit mr-6">
         <Coin className="text-[#2f8af5]" />

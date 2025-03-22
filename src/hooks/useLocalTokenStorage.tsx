@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 type ImportTokenType = {
+  chainId: number
   icon?: string
   address: string
   name: string

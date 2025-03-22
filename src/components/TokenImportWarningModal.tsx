@@ -1,23 +1,19 @@
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  Transition,
-} from "@headlessui/react";
-import ExternalLink from "./svgs/ExternalLink";
-import Clipboard from "./svgs/Clipboard";
-import Alert from "./svgs/Alert";
-import Link from "next/link";
-import { useAccount } from "wagmi";
-import { Chain, ChainId, isChainId } from "@/packages/chain";
+import { Dialog, DialogPanel, DialogTitle, Transition } from "@headlessui/react"
+import ExternalLink from "./svgs/ExternalLink"
+import Clipboard from "./svgs/Clipboard"
+import Alert from "./svgs/Alert"
+import Link from "next/link"
+import { useAccount } from "wagmi"
+import { Chain, ChainId, isChainId } from "@/packages/chain"
+import { Type } from "@/packages/currency"
 
 interface TokenImportWarningModalProps {
-  token: string;
-  onConfirm: any;
-  open: boolean;
-  onClose: any;
-  isCustom?: number;
-  className?: string;
+  token: Type
+  onConfirm: any
+  open: boolean
+  onClose: any
+  isCustom?: number
+  className?: string
 }
 
 const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
@@ -28,10 +24,10 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
   isCustom,
   className,
 }) => {
-  const { chainId } = useAccount();
+  const { chainId } = useAccount()
   const onCopy = () => {
-    window.navigator.clipboard.writeText(token);
-  };
+    window.navigator.clipboard.writeText(token.wrapped.address)
+  }
 
   return (
     <Transition appear show={open}>
@@ -75,13 +71,17 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
               </p>
               <div className="flex overflow-hidden cursor-pointer bg-[#2f8af529] py-1 px-2 rounded-lg text-[#6c86ad] mt-3">
                 <Link
-                  href={`${Chain.fromChainId(ChainId.INK).getTokenUrl(token)}`}
+                  href={`${Chain.fromChainId(token.chainId).getTokenUrl(
+                    token.wrapped.address
+                  )}`}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center overflow-hidden hover:brightness-75 transition-all"
                 >
                   <span className="overflow-hidden text-ellipsis text-sm">
-                    {Chain.fromChainId(ChainId.INK).getTokenUrl(token)}
+                    {Chain.fromChainId(token.chainId).getTokenUrl(
+                      token.wrapped.address
+                    )}
                   </span>
                   <button className="ml-1">
                     <ExternalLink className="w-4 h-4" />
@@ -97,8 +97,8 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
               <button
                 className="w-full bg-[#2f8af529] text-[#2f8af5] hover:bg-[#2f8af51f] py-3 rounded-xl mt-4 hover:brightness-75 transition-all"
                 onClick={() => {
-                  onConfirm();
-                  onClose();
+                  onConfirm()
+                  onClose()
                 }}
               >
                 I understand
@@ -113,7 +113,7 @@ const TokenImportWarningModal: React.FC<TokenImportWarningModalProps> = ({
         </div>
       </Dialog>
     </Transition>
-  );
-};
+  )
+}
 
-export default TokenImportWarningModal;
+export default TokenImportWarningModal

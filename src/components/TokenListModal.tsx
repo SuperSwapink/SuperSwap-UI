@@ -12,15 +12,17 @@ import Magnifier from "./svgs/Magnifier"
 import TokenListItem from "./TokenListItem"
 import useTokenList from "../hooks/useTokenList"
 import { Token, Type } from "@/packages/currency"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAccount, useReadContracts } from "wagmi"
 import { Address, erc20Abi, getAddress, isAddress } from "viem"
-import { ChainId } from "@/packages/chain"
+import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
 import { TOKEN_LIST } from "@/packages/config"
 import TokenImportWarningModal from "./TokenImportWarningModal"
 import HelpToolTip from "./HelpToolTip"
 import Link from "next/link"
 import useLocalTokenStorage from "@/hooks/useLocalTokenStorage"
+import Ink from "@/assets/network/ink.png"
+import Image from "next/image"
 
 interface TokenListModalProps {
   currentToken?: Type
@@ -31,29 +33,55 @@ interface TokenListModalProps {
 }
 
 const TokenListModal: React.FC<TokenListModalProps> = ({
+  currentToken,
   setToken,
   open,
   onClose,
   primaryTokens,
 }) => {
-  const tokenList = useTokenList(primaryTokens)
   const [filter, setFilter] = useState("")
   const { localTokenList } = useLocalTokenStorage()
+  const [selectedChain, setSelectedChain] = useState<ChainId>(ChainId.INK)
+  const tokenList = useTokenList(selectedChain, primaryTokens)
+
+  useEffect(() => {
+    setSelectedChain(currentToken?.chainId ?? ChainId.INK)
+  }, [open])
 
   const { data: tokenInfo } = useReadContracts({
     contracts: [
-      { abi: erc20Abi, address: filter as Address, functionName: "name" },
-      { abi: erc20Abi, address: filter as Address, functionName: "symbol" },
-      { abi: erc20Abi, address: filter as Address, functionName: "decimals" },
+      {
+        abi: erc20Abi,
+        address: filter as Address,
+        functionName: "name",
+        chainId: selectedChain,
+      },
+      {
+        abi: erc20Abi,
+        address: filter as Address,
+        functionName: "symbol",
+        chainId: selectedChain,
+      },
+      {
+        abi: erc20Abi,
+        address: filter as Address,
+        functionName: "decimals",
+        chainId: selectedChain,
+      },
     ],
     query: {
       enabled: isAddress(filter),
+      refetchInterval: 10000,
     },
   })
 
   const onSelectItem = (token: Type) => {
     setToken(token)
     onClose()
+  }
+
+  const onChainChange = (id: ChainId) => {
+    setSelectedChain(id)
   }
 
   const tokens = [
@@ -74,7 +102,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
           .map(
             (item) =>
               new Token({
-                chainId: ChainId.INK,
+                chainId: item.chainId,
                 address: item.address,
                 name: item.name,
                 symbol: item.symbol,
@@ -86,6 +114,9 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
       : []),
     ...(isAddress(filter) &&
     tokenInfo &&
+    tokenInfo[0].result &&
+    tokenInfo[1].result &&
+    tokenInfo[2].result &&
     tokenList.findIndex(
       (item) =>
         !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
@@ -99,7 +130,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
       ? [
           new Token({
             address: getAddress(filter),
-            chainId: ChainId.INK,
+            chainId: selectedChain,
             name: tokenInfo[0]?.result,
             symbol: tokenInfo[1]?.result,
             decimals: tokenInfo[2]?.result ?? 18,
@@ -144,7 +175,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
           />
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
             <div className="flex min-h-full items-center justify-center">
-              <DialogPanel className="relative w-full max-w-md bg-white dark:bg-[#131823] rounded-2xl backdrop-blur-2xl overflow-hidden">
+              <DialogPanel className="relative w-full max-w-xl bg-white dark:bg-[#131823] rounded-2xl backdrop-blur-2xl overflow-hidden">
                 <h3 className="px-6 py-4 text-xl font-semibold text-[#222] dark:text-white">
                   Select a token
                 </h3>
@@ -177,14 +208,39 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                     </Link>
                   </HelpToolTip>
                 </div>
-                <div className="flex flex-col rounded-es-2xl rounded-ee-2xl p-4 space-y-2 h-[66vh] overflow-y-auto">
-                  {tokens.map((item) => (
-                    <TokenListItem
-                      key={item.id}
-                      token={item}
-                      onSelectItem={onSelectItem}
-                    />
-                  ))}
+                <div className="flex rounded-es-2xl rounded-ee-2xl p-4 space-x-2">
+                  <div className="flex flex-col w-[200px] h-[66vh] overflow-y-auto space-y-1 [&::-webkit-scrollbar]:!hidden">
+                    {Object.values(SUPPORTED_CHAINS).map((chain) => (
+                      <div
+                        key={chain.name}
+                        data-active={chain.id === selectedChain}
+                        className="flex items-center p-2 rounded-md hover:bg-[#060a1080] transition-all cursor-pointer data-[active=true]:bg-[#060a1080]"
+                        onClick={() => onChainChange(chain.id)}
+                      >
+                        <Image
+                          src={chain.icon.src}
+                          width={chain.icon.width}
+                          height={chain.icon.height}
+                          alt={chain.name}
+                          className="size-5 rounded-full"
+                        />
+                        <span className="ml-2 text-sm uppercase">
+                          {chain.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-col space-y-2 h-[66vh] overflow-y-auto w-full">
+                    {tokens
+                      .filter((item) => item.chainId === selectedChain)
+                      .map((item) => (
+                        <TokenListItem
+                          key={item.id}
+                          token={item}
+                          onSelectItem={onSelectItem}
+                        />
+                      ))}
+                  </div>
                 </div>
               </DialogPanel>
             </div>

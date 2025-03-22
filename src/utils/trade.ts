@@ -1,14 +1,14 @@
-import { routeProcessor3Abi } from "@/packages/abi";
-import { ChainId } from "@/packages/chain";
-import { ROUTE_PROCESSOR_3_ADDRESS } from "@/packages/config";
-import { Amount, Token, Type, USDC, USDC_ADDRESS } from "@/packages/currency";
-import { Percent } from "@/packages/math";
-import { LiquidityProviders, PoolCode, Router } from "@/packages/router";
-import { RouteStatus } from "@/packages/tines";
-import axios from "axios";
-import { Address, encodeFunctionData } from "viem";
+import { routeProcessor3Abi } from "@/packages/abi"
+import { ChainId } from "@/packages/chain"
+import { ROUTE_PROCESSOR_3_ADDRESS } from "@/packages/config"
+import { Amount, Token, Type, USDC, USDC_ADDRESS } from "@/packages/currency"
+import { Percent } from "@/packages/math"
+import { LiquidityProviders, PoolCode, Router } from "@/packages/router"
+import { RouteStatus } from "@/packages/tines"
+import axios from "axios"
+import { Address, encodeFunctionData } from "viem"
 
-const FEE_ENABLED = false;
+const FEE_ENABLED = false
 
 export const getXFusionTrade = async (
   tokenIn: Type,
@@ -18,29 +18,29 @@ export const getXFusionTrade = async (
   amountIn: string,
   poolsCodeMap?: Map<string, PoolCode>
 ) => {
-  if (!poolsCodeMap) return undefined;
+  if (!poolsCodeMap) return undefined
   const parsedAmountIn =
     tokenIn.wrapped.address === tokenOut.wrapped.address
       ? BigInt(amountIn)
-      : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n;
+      : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n
   const route = Router.findBestRoute(
     poolsCodeMap,
-    ChainId.INK,
+    tokenIn.chainId,
     tokenIn,
     parsedAmountIn,
     tokenOut,
     10000000,
     100
-  );
+  )
 
-  console.log(route);
+  console.log(route)
 
   if (route && route.status === RouteStatus.Success) {
-    const amountIn = Amount.fromRawAmount(tokenIn, route.amountInBI.toString());
+    const amountIn = Amount.fromRawAmount(tokenIn, route.amountInBI.toString())
     const amountOut = Amount.fromRawAmount(
       tokenOut,
       route.amountOutBI.toString()
-    );
+    )
 
     const args = Router.routeProcessor3Params(
       poolsCodeMap,
@@ -48,10 +48,10 @@ export const getXFusionTrade = async (
       tokenIn,
       tokenOut,
       recipient,
-      ROUTE_PROCESSOR_3_ADDRESS[ChainId.INK],
+      ROUTE_PROCESSOR_3_ADDRESS[tokenIn.chainId],
       [],
       +slippage / 100
-    );
+    )
 
     return {
       tokenIn,
@@ -70,9 +70,9 @@ export const getXFusionTrade = async (
       ),
       data: args,
       type: "SuperSwap",
-    };
+    }
   }
-};
+}
 
 export const getBestSwap = async (
   tokenIn: Type,
@@ -81,12 +81,12 @@ export const getBestSwap = async (
   amountIn: string,
   poolsCodeMap?: Map<string, PoolCode>
 ) => {
-  if (!poolsCodeMap) return undefined;
+  if (!poolsCodeMap) return undefined
   const parsedAmountIn =
     tokenIn.wrapped.address === tokenOut.wrapped.address
       ? BigInt(amountIn)
-      : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n;
-  console.log(slippage);
+      : (BigInt(amountIn) * (FEE_ENABLED ? 9900n : 10000n)) / 10000n
+  console.log(slippage)
 
   const reservoirSwap = await axios
     .post("https://apiv2.staging.reservoir.w3us.site/quote", {
@@ -109,7 +109,7 @@ export const getBestSwap = async (
       useUniswapX: false,
       slippageTolerance: slippage.toString(),
     })
-    .catch((err) => {});
+    .catch((err) => {})
 
   let routes = [
     { provider: [LiquidityProviders.InkSwap], protocolFee: 0n },
@@ -150,22 +150,22 @@ export const getBestSwap = async (
       amountOut:
         (BigInt(route.amountOutBI) * (1000n - route.protocolFee)) / 1000n,
       legs: route.legs,
-    }));
+    }))
 
-  console.log(routes);
+  console.log(routes)
 
   if (reservoirSwap?.data?.quote) {
     routes.push({
       provider: LiquidityProviders.ReservoirSwap,
       amountOut: BigInt(reservoirSwap?.data?.quote?.quote ?? "0"),
       legs: [],
-    });
+    })
   }
 
-  routes.sort((a, b) => (a.amountOut < b.amountOut ? 1 : -1));
+  routes.sort((a, b) => (a.amountOut < b.amountOut ? 1 : -1))
 
-  return routes?.[0];
-};
+  return routes?.[0]
+}
 
 export const getXFusionTxData = async (trade: any) => {
   const targetData = encodeFunctionData({
@@ -179,7 +179,7 @@ export const getXFusionTxData = async (trade: any) => {
       trade.data?.to,
       trade.data?.routeCode,
     ],
-  });
+  })
   return {
     amountIn: BigInt(trade?.amountIn ?? "0"),
     amountOut: BigInt(trade?.amountOut ?? "0"),
@@ -194,5 +194,5 @@ export const getXFusionTxData = async (trade: any) => {
       fee: false,
     },
     value: trade?.data?.value,
-  };
-};
+  }
+}

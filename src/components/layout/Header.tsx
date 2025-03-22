@@ -1,7 +1,7 @@
 "use client"
 
 import WalletConnect from "../WalletConnect"
-import NetworkSelector from "../NetworkSelector"
+// import NetworkSelector from "../NetworkSelector"
 import LogoLight from "../../assets/logo-light.png"
 import LogoDark from "../../assets/logo-dark.png"
 import LogoMbLight from "../../assets/logo-mb-light.png"
@@ -43,7 +43,7 @@ const Header = () => {
         />
         <div className="flex items-center">
           <SettingMenu className="mr-2" />
-          <NetworkSelector className="mr-2" />
+          {/* <NetworkSelector className="mr-2" /> */}
           <WalletConnect />
         </div>
       </div>

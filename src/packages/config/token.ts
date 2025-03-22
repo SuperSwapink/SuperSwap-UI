@@ -1,4 +1,4 @@
-import { ChainId } from "../chain";
+import { ChainId } from "../chain"
 
 export const PRIMARY_TOKEN_LIST = [
   {
@@ -26,6 +26,15 @@ export const PRIMARY_TOKEN_LIST = [
     decimals: 6,
     icon: "/media/usdt0.svg",
     category: "Stablecoin",
+    chainId: ChainId.INK,
+  },
+  {
+    address: "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+    symbol: "Kraken Wrapped Bitcoin",
+    name: "kBTC",
+    decimals: 8,
+    icon: "/media/kbtc.webp",
+    category: "Bitcoin",
     chainId: ChainId.INK,
   },
   {
@@ -208,9 +217,45 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Meme",
     chainId: ChainId.INK,
   },
-];
+  {
+    address: "0x4200000000000000000000000000000000000006",
+    symbol: "WETH",
+    name: "Wrapped Ether",
+    decimals: 18,
+    icon: "/media/weth.png",
+    category: "Native",
+    chainId: ChainId.BASE,
+  },
+  {
+    address: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    symbol: "USDC",
+    name: "USDC",
+    decimals: 6,
+    icon: "/media/usdc.png",
+    category: "Stablecoin",
+    chainId: ChainId.BASE,
+  },
+  {
+    address: "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+    symbol: "USDT",
+    name: "USDT",
+    decimals: 6,
+    icon: "/media/usdt.png",
+    category: "Stablecoin",
+    chainId: ChainId.BASE,
+  },
+  {
+    address: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    symbol: "Dai Stablecoin",
+    name: "DAI",
+    decimals: 18,
+    icon: "/media/dai.png",
+    category: "Stablecoin",
+    chainId: ChainId.BASE,
+  },
+]
 
-export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];
+export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST]
 
 export const TOKEN_LIST = [
   {
@@ -222,4 +267,4 @@ export const TOKEN_LIST = [
     category: "Top",
     chainId: ChainId.INK,
   },
-];
+]

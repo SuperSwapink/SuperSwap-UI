@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState } from "react";
-import ChevronDown from "../svgs/ChevronDown";
-import TokenListModal from "../TokenListModal";
+import { useEffect, useRef, useState } from "react"
+import ChevronDown from "../svgs/ChevronDown"
+import TokenListModal from "../TokenListModal"
 import {
   Amount,
   Token,
   Type,
   USDC,
   defaultCurrencies,
-} from "@/packages/currency";
-import { DEFAULT_IMAGE_URL, NATIVE_GAS_FEE } from "@/constants";
-import Image from "next/image";
-import { useAccount, useBalance } from "wagmi";
-import { ChainId, isChainId } from "@/packages/chain";
-import { usePrice } from "@/packages/prices";
+} from "@/packages/currency"
+import { DEFAULT_IMAGE_URL, NATIVE_GAS_FEE } from "@/constants"
+import Image from "next/image"
+import { useAccount, useBalance } from "wagmi"
+import { ChainId, isChainId } from "@/packages/chain"
+import { usePrice } from "@/packages/prices"
 
 interface SwapSideProps {
-  side: "From" | "To";
-  amount: string | undefined;
-  setAmount?: any;
-  token?: Type;
-  setToken: any;
-  className?: string;
-  hideSide?: boolean;
-  hideBalance?: boolean;
-  disabled?: boolean;
-  primaryTokens?: boolean;
+  side: "From" | "To"
+  amount: string | undefined
+  setAmount?: any
+  token?: Type
+  setToken: any
+  className?: string
+  hideSide?: boolean
+  hideBalance?: boolean
+  disabled?: boolean
+  primaryTokens?: boolean
 }
 
 const SwapSide: React.FC<SwapSideProps> = ({
@@ -41,12 +41,12 @@ const SwapSide: React.FC<SwapSideProps> = ({
   primaryTokens,
   disabled,
 }) => {
-  const { address, chainId } = useAccount();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const tokenSelectorRef = useRef<HTMLDivElement>(null);
-  const amountInputRef = useRef<HTMLInputElement>(null);
+  const { address, chainId } = useAccount()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const tokenSelectorRef = useRef<HTMLDivElement>(null)
+  const amountInputRef = useRef<HTMLInputElement>(null)
 
-  const fastTokens = !token;
+  const fastTokens = !token
 
   const { data: balance } = useBalance({
     chainId: ChainId.INK,
@@ -56,13 +56,13 @@ const SwapSide: React.FC<SwapSideProps> = ({
       enabled: Boolean(address) && Boolean(token),
       refetchInterval: 30000,
     },
-  });
+  })
 
   const { data: price } = usePrice({
     address: token?.wrapped?.address,
     chainId: ChainId.INK,
     enabled: Number(amount) > 0,
-  });
+  })
 
   const onMax = () => {
     if (balance && token) {
@@ -74,12 +74,12 @@ const SwapSide: React.FC<SwapSideProps> = ({
               ? balance.value - NATIVE_GAS_FEE
               : 0n
           ).toExact()
-        );
-      } else setAmount?.(Amount.fromRawAmount(token, balance.value).toExact());
+        )
+      } else setAmount?.(Amount.fromRawAmount(token, balance.value).toExact())
     } else {
-      setAmount?.("0");
+      setAmount?.("0")
     }
-  };
+  }
 
   const onAmountInput = (e: string) => {
     if (
@@ -88,16 +88,16 @@ const SwapSide: React.FC<SwapSideProps> = ({
         e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
       )
     ) {
-      setAmount(e);
+      setAmount(e)
     }
-  };
+  }
 
   useEffect(() => {
     if (amountInputRef.current)
       amountInputRef.current.style.paddingRight = `${
         (tokenSelectorRef.current?.clientWidth ?? 0) + 10
-      }px`;
-  }, [token, balance]);
+      }px`
+  }, [token, balance])
 
   return (
     <>
@@ -194,7 +194,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
         onClose={() => setIsModalOpen(false)}
       />
     </>
-  );
-};
+  )
+}
 
-export default SwapSide;
+export default SwapSide

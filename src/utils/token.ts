@@ -1,21 +1,21 @@
 import { ChainId } from "@/packages/chain"
 import { DEFAULT_TOKEN_LIST, TOKEN_LIST } from "../packages/config/token"
 import { Native, Token } from "@/packages/currency"
-import { erc20Abi, getAddress, isAddress, PublicClient } from "viem"
+import { createPublicClient, erc20Abi, getAddress, isAddress } from "viem"
+import { config } from "@/packages/config"
 
-export const getTokenInfo = async (
-  address: string,
-  publicClient: PublicClient
-) => {
-  if (address === "NATIVE") return Native.onChain(ChainId.INK)
+export const getTokenInfo = async (chainId: ChainId, address: string) => {
+  if (address === "NATIVE") return Native.onChain(chainId)
   if (!isAddress(address)) return undefined
   const tokenInList = [...DEFAULT_TOKEN_LIST, ...TOKEN_LIST].find(
-    (item) => item.address.toLowerCase() === address.toLowerCase()
+    (item) =>
+      item.address.toLowerCase() === address.toLowerCase() &&
+      item.chainId === chainId
   )
 
   if (tokenInList)
     return new Token({
-      chainId: ChainId.INK,
+      chainId,
       address: tokenInList.address,
       decimals: tokenInList.decimals,
       name: tokenInList.name,
@@ -25,6 +25,9 @@ export const getTokenInfo = async (
     })
 
   try {
+    const publicClient = createPublicClient({
+      ...config[chainId][0],
+    })
     const tokenInfo = await publicClient.multicall({
       contracts: [
         { address, abi: erc20Abi, functionName: "decimals" },
@@ -34,7 +37,7 @@ export const getTokenInfo = async (
     })
     if (tokenInfo[0].result) {
       return new Token({
-        chainId: ChainId.INK,
+        chainId,
         address: getAddress(address),
         decimals: tokenInfo[0].result,
         name: tokenInfo[1].result,

@@ -1,19 +1,19 @@
-import { UseQueryResult } from "@tanstack/react-query";
-import ChevronDown from "../svgs/ChevronDown";
-import { useState } from "react";
-import { Amount, Price } from "@/packages/currency";
-import useSwapParams from "@/hooks/useSwapParams";
-import useSettings from "@/hooks/useSettings";
+import { UseQueryResult } from "@tanstack/react-query"
+import ChevronDown from "../svgs/ChevronDown"
+import { useState } from "react"
+import { Amount, Price } from "@/packages/currency"
+import useSwapParams from "@/hooks/useSwapParams"
+import useSettings from "@/hooks/useSettings"
 
 interface SwapDetailsProps {
-  trade: UseQueryResult<any, Error>;
+  trade: UseQueryResult<any, Error>
 }
 
 const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
-  const [open, setOpen] = useState(false);
-  const [reverted, setReverted] = useState(false);
-  const { tokenIn, tokenOut } = useSwapParams();
-  const { slippage } = useSettings();
+  const [open, setOpen] = useState(false)
+  const [reverted, setReverted] = useState(false)
+  const { tokenIn, tokenOut } = useSwapParams()
+  const { slippage } = useSettings()
 
   const swapPrice =
     trade.data && tokenIn && tokenOut
@@ -23,9 +23,9 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
           trade.data?.amountIn ?? "0",
           trade.data?.amountOut ?? "0"
         )
-      : undefined;
+      : undefined
 
-  const isWrap = tokenIn?.wrapped.address === tokenOut?.wrapped.address;
+  const isWrap = tokenIn?.wrapped.address === tokenOut?.wrapped.address
 
   return trade.data && tokenIn && tokenOut ? (
     <div className="mt-4 border rounded-2xl px-4 border-[#e3e7ee] dark:border-[#202835]">
@@ -78,16 +78,18 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
               {tokenOut.symbol}
             </span>
           </div>
-          <div className="flex items-start justify-between">
-            <span className="text-[#6c86ad] text-sm">Price Impact:</span>
-            <span className="text-[#6c86ad] text-sm font-semibold">
-              {isWrap
-                ? "0%"
-                : (trade.data?.priceImpact ?? 0) < 0.01
-                ? "<0.01%"
-                : `${(trade.data?.priceImpact ?? 0).toFixed(2)}%`}
-            </span>
-          </div>
+          {trade?.data?.priceImpage !== undefined && (
+            <div className="flex items-start justify-between">
+              <span className="text-[#6c86ad] text-sm">Price Impact:</span>
+              <span className="text-[#6c86ad] text-sm font-semibold">
+                {isWrap
+                  ? "0%"
+                  : (trade.data?.priceImpact ?? 0) < 0.01
+                  ? "<0.01%"
+                  : `${(trade.data?.priceImpact ?? 0).toFixed(2)}%`}
+              </span>
+            </div>
+          )}
           {/* <div className="flex items-start justify-between">
             <span className="text-[#6c86ad] text-sm">Fees:</span>
             <span className="text-[#6c86ad] text-sm font-semibold">0 ETH</span>
@@ -95,7 +97,7 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
         </div>
       </div>
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default SwapDetails;
+export default SwapDetails

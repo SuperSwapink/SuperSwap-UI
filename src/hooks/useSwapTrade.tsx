@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi"
 import useSwapParams from "./useSwapParams"
 import { useDebounce } from "./useDebounce"
-import { tryParseAmount } from "@/packages/currency"
+import { Native, tryParseAmount } from "@/packages/currency"
 import { ZERO } from "@/packages/math"
 import useSettings from "./useSettings"
 import { useQuery } from "@tanstack/react-query"
@@ -9,6 +9,7 @@ import { getXFusionTrade } from "@/utils/trade"
 import { usePoolsCodeMap } from "@/packages/pools"
 import { ChainId } from "@/packages/chain"
 import { LiquidityProviders } from "@/packages/router"
+import { fetchBestAcross } from "@/packages/across"
 
 const useSwapTrade = () => {
   const { amountIn, tokenIn, tokenOut } = useSwapParams()
@@ -17,10 +18,20 @@ const useSwapTrade = () => {
 
   const parsedAmount = useDebounce(tryParseAmount(amountIn, tokenIn), 200)
 
-  const { data: poolsCodeMap } = usePoolsCodeMap({
-    chainId: ChainId.INK,
+  const { data: poolsCodeMapIn } = usePoolsCodeMap({
+    chainId: tokenIn?.chainId ?? ChainId.INK,
     currencyA: tokenIn,
-    currencyB: tokenOut,
+    currencyB:
+      tokenIn?.chainId === tokenOut?.chainId
+        ? tokenOut
+        : Native.onChain(tokenIn?.chainId ?? ChainId.INK),
+    enabled: Boolean(parsedAmount?.greaterThan(0)),
+  })
+
+  const { data: poolsCodeMapOut } = usePoolsCodeMap({
+    chainId: tokenOut?.chainId ?? ChainId.INK,
+    currencyA: tokenOut,
+    currencyB: Native.onChain(tokenOut?.chainId ?? ChainId.INK),
     enabled: Boolean(parsedAmount?.greaterThan(0)),
   })
 
@@ -31,7 +42,8 @@ const useSwapTrade = () => {
       tokenOut,
       parsedAmount,
       slippage,
-      poolsCodeMap,
+      poolsCodeMapIn,
+      poolsCodeMapOut,
       address,
     ],
     queryFn: async () => {
@@ -40,21 +52,36 @@ const useSwapTrade = () => {
           !tokenIn ||
           !tokenOut ||
           !parsedAmount ||
-          !parsedAmount.greaterThan(ZERO)
+          !parsedAmount.greaterThan(ZERO) ||
+          !poolsCodeMapIn
         ) {
           return undefined
         }
 
-        const trades = await getXFusionTrade(
-          tokenIn,
-          tokenOut,
-          address ?? "0xec288809063df839a62a3a61dd28f2142592b170",
-          slippage,
-          parsedAmount.quotient.toString(),
-          poolsCodeMap
-        )
+        if (tokenIn.chainId === tokenOut.chainId) {
+          const trades = await getXFusionTrade(
+            tokenIn,
+            tokenOut,
+            address ?? "0xec288809063df839a62a3a61dd28f2142592b170",
+            slippage,
+            parsedAmount.quotient.toString(),
+            poolsCodeMapIn
+          )
 
-        return trades
+          return { isBridge: false, ...trades }
+        } else {
+          const trades = await fetchBestAcross({
+            tokenIn,
+            tokenOut,
+            amountIn: parsedAmount.quotient.toString(),
+            recipient: address ?? "0xec288809063df839a62a3a61dd28f2142592b170",
+            poolsCodeMapIn,
+            poolsCodeMapOut,
+            slippage,
+          })
+
+          return { isBridge: true, ...trades }
+        }
       } catch (err) {
         console.log(err)
       }

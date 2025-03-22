@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createWeb3Modal } from "@web3modal/wagmi/react"
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config"
 import { defineChain } from "viem"
+import { base } from "viem/chains"
 
 import { WagmiProvider, cookieStorage, createStorage } from "wagmi"
 
@@ -45,7 +46,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 }
 
-const chains = [ink] as const
+const chains = [ink, base] as const
 export const config = defaultWagmiConfig({
   chains,
   projectId,

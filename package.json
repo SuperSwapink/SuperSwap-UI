@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@across-protocol/app-sdk": "^0.2.0",
     "@headlessui/react": "^2.0.3",
     "@tanstack/react-query": "^5.36.0",
     "@web3modal/wagmi": "^4.1.11",
