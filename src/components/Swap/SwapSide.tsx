@@ -13,7 +13,7 @@ import {
 import { DEFAULT_IMAGE_URL, NATIVE_GAS_FEE } from "@/constants"
 import Image from "next/image"
 import { useAccount, useBalance } from "wagmi"
-import { ChainId, isChainId } from "@/packages/chain"
+import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
 import { usePrice } from "@/packages/prices"
 
 interface SwapSideProps {
@@ -168,10 +168,26 @@ const SwapSide: React.FC<SwapSideProps> = ({
                     src={token?.icon ?? DEFAULT_IMAGE_URL}
                     width={20}
                     height={20}
-                    className="h-5 w-5 rounded-full mr-2"
+                    className="size-7 rounded-full mr-2"
                     alt=""
                   />
-                  {token?.symbol}
+                  <div className="flex flex-col">
+                    <span>{token?.symbol}</span>
+                    {token ? (
+                      <div className="flex items-center">
+                        <Image
+                          src={SUPPORTED_CHAINS[token.chainId].icon.src}
+                          width={SUPPORTED_CHAINS[token.chainId].icon.width}
+                          height={SUPPORTED_CHAINS[token.chainId].icon.height}
+                          alt="network"
+                          className="size-3 rounded-full"
+                        />
+                        <span className="uppercase ml-1 text-[11px]">
+                          {SUPPORTED_CHAINS[token.chainId].name}
+                        </span>
+                      </div>
+                    ) : null}
+                  </div>
                 </>
               ) : (
                 "Select Token"
