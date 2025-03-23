@@ -209,7 +209,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                   </HelpToolTip>
                 </div>
                 <div className="flex rounded-es-2xl rounded-ee-2xl p-4 space-x-2">
-                  <div className="flex flex-col w-[200px] h-[66vh] overflow-y-auto space-y-1 [&::-webkit-scrollbar]:!hidden">
+                  <div className="flex flex-col min-w-[36px] w-[36px] md:w-[200px] h-[66vh] overflow-y-auto space-y-1 [&::-webkit-scrollbar]:!hidden">
                     {Object.values(SUPPORTED_CHAINS).map((chain) => (
                       <div
                         key={chain.name}
@@ -224,7 +224,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                           alt={chain.name}
                           className="size-5 rounded-full"
                         />
-                        <span className="ml-2 text-sm uppercase">
+                        <span className="ml-2 text-sm uppercase max-md:hidden">
                           {chain.name}
                         </span>
                       </div>
