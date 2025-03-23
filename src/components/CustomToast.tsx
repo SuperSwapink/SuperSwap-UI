@@ -4,15 +4,23 @@ import { Toast, toast, useToaster } from "react-hot-toast"
 import ExternalLink from "./svgs/ExternalLink"
 import Spinner from "./Spinner"
 import Close from "./svgs/Close"
+import { Chain, ChainId } from "@/packages/chain"
 
 interface CustomToastProps {
   t: Toast
   type: "success" | "info" | "error"
   text: string
+  chainId?: ChainId
   hash?: string
 }
 
-const CustomToast: React.FC<CustomToastProps> = ({ t, type, text, hash }) => {
+const CustomToast: React.FC<CustomToastProps> = ({
+  t,
+  type,
+  text,
+  chainId,
+  hash,
+}) => {
   const { toasts } = useToaster()
 
   useEffect(() => {
@@ -46,7 +54,7 @@ const CustomToast: React.FC<CustomToastProps> = ({ t, type, text, hash }) => {
         <div className="font-semibold">{text}</div>
         {hash ? (
           <Link
-            href={`https://explorer.inkonchain.com/tx/${hash}`}
+            href={`${Chain.fromChainId(chainId ?? ChainId.INK).getTxUrl(hash)}`}
             target="_blank"
             rel="noreferrer"
             className="flex items-center opacity-75 hover:opacity-50 hover:underline transition-all mt-1"

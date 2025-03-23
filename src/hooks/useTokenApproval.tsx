@@ -16,6 +16,7 @@ import { SendTransactionReturnType } from "wagmi/actions"
 import { useTokenAllowance } from "./useTokenAllowance"
 import toast from "react-hot-toast"
 import CustomToast from "@/components/CustomToast"
+import { ChainId } from "@/packages/chain"
 
 export enum ApprovalState {
   LOADING = "LOADING",
@@ -119,6 +120,7 @@ export const useTokenApproval = ({
                   type="success"
                   text={`Approve ${amount?.currency?.symbol}`}
                   hash={data}
+                  chainId={publicClient.chain.id as ChainId}
                 />
               ))
               setPending(() => false)

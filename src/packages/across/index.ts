@@ -10,6 +10,13 @@ import { createAcrossClient } from "@across-protocol/app-sdk"
 import { RouteStatus } from "../tines"
 import { routeProcessor3Abi } from "../abi"
 
+export const ACROSS_STATUS = {
+  SUCCESS: 0,
+  LOW_AMOUNT: 1,
+  HIGH_AMOUNT: 2,
+  FAILED: 3,
+}
+
 export const fetchBestAcross = async ({
   tokenIn,
   tokenOut,
@@ -84,18 +91,31 @@ export const fetchBestAcross = async ({
     integratorId: "0x0076",
     chains: Object.values(config).map((item) => item[0].chain) as Chain[],
   })
-  const estimatedQuote = await client.getQuote({
-    route: {
-      originChainId: tokenIn.chainId,
-      destinationChainId: tokenOut.chainId,
-      inputToken: Native.onChain(tokenIn.chainId).wrapped.address,
-      outputToken: Native.onChain(tokenOut.chainId).wrapped.address,
-      isNative: true,
-    },
-    recipient: ACROSS_PORTAL_ADDRESS[tokenOut.chainId],
-    inputAmount: originData.amountOutMin,
-    // crossChainMessage: estimatedDestMessage,
-  })
+  let estimatedQuote
+  try {
+    estimatedQuote = await client.getQuote({
+      route: {
+        originChainId: tokenIn.chainId,
+        destinationChainId: tokenOut.chainId,
+        inputToken: Native.onChain(tokenIn.chainId).wrapped.address,
+        outputToken: Native.onChain(tokenOut.chainId).wrapped.address,
+        isNative: true,
+      },
+      recipient: ACROSS_PORTAL_ADDRESS[tokenOut.chainId],
+      inputAmount: originData.amountOutMin,
+      // crossChainMessage: estimatedDestMessage,
+    })
+  } catch (err: any) {
+    const errMsg = err?.message ?? ""
+    console.log(errMsg)
+    return {
+      status: errMsg?.includes("max")
+        ? ACROSS_STATUS.HIGH_AMOUNT
+        : errMsg?.includes("low")
+        ? ACROSS_STATUS.LOW_AMOUNT
+        : ACROSS_STATUS.FAILED,
+    }
+  }
 
   let destData
   if (
@@ -162,6 +182,7 @@ export const fetchBestAcross = async ({
   console.log(quote)
 
   return {
+    status: ACROSS_STATUS.SUCCESS,
     depositData: quote.deposit,
     originalData: originData,
     destData,
