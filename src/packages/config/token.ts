@@ -246,8 +246,8 @@ export const PRIMARY_TOKEN_LIST = [
   },
   {
     address: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-    symbol: "Dai Stablecoin",
-    name: "DAI",
+    symbol: "DAI",
+    name: "Dai Stablecoin",
     decimals: 18,
     icon: "/media/dai.png",
     category: "Stablecoin",

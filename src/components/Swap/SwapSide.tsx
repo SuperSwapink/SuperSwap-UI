@@ -49,7 +49,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
   const fastTokens = !token
 
   const { data: balance } = useBalance({
-    chainId: ChainId.INK,
+    chainId: token?.chainId,
     address,
     token: token instanceof Token ? token.address : undefined,
     query: {

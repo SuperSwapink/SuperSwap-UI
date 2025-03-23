@@ -1,4 +1,4 @@
-import { Chain, encodeFunctionData, encodePacked, erc20Abi } from "viem"
+import { Chain, encodeFunctionData } from "viem"
 import {
   ACROSS_PORTAL_ADDRESS,
   config,
@@ -33,6 +33,7 @@ export const fetchBestAcross = async ({
   if (tokenIn.isNative) {
     originData = {
       amountOut: parsedAmountIn,
+      amountOutMin: parsedAmountIn,
       calldata: "",
     }
   } else {
@@ -63,6 +64,7 @@ export const fetchBestAcross = async ({
 
     originData = {
       amountOut: route.amountOutBI,
+      amountOutMin: args.amountOutMin,
       calldata: encodeFunctionData({
         abi: routeProcessor3Abi,
         functionName: "processRoute",
@@ -78,55 +80,6 @@ export const fetchBestAcross = async ({
     }
   }
 
-  console.log(originData)
-
-  let estimatedDestMessage
-  if (
-    !tokenOut.isNative &&
-    tokenOut.address.toLowerCase() ===
-      WETH9[tokenOut.chainId].address.toLowerCase()
-  ) {
-    estimatedDestMessage = new HEXer()
-      .address(tokenOut.address)
-      .address(recipient)
-      .toHexString()
-  } else {
-    const route = Router.findBestRoute(
-      poolsCodeMapOut,
-      tokenOut.chainId,
-      WETH9[tokenOut.chainId],
-      originData.amountOut,
-      tokenOut,
-      10000000,
-      100
-    )
-
-    if (route.status !== RouteStatus.Success) {
-      console.log(poolsCodeMapOut)
-      throw Error("No route in target chain")
-    }
-
-    const args = Router.routeProcessor3Params(
-      poolsCodeMapOut,
-      route,
-      WETH9[tokenOut.chainId],
-      tokenOut,
-      recipient,
-      ROUTE_PROCESSOR_3_ADDRESS[tokenOut.chainId],
-      [],
-      +slippage / 100
-    )
-
-    estimatedDestMessage = new HEXer()
-      .address(args.tokenOut)
-      .uint256(args.amountOutMin)
-      .address(args.to)
-      .bytes(args.routeCode)
-      .toHexString()
-  }
-
-  console.log(estimatedDestMessage)
-
   const client = createAcrossClient({
     integratorId: "0x0076",
     chains: Object.values(config).map((item) => item[0].chain) as Chain[],
@@ -140,7 +93,7 @@ export const fetchBestAcross = async ({
       isNative: true,
     },
     recipient: ACROSS_PORTAL_ADDRESS[tokenOut.chainId],
-    inputAmount: originData.amountOut,
+    inputAmount: originData.amountOutMin,
     // crossChainMessage: estimatedDestMessage,
   })
 
@@ -202,9 +155,11 @@ export const fetchBestAcross = async ({
       isNative: true,
     },
     recipient: ACROSS_PORTAL_ADDRESS[tokenOut.chainId],
-    inputAmount: originData.amountOut,
+    inputAmount: originData.amountOutMin,
     crossChainMessage: destData.message,
   })
+
+  console.log(quote)
 
   return {
     depositData: quote.deposit,

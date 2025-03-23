@@ -25,14 +25,14 @@ const useSwapTrade = () => {
       tokenIn?.chainId === tokenOut?.chainId
         ? tokenOut
         : Native.onChain(tokenIn?.chainId ?? ChainId.INK),
-    enabled: Boolean(parsedAmount?.greaterThan(0)),
+    enabled: Boolean(tokenIn) && Boolean(tokenOut),
   })
 
   const { data: poolsCodeMapOut } = usePoolsCodeMap({
     chainId: tokenOut?.chainId ?? ChainId.INK,
     currencyA: tokenOut,
     currencyB: Native.onChain(tokenOut?.chainId ?? ChainId.INK),
-    enabled: Boolean(parsedAmount?.greaterThan(0)),
+    enabled: Boolean(tokenIn) && Boolean(tokenOut),
   })
 
   const trade = useQuery({
