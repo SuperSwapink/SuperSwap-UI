@@ -33,7 +33,6 @@ import {
   waitForFillTx,
 } from "@across-protocol/app-sdk"
 import { ACROSS_STATUS } from "@/packages/across"
-import { SPOKE_POOL_ADDRESS } from "@/packages/across/constants"
 
 interface SwapButtonProps {
   trade: UseQueryResult<any, Error>
@@ -66,7 +65,6 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
   })
 
   const onSwap = async () => {
-    console.log(trade.data)
     if (!address || !originPublicClient || !walletClient || !destPublicClient) {
       open?.()
     } else if (chainId !== tokenIn?.chainId) {
@@ -207,7 +205,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             },
             depositId,
             destinationChainClient: destPublicClient,
-            fromBlock: currentDestBlock,
+            fromBlock: currentDestBlock - 100n,
           })
 
           const balanceAfter = tokenOut.isNative
@@ -308,6 +306,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
   return (
     <div className="mt-4">
       {!fetching &&
+      !acrossError &&
       !isError &&
       trade.data &&
       (approvalState === ApprovalState.NOT_APPROVED ||

@@ -3,11 +3,10 @@
 import { LocalTokenStorageProvider } from "@/hooks/useLocalTokenStorage"
 import { SettingsProvider } from "@/hooks/useSettings"
 import { SwapParamsProvider } from "@/hooks/useSwapParams"
-import { ink } from "@/packages/config"
+import { ink, base } from "@/packages/config"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createWeb3Modal } from "@web3modal/wagmi/react"
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config"
-import { base } from "viem/chains"
 
 import { WagmiProvider, cookieStorage, createStorage } from "wagmi"
 
