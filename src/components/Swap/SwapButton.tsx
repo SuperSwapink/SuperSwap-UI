@@ -21,10 +21,11 @@ import { getXFusionTxData } from "@/utils/trade"
 import AggregatorABI from "@/contracts/AggregatorABI"
 import toast from "react-hot-toast"
 import CustomToast from "../CustomToast"
-import { erc20Abi } from "viem"
+import { createPublicClient, erc20Abi } from "viem"
 import { routeProcessor3Abi, acrossPortalAbi } from "@/packages/abi"
 import {
   ACROSS_PORTAL_ADDRESS,
+  config,
   ROUTE_PROCESSOR_3_ADDRESS,
 } from "@/packages/config"
 import {
@@ -195,6 +196,10 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             transactionHash: hash,
           })
 
+          const destinationChainClient = createPublicClient({
+            ...config[tokenOut.chainId][0],
+          })
+
           const fillStatus = await waitForFillTx({
             deposit: {
               destinationChainId: curTrade.depositData.destinationChainId,
@@ -204,7 +209,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               originChainId: curTrade.depositData.originChainId,
             },
             depositId,
-            destinationChainClient: destPublicClient,
+            destinationChainClient: destinationChainClient as any,
             fromBlock: currentDestBlock - 100n,
           })
 

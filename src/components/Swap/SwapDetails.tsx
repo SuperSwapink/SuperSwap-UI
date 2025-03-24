@@ -4,6 +4,8 @@ import { useState } from "react"
 import { Amount, Price } from "@/packages/currency"
 import useSwapParams from "@/hooks/useSwapParams"
 import useSettings from "@/hooks/useSettings"
+import { ACROSS_STATUS } from "@/packages/across"
+import { ACROSS_ESTIMATED_TIME } from "@/constants"
 
 interface SwapDetailsProps {
   trade: UseQueryResult<any, Error>
@@ -90,6 +92,22 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
               </span>
             </div>
           )}
+          {tokenIn.chainId !== tokenOut.chainId &&
+          trade.data &&
+          trade.data.status === ACROSS_STATUS.SUCCESS ? (
+            <div className="flex items-start justify-between">
+              <span className="text-[#6c86ad] text-sm">Estimated Time:</span>
+              <span className="text-[#6c86ad] text-sm font-semibold">
+                ~
+                {
+                  (ACROSS_ESTIMATED_TIME as any)[tokenIn.chainId][
+                    tokenOut.chainId
+                  ]
+                }
+                s
+              </span>
+            </div>
+          ) : null}
           {/* <div className="flex items-start justify-between">
             <span className="text-[#6c86ad] text-sm">Fees:</span>
             <span className="text-[#6c86ad] text-sm font-semibold">0 ETH</span>

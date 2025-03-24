@@ -197,33 +197,37 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                   />
                 </div>
                 <div className="flex justify-between px-4 mt-2">
-                  <span className="text-xs text-[#a0a0a0] min-w-[100px] w-[100px] md:w-[200px]">Network:</span>
+                  <span className="text-xs text-[#a0a0a0] min-w-[100px] w-[100px] md:w-[200px]">
+                    Network:
+                  </span>
                   <div className="flex justify-between w-full px-2">
                     <span className="text-xs text-[#a0a0a0]">Token</span>
                     <span className="text-xs text-[#a0a0a0]">Your Balance</span>
                   </div>
                 </div>
-                <div className="flex rounded-es-2xl rounded-ee-2xl p-3 md:p-4 md:space-x-2">
-                  <div className="flex flex-col min-w-[100px] w-[100px] md:w-[200px] h-[66vh] overflow-y-auto space-y-1 [&::-webkit-scrollbar]:!hidden">
-                    {Object.values(SUPPORTED_CHAINS).map((chain) => (
-                      <div
-                        key={chain.name}
-                        data-active={chain.id === selectedChain}
-                        className="flex items-center p-1 md:p-2 rounded-md hover:bg-[#060a1080] transition-all cursor-pointer data-[active=true]:bg-[#060a1080]"
-                        onClick={() => onChainChange(chain.id)}
-                      >
-                        <Image
-                          src={chain.icon.src}
-                          width={chain.icon.width}
-                          height={chain.icon.height}
-                          alt={chain.name}
-                          className="size-5 rounded-full"
-                        />
-                        <span className="ml-2 text-xs md:text-sm uppercase">
-                          {chain.name}
-                        </span>
-                      </div>
-                    ))}
+                <div className="flex rounded-es-2xl rounded-ee-2xl p-3 md:p-4">
+                  <div className="flex flex-col min-w-[100px] w-[100px] md:w-[200px] h-[66vh] overflow-y-auto space-y-1 [&::-webkit-scrollbar]:!hidden border-r-4 border-[#323740]">
+                    {Object.values(SUPPORTED_CHAINS)
+                      .sort((a, b) => (a.id === ChainId.INK ? -1 : 1))
+                      .map((chain) => (
+                        <div
+                          key={chain.name}
+                          data-active={chain.id === selectedChain}
+                          className="flex items-center p-1 md:p-2 rounded-md hover:bg-[#060a1080] transition-all cursor-pointer data-[active=true]:bg-[#060a1080]"
+                          onClick={() => onChainChange(chain.id)}
+                        >
+                          <Image
+                            src={chain.icon.src}
+                            width={chain.icon.width}
+                            height={chain.icon.height}
+                            alt={chain.name}
+                            className="size-5 rounded-full"
+                          />
+                          <span className="ml-2 text-xs md:text-sm uppercase">
+                            {chain.name}
+                          </span>
+                        </div>
+                      ))}
                   </div>
                   <div className="flex flex-col space-y-2 h-[66vh] overflow-y-auto w-full">
                     {tokens

@@ -31,7 +31,9 @@ export const base = /*#__PURE__*/ defineChain({
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://base.llamarpc.com"],
+      http: [
+        "https://lb.drpc.org/ogrpc?network=base&dkey=Ag7pbj02QkWPimVQN29ULVsYiB5VCJQR8I-DssvAG40d",
+      ],
     },
   },
   blockExplorers: {
@@ -77,7 +79,9 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.BASE]: [
     {
       chain: base,
-      transport: http(`https://base.llamarpc.com`),
+      transport: http(
+        `https://lb.drpc.org/ogrpc?network=base&dkey=Ag7pbj02QkWPimVQN29ULVsYiB5VCJQR8I-DssvAG40d`
+      ),
     },
   ],
 } as const

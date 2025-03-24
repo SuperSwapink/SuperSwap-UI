@@ -4,15 +4,7 @@ import X from "../svgs/X"
 import Telegram from "../svgs/Telegram"
 import Globe from "../svgs/Globe"
 import Github from "../svgs/Github"
-import Image from "next/image"
 import Docs from "../svgs/Docs"
-
-import InkSwap from "../../assets/swap/InkSwap.png"
-import InkySwap from "../../assets/swap/InkySwap.png"
-import SquidSwap from "../../assets/swap/SquidSwap.png"
-import DyorSwap from "../../assets/swap/DyorSwap.png"
-import ReservoirSwap from "../../assets/swap/ReservoirSwap.png"
-import VelodromeSwap from "../../assets/swap/VelodromeSwap.png"
 
 function Footer() {
   return (
@@ -65,26 +57,6 @@ function Footer() {
       <p className="text-[#1f1d1a] dark:text-white text-sm">
         © 2025 SuperSwap.
       </p>
-      <div className="flex items-center space-x-2">
-        <span className="text-xs text-[#6c86ad]">Aggregating: </span>
-        {[
-          InkSwap,
-          InkySwap,
-          SquidSwap,
-          DyorSwap,
-          ReservoirSwap,
-          VelodromeSwap,
-        ].map((item, i) => (
-          <Image
-            key={i}
-            src={item.src}
-            width={item.width}
-            height={item.height}
-            alt="swap"
-            className={`w-4 h-4 ${item === InkySwap ? 'invert dark:invert-0': ''}`}
-          />
-        ))}
-      </div>
     </div>
   )
 }
