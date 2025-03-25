@@ -20,6 +20,9 @@ import { VelodromeSwapV2Provider } from "./liquidity-providers/VelodromeSwapV2"
 import { VelodromeSwapV3Provider } from "./liquidity-providers/VelodromeSwapV3"
 import { UniswapV2Provider } from "./liquidity-providers/UniswapV2"
 import { UniswapV3Provider } from "./liquidity-providers/UniswapV3"
+import { PancakeSwapV2Provider } from "./liquidity-providers/PancakeSwapV2"
+import { SushiSwapV2Provider } from "./liquidity-providers/SushiSwapV2"
+import { AerodromeSwapV2Provider } from "./liquidity-providers/AerodromeSwapV2"
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -164,6 +167,41 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.UniswapV3, providers)) {
       try {
         const provider = new UniswapV3Provider(this.chainId, this.web3Client)
+        this.providers.push(provider)
+      } catch (e: unknown) {
+        console.warn(e)
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.PancakeSwapV2, providers)) {
+      try {
+        const provider = new PancakeSwapV2Provider(
+          this.chainId,
+          this.web3Client
+        )
+        this.providers.push(provider)
+      } catch (e: unknown) {
+        console.warn(e)
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.SushiSwapV2, providers)) {
+      try {
+        const provider = new SushiSwapV2Provider(this.chainId, this.web3Client)
+        this.providers.push(provider)
+      } catch (e: unknown) {
+        console.warn(e)
+      }
+    }
+
+    if (
+      this._providerIsIncluded(LiquidityProviders.AerodromeSwapV2, providers)
+    ) {
+      try {
+        const provider = new AerodromeSwapV2Provider(
+          this.chainId,
+          this.web3Client
+        )
         this.providers.push(provider)
       } catch (e: unknown) {
         console.warn(e)
