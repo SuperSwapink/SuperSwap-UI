@@ -4,6 +4,7 @@ import { Token } from "../Token"
 import { addressMapToTokenMap } from "../functions/address-map-to-token-map"
 
 import {
+  MYST_ADDRESS,
   USDC_ADDRESS,
   USDT0_ADDRESS,
   USDT_ADDRESS,
@@ -59,4 +60,16 @@ export const USDT: Record<keyof typeof USDT_ADDRESS, Token> = {
     },
     USDT_ADDRESS
   ) as Record<keyof typeof USDT_ADDRESS, Token>),
+} as const
+
+export const MYST: Record<keyof typeof MYST_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 18,
+      symbol: "MYST",
+      name: "MystInk",
+      icon: "/media/myst.svg",
+    },
+    MYST_ADDRESS
+  ) as Record<keyof typeof MYST_ADDRESS, Token>),
 } as const

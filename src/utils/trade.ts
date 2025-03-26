@@ -30,7 +30,7 @@ export const getXFusionTrade = async (
     parsedAmountIn,
     tokenOut,
     10000000,
-    100
+    200
   )
 
   console.log(route)

@@ -22,3 +22,7 @@ export const USDT0_ADDRESS = {
 export const USDT_ADDRESS = {
   [ChainId.BASE]: "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
 } as const
+
+export const MYST_ADDRESS = {
+  [ChainId.INK]: "0xEe73d2f34D66f0f07aF6ab37b42713520E33119C",
+} as const
