@@ -23,6 +23,9 @@ import { UniswapV3Provider } from "./liquidity-providers/UniswapV3"
 import { PancakeSwapV2Provider } from "./liquidity-providers/PancakeSwapV2"
 import { SushiSwapV2Provider } from "./liquidity-providers/SushiSwapV2"
 import { AerodromeSwapV2Provider } from "./liquidity-providers/AerodromeSwapV2"
+import { SushiSwapV3Provider } from "./liquidity-providers/SushiSwapV3"
+import { PancakeSwapV3Provider } from "./liquidity-providers/PancakeSwapV3"
+import { AerodromeSwapV3Provider } from "./liquidity-providers/AerodromeSwapV3"
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -185,9 +188,30 @@ export class DataFetcher {
       }
     }
 
+    if (this._providerIsIncluded(LiquidityProviders.PancakeSwapV3, providers)) {
+      try {
+        const provider = new PancakeSwapV3Provider(
+          this.chainId,
+          this.web3Client
+        )
+        this.providers.push(provider)
+      } catch (e: unknown) {
+        console.warn(e)
+      }
+    }
+
     if (this._providerIsIncluded(LiquidityProviders.SushiSwapV2, providers)) {
       try {
         const provider = new SushiSwapV2Provider(this.chainId, this.web3Client)
+        this.providers.push(provider)
+      } catch (e: unknown) {
+        console.warn(e)
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.SushiSwapV3, providers)) {
+      try {
+        const provider = new SushiSwapV3Provider(this.chainId, this.web3Client)
         this.providers.push(provider)
       } catch (e: unknown) {
         console.warn(e)
@@ -199,6 +223,20 @@ export class DataFetcher {
     ) {
       try {
         const provider = new AerodromeSwapV2Provider(
+          this.chainId,
+          this.web3Client
+        )
+        this.providers.push(provider)
+      } catch (e: unknown) {
+        console.warn(e)
+      }
+    }
+
+    if (
+      this._providerIsIncluded(LiquidityProviders.AerodromeSwapV3, providers)
+    ) {
+      try {
+        const provider = new AerodromeSwapV3Provider(
           this.chainId,
           this.web3Client
         )
