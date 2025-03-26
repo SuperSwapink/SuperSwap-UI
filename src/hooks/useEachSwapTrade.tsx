@@ -23,7 +23,8 @@ const useEachSwapTrade = () => {
     currencyB: tokenOut,
     enabled:
       Boolean(parsedAmount?.greaterThan(0)) &&
-      tokenIn?.chainId === tokenOut?.chainId,
+      tokenIn?.chainId === tokenOut?.chainId &&
+      tokenIn?.chainId === ChainId.INK,
   })
 
   const trade = useQuery({

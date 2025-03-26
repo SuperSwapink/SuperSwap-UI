@@ -32,7 +32,10 @@ const useSwapTrade = () => {
     chainId: tokenOut?.chainId ?? ChainId.INK,
     currencyA: tokenOut,
     currencyB: Native.onChain(tokenOut?.chainId ?? ChainId.INK),
-    enabled: Boolean(tokenIn) && Boolean(tokenOut),
+    enabled:
+      Boolean(tokenIn) &&
+      Boolean(tokenOut) &&
+      tokenIn?.chainId !== tokenOut?.chainId,
   })
 
   const trade = useQuery({

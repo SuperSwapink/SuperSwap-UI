@@ -81,6 +81,10 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
 
         setLoading(true)
 
+        const curTokenIn = tokenIn
+        const curTokenOut = tokenOut
+        const curTrade = trade.data
+
         if (!trade.data.isBridge) {
           const balanceBefore = tokenOut.isNative
             ? await originPublicClient.getBalance({ address })
@@ -113,11 +117,11 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             hash,
           })
 
-          const balanceAfter = tokenOut.isNative
+          const balanceAfter = curTokenOut.isNative
             ? await originPublicClient.getBalance({ address })
             : await originPublicClient.readContract({
                 abi: erc20Abi,
-                address: tokenOut.address,
+                address: curTokenOut.address,
                 functionName: "balanceOf",
                 args: [address],
               })
@@ -127,21 +131,20 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               t={t}
               type="success"
               text={`Swap ${Amount.fromRawAmount(
-                tokenIn,
+                curTokenIn,
                 swapTrade.amountIn
               ).toSignificant(6)} ${
                 swapTrade.tokenIn.symbol
               } for ${Amount.fromRawAmount(
-                tokenOut,
+                curTokenOut,
                 balanceAfter - balanceBefore
               ).toSignificant(6)} ${swapTrade.tokenOut.symbol}`}
               hash={hash}
-              chainId={tokenIn.chainId}
+              chainId={curTokenIn.chainId}
             />
           ))
           console.log(res)
         } else {
-          const curTrade = trade.data
           const balanceBefore = tokenOut.isNative
             ? await destPublicClient.getBalance({ address })
             : await destPublicClient.readContract({
@@ -191,13 +194,13 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
           const hash = await walletClient.writeContract(request)
 
           const { depositId } = await waitForDepositTx({
-            originChainId: tokenIn.chainId,
+            originChainId: curTokenIn.chainId,
             publicClient: originPublicClient,
             transactionHash: hash,
           })
 
           const destinationChainClient = createPublicClient({
-            ...config[tokenOut.chainId][0],
+            ...config[curTokenOut.chainId][0],
           })
 
           const fillStatus = await waitForFillTx({
@@ -213,11 +216,11 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             fromBlock: currentDestBlock - 100n,
           })
 
-          const balanceAfter = tokenOut.isNative
+          const balanceAfter = curTokenOut.isNative
             ? await destPublicClient.getBalance({ address })
             : await destPublicClient.readContract({
                 abi: erc20Abi,
-                address: tokenOut.address,
+                address: curTokenOut.address,
                 functionName: "balanceOf",
                 args: [address],
               })
@@ -227,16 +230,16 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               t={t}
               type="success"
               text={`Swap ${Amount.fromRawAmount(
-                tokenIn,
+                curTokenIn,
                 swapTrade.amountIn
               ).toSignificant(6)} ${
                 swapTrade.tokenIn.symbol
               } for ${Amount.fromRawAmount(
-                tokenOut,
+                curTokenOut,
                 balanceAfter - balanceBefore
               ).toSignificant(6)} ${swapTrade.tokenOut.symbol}`}
               hash={hash}
-              chainId={tokenIn.chainId}
+              chainId={curTokenIn.chainId}
             />
           ))
           console.log(fillStatus)
