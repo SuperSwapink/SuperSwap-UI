@@ -30,8 +30,8 @@ export const PRIMARY_TOKEN_LIST = [
   },
   {
     address: "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
-    symbol: "Kraken Wrapped Bitcoin",
-    name: "kBTC",
+    symbol: "kBTC",
+    name: "Kraken Wrapped Bitcoin",
     decimals: 8,
     icon: "/media/kbtc.webp",
     category: "Bitcoin",
