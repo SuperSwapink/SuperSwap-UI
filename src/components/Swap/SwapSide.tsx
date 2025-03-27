@@ -15,6 +15,7 @@ import Image from "next/image"
 import { useAccount, useBalance } from "wagmi"
 import { ChainId, isChainId, SUPPORTED_CHAINS } from "@/packages/chain"
 import { usePrice } from "@/packages/prices"
+import CurrencyIcon from "../CurrencyIcon"
 
 interface SwapSideProps {
   side: "From" | "To"
@@ -180,7 +181,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
             >
               {token ? (
                 <>
-                  <img
+                  <CurrencyIcon
                     src={token?.icon ?? DEFAULT_IMAGE_URL}
                     width={20}
                     height={20}

@@ -9,6 +9,7 @@ import { useAccount, useBalance } from "wagmi"
 import TokenImportWarningModal from "./TokenImportWarningModal"
 import { useState } from "react"
 import useLocalTokenStorage from "@/hooks/useLocalTokenStorage"
+import CurrencyIcon from "./CurrencyIcon"
 
 interface TokenListItemProps {
   token: Type
@@ -48,7 +49,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
         }}
       >
         <div className="flex items-center">
-          <img
+          <CurrencyIcon
             src={token?.icon ?? DEFAULT_IMAGE_URL}
             width={32}
             height={32}
@@ -64,7 +65,9 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
                 {token.symbol}
               </span>
             </div>
-            <div className="text-xs md:text-sm text-[#a0a0a0]">{token.category}</div>
+            <div className="text-xs md:text-sm text-[#a0a0a0]">
+              {token.category}
+            </div>
           </div>
         </div>
         {token.isCustom ? (

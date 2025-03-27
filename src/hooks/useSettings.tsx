@@ -25,7 +25,7 @@ export default function useSettings() {
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [slippage, setSlippage] = useState(0.5);
+  const [slippage, setSlippage] = useState(0.2);
   const [deadline, setDeadline] = useState(30);
 
   return (

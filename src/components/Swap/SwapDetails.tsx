@@ -80,7 +80,7 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
               {tokenOut.symbol}
             </span>
           </div>
-          {trade?.data?.priceImpage !== undefined && (
+          {trade?.data?.priceImpact !== undefined && (
             <div className="flex items-start justify-between">
               <span className="text-[#6c86ad] text-sm">Price Impact:</span>
               <span className="text-[#6c86ad] text-sm font-semibold">
