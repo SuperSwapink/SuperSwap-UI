@@ -42,6 +42,7 @@ export const fetchBestAcross = async ({
       amountOut: parsedAmountIn,
       amountOutMin: parsedAmountIn,
       calldata: "",
+      priceImpact: 0,
     }
   } else {
     const route = Router.findBestRoute(
@@ -84,6 +85,7 @@ export const fetchBestAcross = async ({
           args.routeCode,
         ],
       }),
+      priceImpact: route.priceImpact ?? 0,
     }
   }
 
@@ -129,6 +131,7 @@ export const fetchBestAcross = async ({
         .address(tokenOut.address)
         .address(recipient)
         .toHexString(),
+      priceImpact: 0,
     }
   } else {
     const route = Router.findBestRoute(
@@ -163,6 +166,7 @@ export const fetchBestAcross = async ({
         .address(args.to)
         .bytes(args.routeCode)
         .toHexString(),
+      priceImpact: route.priceImpact ?? 0,
     }
   }
 
@@ -179,8 +183,6 @@ export const fetchBestAcross = async ({
     crossChainMessage: destData.message,
   })
 
-  console.log(quote)
-
   return {
     status: ACROSS_STATUS.SUCCESS,
     depositData: quote.deposit,
@@ -190,5 +192,14 @@ export const fetchBestAcross = async ({
     amountOut: destData.amountOut?.toString(),
     tokenIn,
     tokenOut,
+    priceImpact:
+      (1 -
+        (1 - originData.priceImpact / 100) *
+          (1 - destData.priceImpact / 100) *
+          Number(
+            Number(quote.deposit.outputAmount) /
+              Number(quote.deposit.inputAmount)
+          )) *
+      100,
   }
 }
