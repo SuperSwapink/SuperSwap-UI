@@ -20,8 +20,6 @@ const SwapPanel = () => {
     switchToken,
   } = useSwapParams()
 
-  console.log(tokenOut)
-
   const trade = useSwapTrade()
 
   return (
