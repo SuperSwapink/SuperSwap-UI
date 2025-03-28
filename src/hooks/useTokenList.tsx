@@ -40,7 +40,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
             k.chainId === ChainId.BASE &&
             !k.isNative &&
             k.address.toLowerCase() === item.token_address.toLowerCase()
-        )
+        ) && item.listed
     )
     ?.filter(
       (item, i, data) =>
