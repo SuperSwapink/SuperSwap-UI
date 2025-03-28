@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import React from "react";
-import Exchange from "../svgs/Exchange";
-import SwapSide from "./SwapSide";
-import useSwapParams from "../../hooks/useSwapParams";
-import SwapButton from "./SwapButton";
-import useSwapTrade from "@/hooks/useSwapTrade";
-import { Amount } from "@/packages/currency";
-import SwapDetails from "./SwapDetails";
+import React from "react"
+import Exchange from "../svgs/Exchange"
+import SwapSide from "./SwapSide"
+import useSwapParams from "../../hooks/useSwapParams"
+import SwapButton from "./SwapButton"
+import useSwapTrade from "@/hooks/useSwapTrade"
+import { Amount } from "@/packages/currency"
+import SwapDetails from "./SwapDetails"
 
 const SwapPanel = () => {
   const {
@@ -18,9 +18,11 @@ const SwapPanel = () => {
     setTokenIn,
     setTokenOut,
     switchToken,
-  } = useSwapParams();
+  } = useSwapParams()
 
-  const trade = useSwapTrade();
+  console.log(tokenOut)
+
+  const trade = useSwapTrade()
 
   return (
     <div className="bg-white dark:bg-[#131823] relative p-4 md:p-8 mt-4 rounded-lg md:rounded-[32px] shadow-[0_12px_24px_#e2e9f6] dark:shadow-none">
@@ -58,7 +60,7 @@ const SwapPanel = () => {
       {/* <SwapTrades trades={trade.data} /> */}
       <SwapButton trade={trade} />
     </div>
-  );
-};
+  )
+}
 
-export default SwapPanel;
+export default SwapPanel

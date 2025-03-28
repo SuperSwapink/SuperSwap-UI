@@ -42,7 +42,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
   primaryTokens,
   disabled,
 }) => {
-  const { address, chainId } = useAccount()
+  const { address } = useAccount()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const tokenSelectorRef = useRef<HTMLDivElement>(null)
   const amountInputRef = useRef<HTMLInputElement>(null)

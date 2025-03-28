@@ -1,6 +1,6 @@
 import { DEFAULT_IMAGE_URL } from "@/constants"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface CurrencyIconProps {
   src: string
@@ -18,6 +18,10 @@ const CurrencyIcon: React.FC<CurrencyIconProps> = ({
   className,
 }) => {
   const [imageSrc, setImageSrc] = useState(src)
+
+  useEffect(() => {
+    setImageSrc(src)
+  }, [src])
 
   const handleError = () => {
     setImageSrc(DEFAULT_IMAGE_URL)
