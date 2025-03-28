@@ -159,7 +159,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
             })
         )
       : []),
-  ]
+  ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i)
 
   return (
     <>

@@ -4,10 +4,12 @@ import { Token } from "../Token"
 import { addressMapToTokenMap } from "../functions/address-map-to-token-map"
 
 import {
+  CBBTC_ADDRESS,
   KBTC_ADDRESS,
   USDC_ADDRESS,
   USDT0_ADDRESS,
   USDT_ADDRESS,
+  VIRTUAL_ADDRESS,
   WETH9_ADDRESS,
 } from "./token-addresses"
 
@@ -72,4 +74,28 @@ export const KBTC: Record<keyof typeof KBTC_ADDRESS, Token> = {
     },
     KBTC_ADDRESS
   ) as Record<keyof typeof KBTC_ADDRESS, Token>),
+} as const
+
+export const CBBTC: Record<keyof typeof CBBTC_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 8,
+      symbol: "cbBTC",
+      name: "Coinbase Wrapped BTC",
+      icon: "/media/cbbtc.svg",
+    },
+    CBBTC_ADDRESS
+  ) as Record<keyof typeof CBBTC_ADDRESS, Token>),
+} as const
+
+export const VIRTUAL: Record<keyof typeof VIRTUAL_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 8,
+      symbol: "VIRTUAL",
+      name: "Virtual Protocol",
+      icon: "/media/virtual.svg",
+    },
+    VIRTUAL_ADDRESS
+  ) as Record<keyof typeof VIRTUAL_ADDRESS, Token>),
 } as const

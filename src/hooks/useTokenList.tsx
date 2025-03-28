@@ -32,7 +32,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
       ),
   ]
 
-  const aerodromeTokens = aerodromeData
+  const filteredAerodromeTokens = aerodromeData
     ?.filter(
       (item) =>
         !defaultTokens.find(
@@ -40,19 +40,27 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
             k.chainId === ChainId.BASE &&
             !k.isNative &&
             k.address.toLowerCase() === item.token_address.toLowerCase()
-        ) && item.listed
+        )
     )
-    ?.map(
-      (item) =>
-        new Token({
-          address: item.token_address,
-          chainId: ChainId.BASE,
-          decimals: item.decimals,
-          name: item.symbol,
-          symbol: item.symbol,
-          icon: `https://raw.githubusercontent.com/SmolDapp/tokenAssets/main/tokens/8453/${item.token_address.toLowerCase()}/logo.svg`,
-        })
+    ?.filter(
+      (item, i, data) =>
+        data.findIndex(
+          (k) =>
+            k.token_address.toLowerCase() === item.token_address.toLowerCase()
+        ) === i
     )
+
+  const aerodromeTokens = filteredAerodromeTokens?.map(
+    (item) =>
+      new Token({
+        address: item.token_address,
+        chainId: ChainId.BASE,
+        decimals: item.decimals,
+        name: item.symbol,
+        symbol: item.symbol,
+        icon: `https://raw.githubusercontent.com/SmolDapp/tokenAssets/main/tokens/8453/${item.token_address.toLowerCase()}/logo.svg`,
+      })
+  )
 
   return [...defaultTokens, ...(aerodromeTokens ?? [])]
 }

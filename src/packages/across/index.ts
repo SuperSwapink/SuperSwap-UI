@@ -183,6 +183,12 @@ export const fetchBestAcross = async ({
     crossChainMessage: destData.message,
   })
 
+  console.log(
+    originData.priceImpact,
+    destData.priceImpact,
+    Number(quote.deposit.outputAmount) / Number(quote.deposit.inputAmount)
+  )
+
   return {
     status: ACROSS_STATUS.SUCCESS,
     depositData: quote.deposit,
@@ -194,8 +200,8 @@ export const fetchBestAcross = async ({
     tokenOut,
     priceImpact:
       (1 -
-        (1 - originData.priceImpact / 100) *
-          (1 - destData.priceImpact / 100) *
+        (1 - originData.priceImpact) *
+          (1 - destData.priceImpact) *
           Number(
             Number(quote.deposit.outputAmount) /
               Number(quote.deposit.inputAmount)

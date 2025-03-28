@@ -26,3 +26,11 @@ export const USDT_ADDRESS = {
 export const KBTC_ADDRESS = {
   [ChainId.INK]: "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
 } as const
+
+export const CBBTC_ADDRESS = {
+  [ChainId.BASE]: "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+} as const
+
+export const VIRTUAL_ADDRESS = {
+  [ChainId.BASE]: "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+} as const

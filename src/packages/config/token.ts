@@ -253,6 +253,15 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Stablecoin",
     chainId: ChainId.BASE,
   },
+  {
+    address: "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+    symbol: "cbBTC",
+    name: "Coinbase Wrapped BTC",
+    decimals: 8,
+    icon: "/media/cbbtc.svg",
+    category: "Bitcoin",
+    chainId: ChainId.BASE,
+  },
 ]
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST]
