@@ -8,6 +8,7 @@ import {
 import TwoLine from "./svgs/TwoLine"
 import Close from "./svgs/Close"
 import useSettings from "@/hooks/useSettings"
+import HelpToolTip from "./HelpToolTip"
 
 const SettingPopup = () => {
   const { deadline, slippage, setDeadline, setSlippage } = useSettings()
@@ -36,7 +37,7 @@ const SettingPopup = () => {
       >
         <MenuItems
           anchor="bottom"
-          className="relative mt-2 rounded-xl bg-white dark:bg-[#131823] shadow-[0px_8px_24px_-8px_rgba(175,178,237,0.24)] dark:shadow-none w-[375px]"
+          className="relative mt-2 rounded-xl bg-white dark:bg-[#131823] shadow-[0px_8px_24px_-8px_rgba(175,178,237,0.24)] dark:shadow-none w-[375px] !overflow-visible"
         >
           <MenuItem>
             {({ close }) => (
@@ -53,7 +54,18 @@ const SettingPopup = () => {
                 <div className="flex flex-col py-4 px-3 space-y-4">
                   <div className="flex flex-col space-y-2">
                     <h4 className="text-[#222] dark:text-white text-sm">
-                      Slippage Tolerance
+                      Slippage Tolerance{" "}
+                      <HelpToolTip id="slippage">
+                        <p>
+                          In cross-chain swaps, slippage represents the
+                          difference between the expected price and the actual
+                          execution price across chains. A lower slippage gives
+                          you a better rate, but it may cause the swap to
+                          fail—especially during high volatility or low
+                          liquidity. If that happens, you’ll be prompted to
+                          adjust your slippage tolerance.
+                        </p>
+                      </HelpToolTip>
                     </h4>
                     <div className="flex items-center justify-between space-x-2">
                       <div className="flex items-center space-x-1">

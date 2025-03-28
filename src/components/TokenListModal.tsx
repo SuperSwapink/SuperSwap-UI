@@ -198,11 +198,11 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                 </div>
                 <div className="flex justify-between px-4 mt-2">
                   <span className="text-xs text-[#a0a0a0] min-w-[100px] w-[100px] md:w-[200px]">
-                    Network:
+                    Network
                   </span>
                   <div className="flex justify-between w-full px-2">
                     <span className="text-xs text-[#a0a0a0]">Token</span>
-                    <span className="text-xs text-[#a0a0a0]">Your Balance</span>
+                    <span className="text-xs text-[#a0a0a0]">Balance</span>
                   </div>
                 </div>
                 <div className="flex rounded-es-2xl rounded-ee-2xl p-3 md:p-4">

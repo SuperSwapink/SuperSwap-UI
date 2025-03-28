@@ -60,11 +60,37 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   Swaps interact only with:
                   <br />
                   <br />
+                  INK
+                  <br />
                   <a
                     href="https://explorer.inkonchain.com/address/0x5839389261D1F38aac7c8E91DcDa85646bEcB414"
                     className="text-[#2f8af5]"
                   >
                     0x5839389261D1F38aac7c8E91DcDa85646bEcB414
+                  </a>
+                  <br />
+                  <a
+                    href="https://explorer.inkonchain.com/address/0xD4EED145b2a3aCFC657124406cD9b79a5a64fe44"
+                    className="text-[#2f8af5]"
+                  >
+                    0xD4EED145b2a3aCFC657124406cD9b79a5a64fe44
+                  </a>
+                  <br />
+                  <br />
+                  BASE
+                  <br />
+                  <a
+                    href="https://basescan.org/address/0x78e7Bb4D66505D25Cef212Ce49A64261d6f1CddB"
+                    className="text-[#2f8af5]"
+                  >
+                    0x78e7Bb4D66505D25Cef212Ce49A64261d6f1CddB
+                  </a>
+                  <br />
+                  <a
+                    href="https://basescan.org/address/0x54C8e426A5167cc34E7CCfb890FD7698733E2c60"
+                    className="text-[#2f8af5]"
+                  >
+                    0x54C8e426A5167cc34E7CCfb890FD7698733E2c60
                   </a>
                   <br />
                   <br />

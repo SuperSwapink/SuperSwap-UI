@@ -1,24 +1,37 @@
-import React from "react";
-import Help from "./svgs/Help";
+import React from "react"
+import Help from "./svgs/Help"
+import { Tooltip } from "react-tooltip"
 
 interface HelpToolTipProps {
-  children: React.ReactNode;
-  className?: string;
+  id: string
+  children: React.ReactNode
+  className?: string
 }
 
-const HelpToolTip: React.FC<HelpToolTipProps> = ({ children, className }) => {
+const HelpToolTip: React.FC<HelpToolTipProps> = ({
+  id,
+  children,
+  className,
+}) => {
   return (
     <div
       className={`relative inline-flex group cursor-pointer ${className ?? ""}`}
     >
-      <span className="bg-black/10 p-0.5 rounded-full">
+      <span id={id} className="bg-black/10 p-0.5 rounded-full">
         <Help />
       </span>
-      <div className="absolute hidden group-hover:block top-0 left-1/2 -translate-y-full -translate-x-1/2 -mt-1 bg-[#f3f5fa] dark:bg-[#131823] py-2 px-3 rounded-lg border border-[#e3e7ee] dark:border-[#202835]">
+      <Tooltip
+        anchorSelect={`#${id}`}
+        positionStrategy="fixed"
+        place={"bottom"}
+        opacity={1}
+        border={"solid 1px #e8edfa"}
+        className="max-w-60 !border !bg-white dark:!bg-[#131823] z-10 !text-black dark:!text-white"
+      >
         {children}
-      </div>
+      </Tooltip>
     </div>
-  );
-};
+  )
+}
 
-export default HelpToolTip;
+export default HelpToolTip
