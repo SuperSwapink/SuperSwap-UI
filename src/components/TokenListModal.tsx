@@ -12,6 +12,7 @@ import { Address, erc20Abi, getAddress, isAddress } from "viem"
 import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
 import Image from "next/image"
 import useTokenBalances from "@/hooks/useTokenBalances"
+import useTokenPrices from "@/hooks/useTokenPrices"
 
 interface TokenListModalProps {
   currentToken?: Type
@@ -32,12 +33,14 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
   const { address } = useAccount()
   const [selectedChain, setSelectedChain] = useState<ChainId>(ChainId.INK)
   const tokenList = useTokenList(selectedChain, primaryTokens)
+  const { prices } = useTokenPrices()
   const { data: balances } = useTokenBalances(
     selectedChain,
     address,
     tokenList,
     open
   )
+  const [sortedTokens, setSortedTokens] = useState<Type[]>([])
 
   useEffect(() => {
     setSelectedChain(currentToken?.chainId ?? ChainId.INK)
@@ -79,63 +82,73 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
     setSelectedChain(id)
   }
 
-  const tokens = [
-    ...tokenList.filter(
-      (item) =>
-        item.name?.match(new RegExp(filter, "i")) ||
-        item.symbol?.match(new RegExp(filter, "i")) ||
-        (!item.isNative && item.address.toLowerCase() === filter.toLowerCase())
-    ),
-    ...(isAddress(filter) &&
-    tokenInfo &&
-    tokenInfo[0].result &&
-    tokenInfo[1].result &&
-    tokenInfo[2].result &&
-    tokenList.findIndex(
-      (item) =>
-        !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
-    ) === -1
-      ? [
-          new Token({
-            address: getAddress(filter),
-            chainId: selectedChain,
-            name: tokenInfo[0]?.result,
-            symbol: tokenInfo[1]?.result,
-            decimals: tokenInfo[2]?.result ?? 18,
-            isCustom: 1,
-          }),
-        ]
-      : []),
-  ]
+  useEffect(() => {
+    const tokens = [
+      ...tokenList.filter(
+        (item) =>
+          item.name?.match(new RegExp(filter, "i")) ||
+          item.symbol?.match(new RegExp(filter, "i")) ||
+          (!item.isNative &&
+            item.address.toLowerCase() === filter.toLowerCase())
+      ),
+      ...(isAddress(filter) &&
+      tokenInfo &&
+      tokenInfo[0].result &&
+      tokenInfo[1].result &&
+      tokenInfo[2].result &&
+      tokenList.findIndex(
+        (item) =>
+          !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
+      ) === -1
+        ? [
+            new Token({
+              address: getAddress(filter),
+              chainId: selectedChain,
+              name: tokenInfo[0]?.result,
+              symbol: tokenInfo[1]?.result,
+              decimals: tokenInfo[2]?.result ?? 18,
+              isCustom: 1,
+            }),
+          ]
+        : []),
+    ]
 
-  const sortedTokens = tokens
-    .filter((item) => item.chainId === selectedChain)
-    .sort((a, b) =>
-      Number(
-        Amount.fromRawAmount(
-          a,
-          balances?.[selectedChain]?.[
-            (a.isNative
-              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-              : a.address
-            ).toLowerCase()
-          ] ?? 0n
-        ).toExact()
-      ) >
-      Number(
-        Amount.fromRawAmount(
-          b,
-          balances?.[selectedChain]?.[
-            (b.isNative
-              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-              : b.address
-            ).toLowerCase()
-          ] ?? 0n
-        ).toExact()
+    const sortedTokens = tokens
+      .filter((item) => item.chainId === selectedChain)
+      .sort((a, b) =>
+        Number(
+          Amount.fromRawAmount(
+            a,
+            balances?.[selectedChain]?.[
+              (a.isNative
+                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                : a.address
+              ).toLowerCase()
+            ] ?? 0n
+          ).toExact()
+        ) *
+          (prices?.[`${selectedChain}:${a.wrapped.address}`.toLowerCase()] ??
+            0) >
+        Number(
+          Amount.fromRawAmount(
+            b,
+            balances?.[selectedChain]?.[
+              (b.isNative
+                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                : b.address
+              ).toLowerCase()
+            ] ?? 0n
+          ).toExact()
+        ) *
+          (prices?.[
+            `${selectedChain}:${b.wrapped.address.toLowerCase()}`.toLowerCase()
+          ] ?? 0)
+          ? -1
+          : 1
       )
-        ? -1
-        : 1
-    )
+
+    setSortedTokens(sortedTokens)
+  }, [tokenList, selectedChain, prices])
 
   return (
     <>
@@ -206,23 +219,21 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                       ))}
                   </div>
                   <div className="flex flex-col space-y-2 h-[66vh] overflow-y-auto w-full">
-                    {sortedTokens
-                      .filter((item) => item.chainId === selectedChain)
-                      .map((item) => (
-                        <TokenListItem
-                          key={item.id}
-                          token={item}
-                          balance={
-                            balances?.[selectedChain]?.[
-                              (item.isNative
-                                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-                                : item.address
-                              ).toLowerCase()
-                            ]
-                          }
-                          onSelectItem={onSelectItem}
-                        />
-                      ))}
+                    {sortedTokens.map((item) => (
+                      <TokenListItem
+                        key={item.id}
+                        token={item}
+                        balance={
+                          balances?.[selectedChain]?.[
+                            (item.isNative
+                              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                              : item.address
+                            ).toLowerCase()
+                          ]
+                        }
+                        onSelectItem={onSelectItem}
+                      />
+                    ))}
                   </div>
                 </div>
               </DialogPanel>

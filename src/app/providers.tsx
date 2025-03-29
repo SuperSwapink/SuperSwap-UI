@@ -3,6 +3,7 @@
 import { LocalTokenStorageProvider } from "@/hooks/useLocalTokenStorage"
 import { SettingsProvider } from "@/hooks/useSettings"
 import { SwapParamsProvider } from "@/hooks/useSwapParams"
+import { TokenPricesProvider } from "@/hooks/useTokenPrices"
 import { ink, base } from "@/packages/config"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createWeb3Modal } from "@web3modal/wagmi/react"
@@ -48,7 +49,9 @@ export default function Provider({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <SettingsProvider>
           <LocalTokenStorageProvider>
-            <SwapParamsProvider>{children}</SwapParamsProvider>
+            <TokenPricesProvider>
+              <SwapParamsProvider>{children}</SwapParamsProvider>
+            </TokenPricesProvider>
           </LocalTokenStorageProvider>
         </SettingsProvider>
       </QueryClientProvider>
