@@ -1,28 +1,17 @@
 "use client"
 
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  Transition,
-  TransitionChild,
-} from "@headlessui/react"
+import { Dialog, DialogPanel, Transition } from "@headlessui/react"
 import Close from "./svgs/Close"
 import Magnifier from "./svgs/Magnifier"
 import TokenListItem from "./TokenListItem"
 import useTokenList from "../hooks/useTokenList"
-import { Token, Type } from "@/packages/currency"
+import { Amount, Token, Type } from "@/packages/currency"
 import { useEffect, useState } from "react"
 import { useAccount, useReadContracts } from "wagmi"
 import { Address, erc20Abi, getAddress, isAddress } from "viem"
 import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
-import { TOKEN_LIST } from "@/packages/config"
-import TokenImportWarningModal from "./TokenImportWarningModal"
-import HelpToolTip from "./HelpToolTip"
-import Link from "next/link"
-import useLocalTokenStorage from "@/hooks/useLocalTokenStorage"
-import Ink from "@/assets/network/ink.png"
 import Image from "next/image"
+import useTokenBalances from "@/hooks/useTokenBalances"
 
 interface TokenListModalProps {
   currentToken?: Type
@@ -40,9 +29,15 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
   primaryTokens,
 }) => {
   const [filter, setFilter] = useState("")
-  const { localTokenList } = useLocalTokenStorage()
+  const { address } = useAccount()
   const [selectedChain, setSelectedChain] = useState<ChainId>(ChainId.INK)
   const tokenList = useTokenList(selectedChain, primaryTokens)
+  const { data: balances } = useTokenBalances(
+    selectedChain,
+    address,
+    tokenList,
+    open
+  )
 
   useEffect(() => {
     setSelectedChain(currentToken?.chainId ?? ChainId.INK)
@@ -91,27 +86,6 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
         item.symbol?.match(new RegExp(filter, "i")) ||
         (!item.isNative && item.address.toLowerCase() === filter.toLowerCase())
     ),
-    ...(filter.length >= 0
-      ? localTokenList
-          .filter(
-            (item) =>
-              item.name?.match(new RegExp(filter, "i")) ||
-              item.symbol?.match(new RegExp(filter, "i")) ||
-              item.address.toLowerCase() === filter.toLowerCase()
-          )
-          .map(
-            (item) =>
-              new Token({
-                chainId: item.chainId,
-                address: item.address,
-                name: item.name,
-                symbol: item.symbol,
-                decimals: item.decimals,
-                category: item.category,
-                icon: item.icon,
-              })
-          )
-      : []),
     ...(isAddress(filter) &&
     tokenInfo &&
     tokenInfo[0].result &&
@@ -120,12 +94,6 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
     tokenList.findIndex(
       (item) =>
         !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
-    ) === -1 &&
-    TOKEN_LIST.findIndex(
-      (item) => item.address.toLowerCase() === filter.toLowerCase()
-    ) === -1 &&
-    localTokenList.findIndex(
-      (item) => item.address.toLowerCase() === filter.toLowerCase()
     ) === -1
       ? [
           new Token({
@@ -138,28 +106,36 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
           }),
         ]
       : []),
-    ...(filter.length >= 0
-      ? TOKEN_LIST.filter(
-          (item) =>
-            (item.name?.match(new RegExp(filter, "i")) ||
-              item.symbol?.match(new RegExp(filter, "i"))) &&
-            localTokenList.findIndex(
-              (k) => k.address.toLowerCase() === item.address.toLowerCase()
-            ) === -1
-        ).map(
-          (item) =>
-            new Token({
-              address: item.address,
-              name: item.name,
-              symbol: item.symbol,
-              chainId: ChainId.INK,
-              decimals: item.decimals,
-              icon: item.icon,
-              isCustom: 2,
-            })
-        )
-      : []),
-  ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i)
+  ]
+
+  const sortedTokens = tokens
+    .filter((item) => item.chainId === selectedChain)
+    .sort((a, b) =>
+      Number(
+        Amount.fromRawAmount(
+          a,
+          balances?.[selectedChain]?.[
+            (a.isNative
+              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+              : a.address
+            ).toLowerCase()
+          ] ?? 0n
+        ).toExact()
+      ) >
+      Number(
+        Amount.fromRawAmount(
+          b,
+          balances?.[selectedChain]?.[
+            (b.isNative
+              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+              : b.address
+            ).toLowerCase()
+          ] ?? 0n
+        ).toExact()
+      )
+        ? -1
+        : 1
+    )
 
   return (
     <>
@@ -230,12 +206,20 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                       ))}
                   </div>
                   <div className="flex flex-col space-y-2 h-[66vh] overflow-y-auto w-full">
-                    {tokens
+                    {sortedTokens
                       .filter((item) => item.chainId === selectedChain)
                       .map((item) => (
                         <TokenListItem
                           key={item.id}
                           token={item}
+                          balance={
+                            balances?.[selectedChain]?.[
+                              (item.isNative
+                                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                                : item.address
+                              ).toLowerCase()
+                            ]
+                          }
                           onSelectItem={onSelectItem}
                         />
                       ))}

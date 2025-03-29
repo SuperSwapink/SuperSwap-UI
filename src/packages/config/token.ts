@@ -218,6 +218,15 @@ export const PRIMARY_TOKEN_LIST = [
     chainId: ChainId.INK,
   },
   {
+    address: "0xca5f2ccbd9c40b32657df57c716de44237f80f05",
+    symbol: "KRAKEN",
+    name: "Kraken",
+    decimals: 18,
+    icon: "/media/kraken.jpg",
+    category: "Top",
+    chainId: ChainId.INK,
+  },
+  {
     address: "0x4200000000000000000000000000000000000006",
     symbol: "WETH",
     name: "Wrapped Ether",
@@ -321,15 +330,3 @@ export const PRIMARY_TOKEN_LIST = [
 ]
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST]
-
-export const TOKEN_LIST = [
-  {
-    address: "0xca5f2ccbd9c40b32657df57c716de44237f80f05",
-    symbol: "KRAKEN",
-    name: "Kraken",
-    decimals: 18,
-    icon: "/media/kraken.jpg",
-    category: "Top",
-    chainId: ChainId.INK,
-  },
-]

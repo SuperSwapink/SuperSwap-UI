@@ -3,8 +3,10 @@ import { ChainId } from "@/packages/chain"
 import { DEFAULT_TOKEN_LIST, PRIMARY_TOKEN_LIST } from "@/packages/config"
 import { Native, Token } from "@/packages/currency"
 import { useReadContract } from "wagmi"
+import useLocalTokenStorage from "./useLocalTokenStorage"
 
 const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
+  const { localTokenList } = useLocalTokenStorage()
   const { data: aerodromeData } = useReadContract({
     abi: aerodromeSugarAbi,
     functionName: "tokens",
@@ -62,7 +64,24 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
       })
   )
 
-  return [...defaultTokens, ...(aerodromeTokens ?? [])]
+  const localTokens = localTokenList?.map(
+    (item) =>
+      new Token({
+        chainId: item.chainId,
+        address: item.address,
+        name: item.name,
+        symbol: item.symbol,
+        decimals: item.decimals,
+        category: item.category,
+        icon: item.icon,
+      })
+  )
+
+  return [
+    ...defaultTokens,
+    ...(aerodromeTokens ?? []),
+    ...(localTokens ?? []),
+  ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i)
 }
 
 export default useTokenList
