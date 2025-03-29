@@ -1,5 +1,5 @@
 import { ChainId } from "@/packages/chain"
-import { DEFAULT_TOKEN_LIST, TOKEN_LIST } from "../packages/config/token"
+import { DEFAULT_TOKEN_LIST } from "../packages/config/token"
 import { Native, Token } from "@/packages/currency"
 import { createPublicClient, erc20Abi, getAddress, isAddress } from "viem"
 import { config } from "@/packages/config"
@@ -7,7 +7,7 @@ import { config } from "@/packages/config"
 export const getTokenInfo = async (chainId: ChainId, address: string) => {
   if (address === "NATIVE") return Native.onChain(chainId)
   if (!isAddress(address)) return undefined
-  const tokenInList = [...DEFAULT_TOKEN_LIST, ...TOKEN_LIST].find(
+  const tokenInList = [...DEFAULT_TOKEN_LIST].find(
     (item) =>
       item.address.toLowerCase() === address.toLowerCase() &&
       item.chainId === chainId
