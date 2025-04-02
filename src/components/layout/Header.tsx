@@ -8,6 +8,7 @@ import LogoMbLight from "../../assets/logo-mb-light.png"
 import LogoMbDark from "../../assets/logo-mb-dark.png"
 import Image from "next/image"
 import SettingMenu from "../SettingMenu"
+import NetworkSelector from "../NetworkSelector"
 
 const Header = () => {
   return (
@@ -43,7 +44,7 @@ const Header = () => {
         />
         <div className="flex items-center">
           <SettingMenu className="mr-2" />
-          {/* <NetworkSelector className="mr-2" /> */}
+          <NetworkSelector className="mr-2" />
           <WalletConnect />
         </div>
       </div>
