@@ -69,7 +69,7 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
       )
       setAmountIn(amount ?? "")
     }
-  }, [publicClient])
+  }, [])
 
   const switchToken = () => {
     const newTokenIn = tokenOut

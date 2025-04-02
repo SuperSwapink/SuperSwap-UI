@@ -40,7 +40,6 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
     tokenList,
     open
   )
-  const [sortedTokens, setSortedTokens] = useState<Type[]>([])
 
   useEffect(() => {
     setSelectedChain(currentToken?.chainId ?? ChainId.INK)
@@ -82,73 +81,67 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
     setSelectedChain(id)
   }
 
-  useEffect(() => {
-    const tokens = [
-      ...tokenList.filter(
-        (item) =>
-          item.name?.match(new RegExp(filter, "i")) ||
-          item.symbol?.match(new RegExp(filter, "i")) ||
-          (!item.isNative &&
-            item.address.toLowerCase() === filter.toLowerCase())
-      ),
-      ...(isAddress(filter) &&
-      tokenInfo &&
-      tokenInfo[0].result &&
-      tokenInfo[1].result &&
-      tokenInfo[2].result &&
-      tokenList.findIndex(
-        (item) =>
-          !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
-      ) === -1
-        ? [
-            new Token({
-              address: getAddress(filter),
-              chainId: selectedChain,
-              name: tokenInfo[0]?.result,
-              symbol: tokenInfo[1]?.result,
-              decimals: tokenInfo[2]?.result ?? 18,
-              isCustom: 1,
-            }),
-          ]
-        : []),
-    ]
+  const tokens = [
+    ...tokenList.filter(
+      (item) =>
+        item.name?.match(new RegExp(filter, "i")) ||
+        item.symbol?.match(new RegExp(filter, "i")) ||
+        (!item.isNative && item.address.toLowerCase() === filter.toLowerCase())
+    ),
+    ...(isAddress(filter) &&
+    tokenInfo &&
+    tokenInfo[0].result &&
+    tokenInfo[1].result &&
+    tokenInfo[2].result &&
+    tokenList.findIndex(
+      (item) =>
+        !item.isNative && item.address.toLowerCase() === filter.toLowerCase()
+    ) === -1
+      ? [
+          new Token({
+            address: getAddress(filter),
+            chainId: selectedChain,
+            name: tokenInfo[0]?.result,
+            symbol: tokenInfo[1]?.result,
+            decimals: tokenInfo[2]?.result ?? 18,
+            isCustom: 1,
+          }),
+        ]
+      : []),
+  ]
 
-    const sortedTokens = tokens
-      .filter((item) => item.chainId === selectedChain)
-      .sort((a, b) =>
-        Number(
-          Amount.fromRawAmount(
-            a,
-            balances?.[selectedChain]?.[
-              (a.isNative
-                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-                : a.address
-              ).toLowerCase()
-            ] ?? 0n
-          ).toExact()
-        ) *
-          (prices?.[`${selectedChain}:${a.wrapped.address}`.toLowerCase()] ??
-            0) >
-        Number(
-          Amount.fromRawAmount(
-            b,
-            balances?.[selectedChain]?.[
-              (b.isNative
-                ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-                : b.address
-              ).toLowerCase()
-            ] ?? 0n
-          ).toExact()
-        ) *
-          (prices?.[
-            `${selectedChain}:${b.wrapped.address.toLowerCase()}`.toLowerCase()
-          ] ?? 0)
-          ? -1
-          : 1
-      )
-
-    setSortedTokens(sortedTokens)
-  }, [tokenList, selectedChain, prices])
+  const sortedTokens = tokens
+    .filter((item) => item.chainId === selectedChain)
+    .sort((a, b) =>
+      Number(
+        Amount.fromRawAmount(
+          a,
+          balances?.[selectedChain]?.[
+            (a.isNative
+              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+              : a.address
+            ).toLowerCase()
+          ] ?? 0n
+        ).toExact()
+      ) *
+        (prices?.[`${selectedChain}:${a.wrapped.address}`.toLowerCase()] ?? 0) >
+      Number(
+        Amount.fromRawAmount(
+          b,
+          balances?.[selectedChain]?.[
+            (b.isNative
+              ? "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+              : b.address
+            ).toLowerCase()
+          ] ?? 0n
+        ).toExact()
+      ) *
+        (prices?.[
+          `${selectedChain}:${b.wrapped.address.toLowerCase()}`.toLowerCase()
+        ] ?? 0)
+        ? -1
+        : 1
+    )
 
   return (
     <>

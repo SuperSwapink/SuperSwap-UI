@@ -116,7 +116,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
                     alt="network"
                     className="size-5 rounded-full"
                   />
-                  <span className="uppercase text-sm ml-1">
+                  <span className="uppercase text-sm ml-1 font-bold">
                     {SUPPORTED_CHAINS[token.chainId].name}
                   </span>
                 </div>
