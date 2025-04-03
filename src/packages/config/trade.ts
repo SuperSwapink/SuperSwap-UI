@@ -30,8 +30,8 @@ export type AcrossPortalChainId =
   (typeof ACROSS_PORTAL_SUPPORTED_CHAIN_IDS)[number]
 export const ACROSS_PORTAL_ADDRESS: Record<AcrossPortalChainId, `0x${string}`> =
   {
-    [ChainId.INK]: "0xD4EED145b2a3aCFC657124406cD9b79a5a64fe44",
-    [ChainId.BASE]: "0x54C8e426A5167cc34E7CCfb890FD7698733E2c60",
+    [ChainId.INK]: "0x51d3f0ecd9fd194eB3cF3aB177241AfEcE4d5494",
+    [ChainId.BASE]: "0x7b92d0ceA18F5598fC560F24f8948740D1eA833C",
   } as const
 export const isAcrossPortalChainId = (
   chainId: ChainId
