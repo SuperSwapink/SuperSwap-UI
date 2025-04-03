@@ -55,7 +55,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
     token: token instanceof Token ? token.address : undefined,
     query: {
       enabled: Boolean(address) && Boolean(token),
-      refetchInterval: 30000,
+      refetchInterval: 10000,
     },
   })
 
