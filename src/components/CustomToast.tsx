@@ -9,7 +9,7 @@ import { Chain, ChainId } from "@/packages/chain"
 interface CustomToastProps {
   t: Toast
   type: "success" | "info" | "error"
-  text: string
+  text: React.ReactNode
   chainId?: ChainId
   hash?: string
 }

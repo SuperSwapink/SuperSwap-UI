@@ -9,7 +9,7 @@ import {
   useWalletClient,
 } from "wagmi"
 import useSwapParams from "../../hooks/useSwapParams"
-import { Amount, Token, tryParseAmount } from "@/packages/currency"
+import { Amount, Token, tryParseAmount, WETH9 } from "@/packages/currency"
 import Spinner from "../Spinner"
 import React, { useState } from "react"
 import { ApprovalState, useTokenApproval } from "@/hooks/useTokenApproval"
@@ -42,7 +42,8 @@ interface SwapButtonProps {
 const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
   const { address, chainId } = useAccount()
   const { open } = useWeb3Modal()
-  const { amountIn, tokenIn, tokenOut, setAmountIn } = useSwapParams()
+  const { amountIn, tokenIn, tokenOut, setAmountIn, setTokenIn, setTokenOut } =
+    useSwapParams()
   const originPublicClient = usePublicClient({
     chainId: tokenIn?.chainId ?? ChainId.INK,
   })
@@ -143,6 +144,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               chainId={curTokenIn.chainId}
             />
           ))
+
           console.log(res)
         } else {
           const balanceBefore = tokenOut.isNative
@@ -153,6 +155,12 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 functionName: "balanceOf",
                 args: [address],
               })
+          const wethBalanceBefore = await originPublicClient.readContract({
+            abi: erc20Abi,
+            address: WETH9[tokenOut.chainId].address,
+            functionName: "balanceOf",
+            args: [address],
+          })
 
           const currentDestBlock = await destPublicClient.getBlockNumber()
 
@@ -224,24 +232,58 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 functionName: "balanceOf",
                 args: [address],
               })
+          const wethBalanceAfter = await originPublicClient.readContract({
+            abi: erc20Abi,
+            address: WETH9[tokenOut.chainId].address,
+            functionName: "balanceOf",
+            args: [address],
+          })
 
-          toast.custom((t) => (
-            <CustomToast
-              t={t}
-              type="success"
-              text={`Swap ${Amount.fromRawAmount(
-                curTokenIn,
-                swapTrade.amountIn
-              ).toSignificant(6)} ${
-                swapTrade.tokenIn.symbol
-              } for ${Amount.fromRawAmount(
-                curTokenOut,
-                balanceAfter - balanceBefore
-              ).toSignificant(6)} ${swapTrade.tokenOut.symbol}`}
-              hash={hash}
-              chainId={curTokenIn.chainId}
-            />
-          ))
+          const isFailedSwap =
+            balanceAfter <= balanceBefore &&
+            wethBalanceAfter >= wethBalanceBefore
+
+          toast.custom((t) =>
+            !isFailedSwap ? (
+              <CustomToast
+                t={t}
+                type="success"
+                text={`Swap ${Amount.fromRawAmount(
+                  curTokenIn,
+                  swapTrade.amountIn
+                ).toSignificant(6)} ${
+                  swapTrade.tokenIn.symbol
+                } for ${Amount.fromRawAmount(
+                  curTokenOut,
+                  balanceAfter - balanceBefore
+                ).toSignificant(6)} ${swapTrade.tokenOut.symbol}`}
+                hash={hash}
+                chainId={curTokenIn.chainId}
+              />
+            ) : (
+              <CustomToast
+                t={t}
+                type="info"
+                text={
+                  <>
+                    Part of your cross-chain swap was completed successfully,
+                    but the final step couldn&apos;t be executed due to high
+                    volatility. As a protective measure, you&apos;ve received
+                    wETH on the destination chain instead of
+                    {curTokenOut.symbol} to prevent a poor-rate swap.
+                    <br />
+                    <br />
+                    You can now swap your wETH to {curTokenOut.symbol} on
+                    SuperSwap — with 0% fees on this transaction.
+                  </>
+                }
+              ></CustomToast>
+            )
+          )
+          if (isFailedSwap) {
+            setTokenIn(WETH9[curTokenOut.chainId])
+            setTokenOut(curTokenOut)
+          }
           console.log(fillStatus)
         }
 
