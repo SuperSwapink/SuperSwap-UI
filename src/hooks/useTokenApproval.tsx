@@ -54,6 +54,8 @@ export const useTokenApproval = ({
     enabled: Boolean(amount?.currency?.isToken && enabled),
   })
 
+  console.log(allowance)
+
   const { data } = useSimulateContract({
     chainId: amount?.currency.chainId,
     abi: [

@@ -28,6 +28,7 @@ export const useTokenAllowance = ({
     args: [owner as Address, spender as Address],
     query: {
       enabled: Boolean(token && owner && spender && enabled && chainId),
+      refetchInterval: 5000,
       select: (data) => {
         if (token) {
           return Amount.fromRawAmount(token, data.toString());
