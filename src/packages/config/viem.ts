@@ -7,7 +7,7 @@ export const ink = defineChain({
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://rpc-gel.inkonchain.com/a64a10dae00f4ab3920b26c9c058b95e"],
+      http: ["https://lb.drpc.org/ogrpc?network=ink&dkey=Avj4ISAgFkv2kgJEJNcc29FIXTViEhAR8JiRKjrWkQAY"],
     },
   },
   blockExplorers: {
@@ -73,7 +73,7 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.INK]: [
     {
       chain: ink,
-      transport: http(`https://rpc-gel.inkonchain.com/a64a10dae00f4ab3920b26c9c058b95e`),
+      transport: http(`https://lb.drpc.org/ogrpc?network=ink&dkey=Avj4ISAgFkv2kgJEJNcc29FIXTViEhAR8JiRKjrWkQAY`),
     },
   ],
   [ChainId.BASE]: [
