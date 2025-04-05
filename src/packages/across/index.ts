@@ -41,7 +41,13 @@ export const fetchBestAcross = async ({
     originData = {
       amountOut: parsedAmountIn,
       amountOutMin: parsedAmountIn,
-      calldata: "",
+      calldata: {
+        tokenIn: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+        amoutIn: parsedAmountIn,
+        tokenOut: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+        amoutOutMin: parsedAmountIn,
+        routeCode: '0x',
+      },
       priceImpact: 0,
     }
   } else {
@@ -73,18 +79,14 @@ export const fetchBestAcross = async ({
     originData = {
       amountOut: route.amountOutBI,
       amountOutMin: args.amountOutMin,
-      calldata: encodeFunctionData({
-        abi: routeProcessor3Abi,
-        functionName: "processRoute",
-        args: [
-          args.tokenIn,
-          args.amountIn,
-          args.tokenOut,
-          args.amountOutMin,
-          args.to,
-          args.routeCode,
-        ],
-      }),
+      calldata: {
+        tokenIn: args.tokenIn,
+        amountIn: args.amountIn,
+        tokenOut: args.tokenOut,
+        amountOutMin: args.amountOutMin,
+        to: args.to,
+        routeCode: args.routeCode,
+      },
       priceImpact: route.priceImpact ?? 0,
     }
   }
@@ -114,8 +116,8 @@ export const fetchBestAcross = async ({
       status: errMsg?.includes("max")
         ? ACROSS_STATUS.HIGH_AMOUNT
         : errMsg?.includes("low")
-        ? ACROSS_STATUS.LOW_AMOUNT
-        : ACROSS_STATUS.FAILED,
+          ? ACROSS_STATUS.LOW_AMOUNT
+          : ACROSS_STATUS.FAILED,
     }
   }
 
@@ -123,7 +125,7 @@ export const fetchBestAcross = async ({
   if (
     !tokenOut.isNative &&
     tokenOut.address.toLowerCase() ===
-      WETH9[tokenOut.chainId].address.toLowerCase()
+    WETH9[tokenOut.chainId].address.toLowerCase()
   ) {
     destData = {
       amountOut: estimatedQuote.deposit.outputAmount,
@@ -183,11 +185,7 @@ export const fetchBestAcross = async ({
     crossChainMessage: destData.message,
   })
 
-  console.log(
-    originData.priceImpact,
-    destData.priceImpact,
-    Number(quote.deposit.outputAmount) / Number(quote.deposit.inputAmount)
-  )
+  console.log(estimatedQuote.deposit.outputAmount, quote.deposit.outputAmount)
 
   return {
     status: ACROSS_STATUS.SUCCESS,
@@ -201,11 +199,11 @@ export const fetchBestAcross = async ({
     priceImpact:
       (1 -
         (1 - originData.priceImpact) *
-          (1 - destData.priceImpact) *
-          Number(
-            Number(quote.deposit.outputAmount) /
-              Number(quote.deposit.inputAmount)
-          )) *
+        (1 - destData.priceImpact) *
+        Number(
+          Number(quote.deposit.outputAmount) /
+          Number(quote.deposit.inputAmount)
+        )) *
       100,
   }
 }
