@@ -24,6 +24,6 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     USDC[ChainId.BASE],
     USDT[ChainId.BASE],
     CBBTC[ChainId.BASE],
-    // VIRTUAL[ChainId.BASE],
+    VIRTUAL[ChainId.BASE],
   ],
 }
