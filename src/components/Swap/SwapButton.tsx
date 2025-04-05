@@ -212,20 +212,20 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             ...config[curTokenOut.chainId][0],
           })
 
-          // const fillStatus = await waitForFillTx({
-          //   deposit: {
-          //     destinationChainId: curTrade.depositData.destinationChainId,
-          //     destinationSpokePoolAddress:
-          //       curTrade.depositData.destinationSpokePoolAddress,
-          //     message: curTrade.depositData.message,
-          //     originChainId: curTrade.depositData.originChainId,
-          //   },
-          //   depositId,
-          //   destinationChainClient: destinationChainClient as any,
-          //   fromBlock: currentDestBlock - 100n,
-          // })
+          const fillStatus = await waitForFillTx({
+            deposit: {
+              destinationChainId: curTrade.depositData.destinationChainId,
+              destinationSpokePoolAddress:
+                curTrade.depositData.destinationSpokePoolAddress,
+              message: curTrade.depositData.message,
+              originChainId: curTrade.depositData.originChainId,
+            },
+            depositId,
+            destinationChainClient: destinationChainClient as any,
+            fromBlock: currentDestBlock - 100n,
+          })
 
-          await delay(10000)
+          // await delay(10000)
 
           const balanceAfter = curTokenOut.isNative
             ? await destPublicClient.getBalance({ address })
@@ -287,7 +287,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             setTokenIn(WETH9[curTokenOut.chainId])
             setTokenOut(curTokenOut)
           }
-          // console.log(fillStatus)
+          console.log(fillStatus)
         }
 
         setAmountIn("")
