@@ -98,7 +98,7 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
     const newPathname = `${window.location.pathname}?${current.toString()}`
     router.replace(newPathname, undefined)
 
-    setAmountIn("0")
+    setAmountIn("")
     setTokenIn(newTokenIn)
     setTokenOut(newTokenOut)
   }
