@@ -42,6 +42,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
   )
 
   useEffect(() => {
+    setFilter("")
     setSelectedChain(currentToken?.chainId ?? ChainId.INK)
   }, [open])
 
