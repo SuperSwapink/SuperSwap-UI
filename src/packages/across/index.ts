@@ -43,9 +43,9 @@ export const fetchBestAcross = async ({
       amountOutMin: parsedAmountIn,
       calldata: {
         tokenIn: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-        amoutIn: parsedAmountIn,
+        amountIn: parsedAmountIn,
         tokenOut: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-        amoutOutMin: parsedAmountIn,
+        amountOutMin: parsedAmountIn,
         routeCode: '0x',
       },
       priceImpact: 0,
