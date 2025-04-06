@@ -70,10 +70,10 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   </a>
                   <br />
                   <a
-                    href="https://explorer.inkonchain.com/address/0xC8E4F0f2BD61b195d48C64b69C0AB23dF271863F"
+                    href="https://explorer.inkonchain.com/address/0xA0Df240629db93d2f88D86a5456F982848bE2B9D"
                     className="text-[#2f8af5]"
                   >
-                    0xC8E4F0f2BD61b195d48C64b69C0AB23dF271863F
+                    0xA0Df240629db93d2f88D86a5456F982848bE2B9D
                   </a>
                   <br />
                   <br />
@@ -87,10 +87,10 @@ const SecurityAlertModal: React.FC<SecurityAlertModalProps> = ({
                   </a>
                   <br />
                   <a
-                    href="https://basescan.org/address/0x15F6c40e7b4B7D41F05373F827f4b11CA5D0243b"
+                    href="https://basescan.org/address/0x0A5803a9341BC7c67EA51188F1dCE52A0B6F0EE4"
                     className="text-[#2f8af5]"
                   >
-                    0x15F6c40e7b4B7D41F05373F827f4b11CA5D0243b
+                    0x0A5803a9341BC7c67EA51188F1dCE52A0B6F0EE4
                   </a>
                   <br />
                   <br />
