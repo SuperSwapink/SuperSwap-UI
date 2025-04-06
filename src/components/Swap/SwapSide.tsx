@@ -16,6 +16,7 @@ import { useAccount, useBalance } from "wagmi"
 import { ChainId, isChainId, SUPPORTED_CHAINS } from "@/packages/chain"
 import { usePrice } from "@/packages/prices"
 import CurrencyIcon from "../CurrencyIcon"
+import { removeLeadingZeros } from "@/utils"
 
 interface SwapSideProps {
   side: "From" | "To"
@@ -89,7 +90,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
         e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
       )
     ) {
-      setAmount(e)
+      setAmount(removeLeadingZeros(e))
     }
   }
 
