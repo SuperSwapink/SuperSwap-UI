@@ -37,6 +37,6 @@ export const SUPPORTED_CHAINS: Record<
   [ChainId.OP]: {
     id: ChainId.OP,
     icon: OpLogo,
-    name: "OP Mainnet",
+    name: "OP",
   },
 } as const;
