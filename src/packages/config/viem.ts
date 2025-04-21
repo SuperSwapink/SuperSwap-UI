@@ -1,5 +1,6 @@
-import { ChainId } from "../chain"
-import { defineChain, http, type PublicClientConfig } from "viem"
+import { ChainId } from "../chain";
+import { defineChain, http, type PublicClientConfig } from "viem";
+import { optimism } from "viem/chains";
 
 export const ink = defineChain({
   id: 57073,
@@ -7,7 +8,7 @@ export const ink = defineChain({
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://lb.drpc.org/ogrpc?network=ink&dkey=Avj4ISAgFkv2kgJEJNcc29FIXTViEhAR8JiRKjrWkQAY"],
+      http: ["https://rpc-qnd.inkonchain.com"],
     },
   },
   blockExplorers: {
@@ -23,7 +24,7 @@ export const ink = defineChain({
       blockCreated: 956889,
     },
   },
-})
+});
 
 export const base = /*#__PURE__*/ defineChain({
   id: 8453,
@@ -67,13 +68,15 @@ export const base = /*#__PURE__*/ defineChain({
     },
   },
   sourceId: 1,
-})
+});
+
+export { optimism };
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.INK]: [
     {
       chain: ink,
-      transport: http(`https://lb.drpc.org/ogrpc?network=ink&dkey=Avj4ISAgFkv2kgJEJNcc29FIXTViEhAR8JiRKjrWkQAY`),
+      transport: http(`https://rpc-qnd.inkonchain.com`),
     },
   ],
   [ChainId.BASE]: [
@@ -84,4 +87,10 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
       ),
     },
   ],
-} as const
+  [ChainId.OP]: [
+    {
+      chain: optimism,
+      transport: http(`https://mainnet.optimism.io`),
+    },
+  ],
+} as const;

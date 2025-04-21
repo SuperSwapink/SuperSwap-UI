@@ -1,62 +1,62 @@
-"use client"
+"use client";
 
-import { useWeb3Modal } from "@web3modal/wagmi/react"
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import {
   useAccount,
   useBalance,
   usePublicClient,
   useSwitchChain,
   useWalletClient,
-} from "wagmi"
-import useSwapParams from "../../hooks/useSwapParams"
-import { Amount, Token, tryParseAmount, WETH9 } from "@/packages/currency"
-import Spinner from "../Spinner"
-import React, { useState } from "react"
-import { ApprovalState, useTokenApproval } from "@/hooks/useTokenApproval"
-import { ChainId } from "@/packages/chain"
-import { UseQueryResult } from "@tanstack/react-query"
-import useSettings from "@/hooks/useSettings"
-import { AGGREGATOR_ADDR } from "@/contracts"
-import { getXFusionTxData } from "@/utils/trade"
-import AggregatorABI from "@/contracts/AggregatorABI"
-import toast from "react-hot-toast"
-import CustomToast from "../CustomToast"
-import { createPublicClient, erc20Abi } from "viem"
-import { routeProcessor3Abi, acrossPortalAbi } from "@/packages/abi"
+} from "wagmi";
+import useSwapParams from "../../hooks/useSwapParams";
+import { Amount, Token, tryParseAmount, WETH9 } from "@/packages/currency";
+import Spinner from "../Spinner";
+import React, { useState } from "react";
+import { ApprovalState, useTokenApproval } from "@/hooks/useTokenApproval";
+import { ChainId } from "@/packages/chain";
+import { UseQueryResult } from "@tanstack/react-query";
+import useSettings from "@/hooks/useSettings";
+import { AGGREGATOR_ADDR } from "@/contracts";
+import { getXFusionTxData } from "@/utils/trade";
+import AggregatorABI from "@/contracts/AggregatorABI";
+import toast from "react-hot-toast";
+import CustomToast from "../CustomToast";
+import { createPublicClient, erc20Abi } from "viem";
+import { routeProcessor3Abi, acrossPortalAbi } from "@/packages/abi";
 import {
   ACROSS_PORTAL_ADDRESS,
   config,
   ROUTE_PROCESSOR_3_ADDRESS,
-} from "@/packages/config"
+} from "@/packages/config";
 import {
   addressToBytes32,
   waitForDepositTx,
   waitForFillTx,
-} from "@across-protocol/app-sdk"
-import { ACROSS_STATUS } from "@/packages/across"
-import { delay } from "@/utils"
+} from "@across-protocol/app-sdk";
+import { ACROSS_STATUS } from "@/packages/across";
+import { delay } from "@/utils";
 
 interface SwapButtonProps {
-  trade: UseQueryResult<any, Error>
+  trade: UseQueryResult<any, Error>;
 }
 
 const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
-  const { address, chainId } = useAccount()
-  const { open } = useWeb3Modal()
+  const { address, chainId } = useAccount();
+  const { open } = useWeb3Modal();
   const { amountIn, tokenIn, tokenOut, setAmountIn, setTokenIn, setTokenOut } =
-    useSwapParams()
+    useSwapParams();
   const originPublicClient = usePublicClient({
     chainId: tokenIn?.chainId ?? ChainId.INK,
-  })
+  });
   const destPublicClient = usePublicClient({
     chainId: tokenOut?.chainId ?? ChainId.INK,
-  })
-  const { data: walletClient } = useWalletClient()
-  const { switchChainAsync } = useSwitchChain()
-  const [loading, setLoading] = useState(false)
-  const [approving, setApproving] = useState(false)
+  });
+  const { data: walletClient } = useWalletClient();
+  const { switchChainAsync } = useSwitchChain();
+  const [loading, setLoading] = useState(false);
+  const [approving, setApproving] = useState(false);
 
-  const parsedAmount = tryParseAmount(amountIn, tokenIn)
+  const parsedAmount = tryParseAmount(amountIn, tokenIn);
 
   const [approvalState, approve, approvalRequest] = useTokenApproval({
     amount: parsedAmount,
@@ -65,27 +65,27 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
         ? ROUTE_PROCESSOR_3_ADDRESS[tokenIn?.chainId ?? ChainId.INK]
         : ACROSS_PORTAL_ADDRESS[tokenIn?.chainId ?? ChainId.INK],
     enabled: Boolean(parsedAmount),
-  })
+  });
 
   const onSwap = async () => {
     if (!address || !originPublicClient || !walletClient || !destPublicClient) {
-      open?.()
+      open?.();
     } else if (chainId !== tokenIn?.chainId) {
-      switchChainAsync?.({ chainId: tokenIn?.chainId ?? ChainId.INK })
+      switchChainAsync?.({ chainId: tokenIn?.chainId ?? ChainId.INK });
     } else {
       try {
-        if (!tokenIn || !tokenOut) return
-        await trade.refetch()
+        if (!tokenIn || !tokenOut) return;
+        await trade.refetch();
 
-        if (!trade.data) return
+        if (!trade.data) return;
 
-        const swapTrade = { ...trade.data }
+        const swapTrade = { ...trade.data };
 
-        setLoading(true)
+        setLoading(true);
 
-        const curTokenIn = tokenIn
-        const curTokenOut = tokenOut
-        const curTrade = trade.data
+        const curTokenIn = tokenIn;
+        const curTokenOut = tokenOut;
+        const curTrade = trade.data;
 
         if (!trade.data.isBridge) {
           const balanceBefore = tokenOut.isNative
@@ -95,7 +95,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 address: tokenOut.address,
                 functionName: "balanceOf",
                 args: [address],
-              })
+              });
 
           const { request } = await originPublicClient.simulateContract({
             abi: routeProcessor3Abi,
@@ -111,13 +111,13 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               swapTrade?.data?.routeCode,
             ],
             value: swapTrade?.data?.value,
-          })
+          });
 
-          const hash = await walletClient.writeContract(request)
+          const hash = await walletClient.writeContract(request);
 
           const res = await originPublicClient.waitForTransactionReceipt({
             hash,
-          })
+          });
 
           const balanceAfter = curTokenOut.isNative
             ? await originPublicClient.getBalance({ address })
@@ -126,7 +126,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 address: curTokenOut.address,
                 functionName: "balanceOf",
                 args: [address],
-              })
+              });
 
           toast.custom((t) => (
             <CustomToast
@@ -144,9 +144,9 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               hash={hash}
               chainId={curTokenIn.chainId}
             />
-          ))
+          ));
 
-          console.log(res)
+          console.log(res);
         } else {
           const balanceBefore = tokenOut.isNative
             ? await destPublicClient.getBalance({ address })
@@ -155,15 +155,48 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 address: tokenOut.address,
                 functionName: "balanceOf",
                 args: [address],
-              })
+              });
           const wethBalanceBefore = await originPublicClient.readContract({
             abi: erc20Abi,
             address: WETH9[tokenOut.chainId].address,
             functionName: "balanceOf",
             args: [address],
-          })
+          });
 
-          const currentDestBlock = await destPublicClient.getBlockNumber()
+          const currentDestBlock = await destPublicClient.getBlockNumber();
+
+          console.log(
+            {
+              tokenIn: trade.data.originalData.calldata.tokenIn,
+              amountIn: trade.data.originalData.calldata.amountIn,
+              tokenOut: trade.data.originalData.calldata.tokenOut,
+              amountOutMin: trade.data.originalData.calldata.amountOutMin,
+              routeCode: trade.data.originalData.calldata.routeCode,
+            },
+            {
+              depositor: addressToBytes32(address),
+              destinationChainId: BigInt(
+                trade.data.depositData.destinationChainId
+              ),
+              exclusiveRelayer: addressToBytes32(
+                trade.data.depositData.exclusiveRelayer
+              ),
+              exclusivityDeadline: trade.data.depositData.exclusivityDeadline,
+              fillDeadline: trade.data.depositData.fillDeadline,
+              inputAmount: trade.data.depositData.inputAmount,
+              inputToken: addressToBytes32(trade.data.depositData.inputToken),
+              message: trade.data.depositData.message,
+              outputAmount: trade.data.depositData.outputAmount,
+              outputToken: addressToBytes32(trade.data.depositData.outputToken),
+              quoteTimestamp: trade.data.depositData.quoteTimestamp,
+              recipient: addressToBytes32(trade.data.depositData.recipient),
+            },
+            {
+              value: tokenIn.isNative
+                ? trade.data.originalData.calldata.amountIn
+                : 0n,
+            }
+          );
 
           const { request } = await originPublicClient.simulateContract({
             abi: acrossPortalAbi,
@@ -199,20 +232,22 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 recipient: addressToBytes32(trade.data.depositData.recipient),
               },
             ],
-            value: tokenIn.isNative ? trade.data.depositData.inputAmount : 0n,
-          })
+            value: tokenIn.isNative
+              ? trade.data.originalData.calldata.amountIn
+              : 0n,
+          });
 
-          const hash = await walletClient.writeContract(request)
+          const hash = await walletClient.writeContract(request);
 
           const { depositId } = await waitForDepositTx({
             originChainId: curTokenIn.chainId,
             publicClient: originPublicClient,
             transactionHash: hash,
-          })
+          });
 
           const destinationChainClient = createPublicClient({
             ...config[curTokenOut.chainId][0],
-          })
+          });
 
           const fillStatus = await waitForFillTx({
             deposit: {
@@ -225,7 +260,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
             depositId,
             destinationChainClient: destinationChainClient as any,
             fromBlock: currentDestBlock - 100n,
-          })
+          });
 
           // await delay(10000)
 
@@ -236,17 +271,17 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 address: curTokenOut.address,
                 functionName: "balanceOf",
                 args: [address],
-              })
+              });
           const wethBalanceAfter = await originPublicClient.readContract({
             abi: erc20Abi,
             address: WETH9[tokenOut.chainId].address,
             functionName: "balanceOf",
             args: [address],
-          })
+          });
 
           const isFailedSwap =
             balanceAfter <= balanceBefore &&
-            wethBalanceAfter >= wethBalanceBefore
+            wethBalanceAfter >= wethBalanceBefore;
 
           toast.custom((t) =>
             !isFailedSwap ? (
@@ -284,17 +319,17 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 }
               ></CustomToast>
             )
-          )
+          );
           if (isFailedSwap) {
-            setTokenIn(WETH9[curTokenOut.chainId])
-            setTokenOut(curTokenOut)
+            setTokenIn(WETH9[curTokenOut.chainId]);
+            setTokenOut(curTokenOut);
           }
-          console.log(fillStatus)
+          console.log(fillStatus);
         }
 
-        setAmountIn("")
+        setAmountIn("");
       } catch (err: any) {
-        console.log(err)
+        console.log(err);
         if (!err?.message?.includes("User rejected the request.")) {
           toast.custom((t) => (
             <CustomToast
@@ -302,24 +337,24 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
               type="error"
               text={`Failed to send the transaction. Please check the slippage and try again later.`}
             />
-          ))
+          ));
         }
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-  }
+  };
 
   const onApprove = async () => {
     try {
-      setApproving(true)
-      await approve(approvalRequest)
+      setApproving(true);
+      await approve(approvalRequest);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     } finally {
-      setApproving(false)
+      setApproving(false);
     }
-  }
+  };
 
   const { data: balance } = useBalance({
     address,
@@ -328,24 +363,24 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
       enabled: Boolean(address) && Boolean(tokenIn),
       refetchInterval: 30000,
     },
-  })
+  });
 
   const fetching =
     Boolean(tokenIn) &&
     Boolean(tokenOut) &&
     Boolean(parsedAmount?.greaterThan(0n)) &&
-    (trade.isFetching || trade.isLoading || trade.isPending)
-  const wrongNetworkError = chainId !== tokenIn?.chainId
-  const nonAssetError = !tokenIn || !tokenOut
+    (trade.isFetching || trade.isLoading || trade.isPending);
+  const wrongNetworkError = chainId !== tokenIn?.chainId;
+  const nonAssetError = !tokenIn || !tokenOut;
   const nonAmountError = !(
     tokenIn &&
     amountIn &&
     tryParseAmount(amountIn, tokenIn)?.greaterThan(0n)
-  )
+  );
   const insufficientBalanceError =
-    Number(amountIn) > Number(balance?.formatted ?? "0")
+    Number(amountIn) > Number(balance?.formatted ?? "0");
 
-  const isError = nonAmountError || nonAssetError || insufficientBalanceError
+  const isError = nonAmountError || nonAssetError || insufficientBalanceError;
 
   const acrossError =
     tokenIn && tokenOut && tokenIn.chainId !== tokenOut.chainId && trade.data
@@ -353,10 +388,12 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
         ? "Amount Too Low"
         : trade.data?.status === ACROSS_STATUS.HIGH_AMOUNT
         ? "Amount Too High"
+        : trade.data?.status === ACROSS_STATUS.NO_ROUTE
+        ? "No Route"
         : trade.data?.status === ACROSS_STATUS.FAILED
         ? "Failed to Fetch"
         : undefined
-      : undefined
+      : undefined;
 
   return (
     <div className="mt-4">
@@ -416,7 +453,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
         )}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default SwapButton
+export default SwapButton;

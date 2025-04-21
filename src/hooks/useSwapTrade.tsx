@@ -1,22 +1,26 @@
-import { useAccount } from "wagmi"
-import useSwapParams from "./useSwapParams"
-import { useDebounce } from "./useDebounce"
-import { Native, tryParseAmount } from "@/packages/currency"
-import { ZERO } from "@/packages/math"
-import useSettings from "./useSettings"
-import { useQuery } from "@tanstack/react-query"
-import { getXFusionTrade } from "@/utils/trade"
-import { usePoolsCodeMap } from "@/packages/pools"
-import { ChainId } from "@/packages/chain"
-import { LiquidityProviders } from "@/packages/router"
-import { fetchBestAcross } from "@/packages/across"
+import { useAccount } from "wagmi";
+import useSwapParams from "./useSwapParams";
+import { useDebounce } from "./useDebounce";
+import {
+  defaultQuoteCurrency,
+  Native,
+  tryParseAmount,
+} from "@/packages/currency";
+import { ZERO } from "@/packages/math";
+import useSettings from "./useSettings";
+import { useQuery } from "@tanstack/react-query";
+import { getXFusionTrade } from "@/utils/trade";
+import { usePoolsCodeMap } from "@/packages/pools";
+import { ChainId } from "@/packages/chain";
+import { LiquidityProviders } from "@/packages/router";
+import { fetchBestAcross } from "@/packages/across";
 
 const useSwapTrade = () => {
-  const { amountIn, tokenIn, tokenOut } = useSwapParams()
-  const { address } = useAccount()
-  const { slippage } = useSettings()
+  const { amountIn, tokenIn, tokenOut } = useSwapParams();
+  const { address } = useAccount();
+  const { slippage } = useSettings();
 
-  const parsedAmount = useDebounce(tryParseAmount(amountIn, tokenIn), 200)
+  const parsedAmount = useDebounce(tryParseAmount(amountIn, tokenIn), 200);
 
   const { data: poolsCodeMapIn } = usePoolsCodeMap({
     chainId: tokenIn?.chainId ?? ChainId.INK,
@@ -24,19 +28,19 @@ const useSwapTrade = () => {
     currencyB:
       tokenIn?.chainId === tokenOut?.chainId
         ? tokenOut
-        : Native.onChain(tokenIn?.chainId ?? ChainId.INK),
+        : defaultQuoteCurrency[tokenIn?.chainId ?? ChainId.INK],
     enabled: Boolean(tokenIn) && Boolean(tokenOut),
-  })
+  });
 
   const { data: poolsCodeMapOut } = usePoolsCodeMap({
     chainId: tokenOut?.chainId ?? ChainId.INK,
     currencyA: tokenOut,
-    currencyB: Native.onChain(tokenOut?.chainId ?? ChainId.INK),
+    currencyB: defaultQuoteCurrency[tokenOut?.chainId ?? ChainId.INK],
     enabled:
       Boolean(tokenIn) &&
       Boolean(tokenOut) &&
       tokenIn?.chainId !== tokenOut?.chainId,
-  })
+  });
 
   const trade = useQuery({
     queryKey: [
@@ -58,7 +62,7 @@ const useSwapTrade = () => {
           !parsedAmount.greaterThan(ZERO) ||
           !poolsCodeMapIn
         ) {
-          return undefined
+          return undefined;
         }
 
         if (tokenIn.chainId === tokenOut.chainId) {
@@ -69,9 +73,9 @@ const useSwapTrade = () => {
             slippage,
             parsedAmount.quotient.toString(),
             poolsCodeMapIn
-          )
+          );
 
-          return { isBridge: false, ...trades }
+          return { isBridge: false, ...trades };
         } else {
           const trades = await fetchBestAcross({
             tokenIn,
@@ -81,12 +85,12 @@ const useSwapTrade = () => {
             poolsCodeMapIn,
             poolsCodeMapOut,
             slippage,
-          })
+          });
 
-          return { isBridge: true, ...trades }
+          return { isBridge: true, ...trades };
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     refetchInterval: 15000,
@@ -95,8 +99,8 @@ const useSwapTrade = () => {
       Boolean(tokenOut) &&
       Boolean(parsedAmount?.greaterThan(ZERO)),
     refetchOnWindowFocus: false,
-  })
-  return trade
-}
+  });
+  return trade;
+};
 
-export default useSwapTrade
+export default useSwapTrade;

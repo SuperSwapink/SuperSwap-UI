@@ -1,5 +1,22 @@
 export default [
   {
+    chainId: 10,
+    explorers: [
+      {
+        name: "Optimism Explorer",
+        url: "https://optimistic.etherscan.io/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "OP Mainnet",
+    shortName: "op",
+  },
+  {
     chainId: 8453,
     explorers: [
       {

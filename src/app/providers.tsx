@@ -4,7 +4,7 @@ import { LocalTokenStorageProvider } from "@/hooks/useLocalTokenStorage"
 import { SettingsProvider } from "@/hooks/useSettings"
 import { SwapParamsProvider } from "@/hooks/useSwapParams"
 import { TokenPricesProvider } from "@/hooks/useTokenPrices"
-import { ink, base } from "@/packages/config"
+import { ink, base, optimism } from "@/packages/config"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { createWeb3Modal } from "@web3modal/wagmi/react"
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config"
@@ -22,7 +22,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 }
 
-const chains = [ink, base] as const
+const chains = [ink, base, optimism] as const
 export const config = defaultWagmiConfig({
   chains,
   projectId,

@@ -1,21 +1,24 @@
-import InkLogo from "@/assets/network/ink.png"
-import BaseLogo from "@/assets/network/base.svg"
-import { StaticImageData } from "next/image"
+import InkLogo from "@/assets/network/ink.png";
+import BaseLogo from "@/assets/network/base.svg";
+import OpLogo from "@/assets/network/op.png";
+import { StaticImageData } from "next/image";
 
 export const ChainId = {
   INK: 57073,
   BASE: 8453,
-} as const
-export type ChainId = (typeof ChainId)[keyof typeof ChainId]
+  OP: 10,
+} as const;
+export type ChainId = (typeof ChainId)[keyof typeof ChainId];
 
 export const isChainId = (chainId: number | undefined): chainId is ChainId =>
-  chainId !== undefined && Object.values(ChainId).includes(chainId as ChainId)
+  chainId !== undefined && Object.values(ChainId).includes(chainId as ChainId);
 
 export const ChainKey = {
   [ChainId.INK]: "ink",
   [ChainId.BASE]: "base",
-} as const
-export type ChainKey = (typeof ChainKey)[keyof typeof ChainKey]
+  [ChainId.OP]: "op",
+} as const;
+export type ChainKey = (typeof ChainKey)[keyof typeof ChainKey];
 
 export const SUPPORTED_CHAINS: Record<
   ChainId,
@@ -31,4 +34,9 @@ export const SUPPORTED_CHAINS: Record<
     icon: BaseLogo,
     name: "Base",
   },
-} as const
+  [ChainId.OP]: {
+    id: ChainId.OP,
+    icon: OpLogo,
+    name: "OP Mainnet",
+  },
+} as const;

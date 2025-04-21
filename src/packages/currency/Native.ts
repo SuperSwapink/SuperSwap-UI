@@ -10,6 +10,7 @@ import { type SerializedNative, nativeSchema } from "./zod"
 const NATIVE_MEDIAS = {
   [ChainId.INK]: "eth",
   [ChainId.BASE]: "eth",
+  [ChainId.OP]: "eth",
 }
 
 export class Native extends Currency {

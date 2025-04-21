@@ -1,7 +1,7 @@
-import { ChainId } from "../../chain"
+import { ChainId } from "../../chain";
 
-import { Token } from "../Token"
-import { addressMapToTokenMap } from "../functions/address-map-to-token-map"
+import { Token } from "../Token";
+import { addressMapToTokenMap } from "../functions/address-map-to-token-map";
 
 import {
   CBBTC_ADDRESS,
@@ -11,7 +11,7 @@ import {
   USDT_ADDRESS,
   VIRTUAL_ADDRESS,
   WETH9_ADDRESS,
-} from "./token-addresses"
+} from "./token-addresses";
 
 export const WETH9 = addressMapToTokenMap(
   {
@@ -21,12 +21,13 @@ export const WETH9 = addressMapToTokenMap(
     icon: "/media/weth.png",
   },
   WETH9_ADDRESS
-) as Record<keyof typeof WETH9_ADDRESS, Token>
+) as Record<keyof typeof WETH9_ADDRESS, Token>;
 
 export const WNATIVE = {
   [ChainId.INK]: WETH9[ChainId.INK],
   [ChainId.BASE]: WETH9[ChainId.BASE],
-} as const
+  [ChainId.OP]: WETH9[ChainId.OP],
+} as const;
 
 export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
@@ -38,7 +39,7 @@ export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {
     },
     USDC_ADDRESS
   ) as Record<keyof typeof USDC_ADDRESS, Token>),
-} as const
+} as const;
 
 export const USDT0: Record<keyof typeof USDT0_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
@@ -50,7 +51,7 @@ export const USDT0: Record<keyof typeof USDT0_ADDRESS, Token> = {
     },
     USDT0_ADDRESS
   ) as Record<keyof typeof USDT0_ADDRESS, Token>),
-} as const
+} as const;
 
 export const USDT: Record<keyof typeof USDT_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
@@ -62,7 +63,7 @@ export const USDT: Record<keyof typeof USDT_ADDRESS, Token> = {
     },
     USDT_ADDRESS
   ) as Record<keyof typeof USDT_ADDRESS, Token>),
-} as const
+} as const;
 
 export const KBTC: Record<keyof typeof KBTC_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
@@ -74,7 +75,7 @@ export const KBTC: Record<keyof typeof KBTC_ADDRESS, Token> = {
     },
     KBTC_ADDRESS
   ) as Record<keyof typeof KBTC_ADDRESS, Token>),
-} as const
+} as const;
 
 export const CBBTC: Record<keyof typeof CBBTC_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
@@ -86,7 +87,7 @@ export const CBBTC: Record<keyof typeof CBBTC_ADDRESS, Token> = {
     },
     CBBTC_ADDRESS
   ) as Record<keyof typeof CBBTC_ADDRESS, Token>),
-} as const
+} as const;
 
 export const VIRTUAL: Record<keyof typeof VIRTUAL_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
@@ -98,4 +99,4 @@ export const VIRTUAL: Record<keyof typeof VIRTUAL_ADDRESS, Token> = {
     },
     VIRTUAL_ADDRESS
   ) as Record<keyof typeof VIRTUAL_ADDRESS, Token>),
-} as const
+} as const;

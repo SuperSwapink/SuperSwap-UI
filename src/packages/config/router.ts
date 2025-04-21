@@ -1,4 +1,4 @@
-import { ChainId } from "../chain"
+import { ChainId } from "../chain";
 import {
   CBBTC,
   KBTC,
@@ -8,10 +8,10 @@ import {
   USDT0,
   VIRTUAL,
   WNATIVE,
-} from "../currency"
+} from "../currency";
 
 export const BASES_TO_CHECK_TRADES_AGAINST: {
-  readonly [chainId: number]: Token[]
+  readonly [chainId: number]: Token[];
 } = {
   [ChainId.INK]: [
     WNATIVE[ChainId.INK],
@@ -26,4 +26,5 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     CBBTC[ChainId.BASE],
     VIRTUAL[ChainId.BASE],
   ],
-}
+  [ChainId.OP]: [WNATIVE[ChainId.OP], USDC[ChainId.OP], USDT[ChainId.OP]],
+};

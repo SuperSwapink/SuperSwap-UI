@@ -1,4 +1,4 @@
-import { ChainId } from "../chain"
+import { ChainId } from "../chain";
 
 export const PRIMARY_TOKEN_LIST = [
   {
@@ -327,6 +327,33 @@ export const PRIMARY_TOKEN_LIST = [
     icon: "https://raw.githubusercontent.com/SmolDapp/tokenAssets/main/tokens//8453/0x4f9fd6be4a90f2620860d680c0d4d5fb53d1a825/logo.svg",
     chainId: ChainId.BASE,
   },
-]
+  {
+    address: "0x4200000000000000000000000000000000000006",
+    symbol: "WETH",
+    name: "Wrapped Ether",
+    decimals: 18,
+    icon: "/media/weth.png",
+    category: "Native",
+    chainId: ChainId.OP,
+  },
+  {
+    address: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    symbol: "USDC",
+    name: "USDC",
+    decimals: 6,
+    icon: "/media/usdc.png",
+    category: "Stablecoin",
+    chainId: ChainId.OP,
+  },
+  {
+    address: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+    symbol: "USDT",
+    name: "USDT",
+    decimals: 6,
+    icon: "/media/usdt.png",
+    category: "Stablecoin",
+    chainId: ChainId.OP,
+  },
+];
 
-export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST]
+export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];
