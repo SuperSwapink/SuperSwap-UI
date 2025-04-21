@@ -206,7 +206,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                             alt={chain.name}
                             className="size-5 rounded-full"
                           />
-                          <span className="ml-2 text-xs md:text-sm uppercase">
+                          <span className="ml-1 md:ml-2 text-[10px] md:text-sm uppercase">
                             {chain.name}
                           </span>
                         </div>

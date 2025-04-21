@@ -42,13 +42,15 @@ const useSwapTrade = () => {
       tokenIn?.chainId !== tokenOut?.chainId,
   });
 
+  const debouncedSlippage = useDebounce(slippage, 2000);
+
   const trade = useQuery({
     queryKey: [
       "smart-router",
       tokenIn,
       tokenOut,
       parsedAmount,
-      slippage,
+      debouncedSlippage,
       poolsCodeMapIn,
       poolsCodeMapOut,
       address,
@@ -70,7 +72,7 @@ const useSwapTrade = () => {
             tokenIn,
             tokenOut,
             address ?? "0xec288809063df839a62a3a61dd28f2142592b170",
-            slippage,
+            debouncedSlippage,
             parsedAmount.quotient.toString(),
             poolsCodeMapIn
           );
@@ -84,7 +86,7 @@ const useSwapTrade = () => {
             recipient: address ?? "0xec288809063df839a62a3a61dd28f2142592b170",
             poolsCodeMapIn,
             poolsCodeMapOut,
-            slippage,
+            slippage: debouncedSlippage,
           });
 
           return { isBridge: true, ...trades };
