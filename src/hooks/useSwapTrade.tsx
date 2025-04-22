@@ -61,7 +61,7 @@ const useSwapTrade = () => {
       tokenIn?.chainId !== tokenOut?.chainId,
   });
 
-  const debouncedSlippage = useDebounce(slippage, 2000);
+  const debouncedSlippage = useDebounce(slippage, 1000);
 
   const trade = useQuery({
     queryKey: [
