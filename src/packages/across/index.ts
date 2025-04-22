@@ -64,6 +64,8 @@ export const fetchBestAcross = async ({
     )
   );
 
+  console.log(acrossResults);
+
   const bestResult = acrossResults.sort((a, b) =>
     BigInt(a?.amountOut ?? "0") < BigInt(b?.amountOut ?? "0") ? 1 : -1
   )?.[0];
@@ -126,7 +128,9 @@ export const getBestAcrossByMediumToken = async ({
       return { status: ACROSS_STATUS.NO_ROUTE };
     }
 
-    console.log(route);
+    const isWrap =
+      tokenIn.wrapped.address.toLowerCase() ===
+      mediumTokenIn.address.toLowerCase();
 
     const args = Router.routeProcessor3Params(
       poolsCodeMapIn,
@@ -136,7 +140,7 @@ export const getBestAcrossByMediumToken = async ({
       ACROSS_PORTAL_ADDRESS[tokenIn.chainId],
       ROUTE_PROCESSOR_3_ADDRESS[tokenIn.chainId],
       [],
-      +slippage / 100
+      isWrap ? 0 : +slippage / 100
     );
 
     originData = {

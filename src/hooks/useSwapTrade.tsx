@@ -35,19 +35,26 @@ const useSwapTrade = () => {
             (item) =>
               item.address.toLowerCase() !==
               tokenIn?.wrapped.address.toLowerCase()
-          ),
+          ) ??
+          Object.values(
+            SUPPORTED_ACROSS_ASSETS[tokenIn?.chainId ?? ChainId.INK]
+          )[0],
     enabled: Boolean(tokenIn) && Boolean(tokenOut),
   });
 
   const { data: poolsCodeMapOut } = usePoolsCodeMap({
     chainId: tokenOut?.chainId ?? ChainId.INK,
     currencyA: tokenOut,
-    currencyB: Object.values(
-      SUPPORTED_ACROSS_ASSETS[tokenOut?.chainId ?? ChainId.INK]
-    ).find(
-      (item) =>
-        item.address.toLowerCase() !== tokenOut?.wrapped.address.toLowerCase()
-    ),
+    currencyB:
+      Object.values(
+        SUPPORTED_ACROSS_ASSETS[tokenOut?.chainId ?? ChainId.INK]
+      ).find(
+        (item) =>
+          item.address.toLowerCase() !== tokenOut?.wrapped.address.toLowerCase()
+      ) ??
+      Object.values(
+        SUPPORTED_ACROSS_ASSETS[tokenOut?.chainId ?? ChainId.INK]
+      )[0],
     enabled:
       Boolean(tokenIn) &&
       Boolean(tokenOut) &&
