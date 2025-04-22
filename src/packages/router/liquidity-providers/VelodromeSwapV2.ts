@@ -23,7 +23,19 @@ export class VelodromeSwapV2Provider extends VelodrmoeV2BaseProvider {
         "0xf134c874b39e61378a3f19b6f15a0e83c6916c54524901806f3e1ca3da7b2243",
     } as const;
 
-    super(chainId, web3Client, factory, implementation, initCodeHash);
+    const fees = {
+      [ChainId.INK]: 0.003,
+      [ChainId.OP]: 0.01,
+    } as const;
+
+    super(
+      chainId,
+      web3Client,
+      factory,
+      implementation,
+      initCodeHash,
+      (fees as any)[chainId]
+    );
   }
   getType(): LiquidityProviders {
     return LiquidityProviders.VelodromeSwapV2;

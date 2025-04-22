@@ -72,12 +72,14 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
     web3Client: PublicClient,
     factory: Record<number, Address>,
     implementation: Record<number, Address>,
-    initCodeHash: Record<number, Hex>
+    initCodeHash: Record<number, Hex>,
+    fee: number
   ) {
     super(chainId, web3Client)
     this.factory = factory
     this.implementation = implementation
     this.initCodeHash = initCodeHash
+    this.fee = fee
     if (
       !(chainId in this.factory) ||
       !(chainId in this.implementation) ||
