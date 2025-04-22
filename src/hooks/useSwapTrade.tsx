@@ -14,6 +14,7 @@ import { usePoolsCodeMap } from "@/packages/pools";
 import { ChainId } from "@/packages/chain";
 import { LiquidityProviders } from "@/packages/router";
 import { fetchBestAcross } from "@/packages/across";
+import { SUPPORTED_ACROSS_ASSETS } from "@/packages/across/constants";
 
 const useSwapTrade = () => {
   const { amountIn, tokenIn, tokenOut } = useSwapParams();
@@ -28,14 +29,25 @@ const useSwapTrade = () => {
     currencyB:
       tokenIn?.chainId === tokenOut?.chainId
         ? tokenOut
-        : defaultQuoteCurrency[tokenIn?.chainId ?? ChainId.INK],
+        : Object.values(
+            SUPPORTED_ACROSS_ASSETS[tokenIn?.chainId ?? ChainId.INK]
+          ).find(
+            (item) =>
+              item.address.toLowerCase() !==
+              tokenIn?.wrapped.address.toLowerCase()
+          ),
     enabled: Boolean(tokenIn) && Boolean(tokenOut),
   });
 
   const { data: poolsCodeMapOut } = usePoolsCodeMap({
     chainId: tokenOut?.chainId ?? ChainId.INK,
     currencyA: tokenOut,
-    currencyB: defaultQuoteCurrency[tokenOut?.chainId ?? ChainId.INK],
+    currencyB: Object.values(
+      SUPPORTED_ACROSS_ASSETS[tokenOut?.chainId ?? ChainId.INK]
+    ).find(
+      (item) =>
+        item.address.toLowerCase() !== tokenOut?.wrapped.address.toLowerCase()
+    ),
     enabled:
       Boolean(tokenIn) &&
       Boolean(tokenOut) &&
