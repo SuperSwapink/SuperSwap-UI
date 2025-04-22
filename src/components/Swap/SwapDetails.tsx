@@ -1,21 +1,21 @@
-import { UseQueryResult } from "@tanstack/react-query"
-import ChevronDown from "../svgs/ChevronDown"
-import { useState } from "react"
-import { Amount, Price } from "@/packages/currency"
-import useSwapParams from "@/hooks/useSwapParams"
-import useSettings from "@/hooks/useSettings"
-import { ACROSS_STATUS } from "@/packages/across"
-import { ACROSS_ESTIMATED_TIME } from "@/constants"
+import { UseQueryResult } from "@tanstack/react-query";
+import ChevronDown from "../svgs/ChevronDown";
+import { useState } from "react";
+import { Amount, Price } from "@/packages/currency";
+import useSwapParams from "@/hooks/useSwapParams";
+import useSettings from "@/hooks/useSettings";
+import { ACROSS_STATUS } from "@/packages/across";
+import { ACROSS_ESTIMATED_TIME } from "@/constants";
 
 interface SwapDetailsProps {
-  trade: UseQueryResult<any, Error>
+  trade: UseQueryResult<any, Error>;
 }
 
 const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
-  const [open, setOpen] = useState(false)
-  const [reverted, setReverted] = useState(false)
-  const { tokenIn, tokenOut } = useSwapParams()
-  const { slippage } = useSettings()
+  const [open, setOpen] = useState(false);
+  const [reverted, setReverted] = useState(false);
+  const { tokenIn, tokenOut } = useSwapParams();
+  const { slippage } = useSettings();
 
   const swapPrice =
     trade.data && tokenIn && tokenOut
@@ -25,9 +25,9 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
           trade.data?.amountIn ?? "0",
           trade.data?.amountOut ?? "0"
         )
-      : undefined
+      : undefined;
 
-  const isWrap = tokenIn?.wrapped.address === tokenOut?.wrapped.address
+  const isWrap = tokenIn?.wrapped.address === tokenOut?.wrapped.address;
 
   return trade.data && tokenIn && tokenOut ? (
     <div className="mt-4 border rounded-2xl px-4 border-[#e3e7ee] dark:border-[#202835]">
@@ -115,7 +115,7 @@ const SwapDetails: React.FC<SwapDetailsProps> = ({ trade }) => {
         </div>
       </div>
     </div>
-  ) : null
-}
+  ) : null;
+};
 
-export default SwapDetails
+export default SwapDetails;

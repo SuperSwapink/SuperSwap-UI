@@ -4,14 +4,14 @@ import {
   MenuItem,
   MenuItems,
   Transition,
-} from "@headlessui/react"
-import TwoLine from "./svgs/TwoLine"
-import Close from "./svgs/Close"
-import useSettings from "@/hooks/useSettings"
-import HelpToolTip from "./HelpToolTip"
+} from "@headlessui/react";
+import TwoLine from "./svgs/TwoLine";
+import Close from "./svgs/Close";
+import useSettings from "@/hooks/useSettings";
+import HelpToolTip from "./HelpToolTip";
 
 const SettingPopup = () => {
-  const { deadline, slippage, setDeadline, setSlippage } = useSettings()
+  const { deadline, slippage, setDeadline, setSlippage } = useSettings();
 
   const warning =
     slippage < 0.5
@@ -20,7 +20,7 @@ const SettingPopup = () => {
       ? "Enter a valid slippage percentage"
       : slippage >= 2
       ? "Your transaction may be frontrun"
-      : undefined
+      : undefined;
 
   return (
     <Menu>
@@ -95,7 +95,13 @@ const SettingPopup = () => {
                         <input
                           type="number"
                           value={slippage}
-                          onChange={(e) => setSlippage(e.target.valueAsNumber)}
+                          onChange={(e) =>
+                            setSlippage(
+                              isNaN(e.target.valueAsNumber)
+                                ? 0
+                                : e.target.valueAsNumber
+                            )
+                          }
                           onBlur={() =>
                             setSlippage(
                               slippage >= 50 || !slippage ? 0.5 : slippage
@@ -143,7 +149,7 @@ const SettingPopup = () => {
         </MenuItems>
       </Transition>
     </Menu>
-  )
-}
+  );
+};
 
-export default SettingPopup
+export default SettingPopup;
