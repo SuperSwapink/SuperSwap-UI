@@ -1,5 +1,22 @@
 export default [
   {
+    chainId: 1,
+    explorers: [
+      {
+        name: "Etherscan",
+        url: "https://etherscan.io/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Ethereum",
+    shortName: "ether",
+  },
+  {
     chainId: 10,
     explorers: [
       {
@@ -34,6 +51,23 @@ export default [
     shortName: "base",
   },
   {
+    chainId: 42161,
+    explorers: [
+      {
+        name: "Arbiscan",
+        url: "https://arbiscan.io/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Arbitrum",
+    shortName: "arb",
+  },
+  {
     chainId: 57073,
     explorers: [
       {
@@ -50,4 +84,4 @@ export default [
     name: "Ink",
     shortName: "ink",
   },
-] as const
+] as const;

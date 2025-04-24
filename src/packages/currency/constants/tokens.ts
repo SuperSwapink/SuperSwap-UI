@@ -24,9 +24,11 @@ export const WETH9 = addressMapToTokenMap(
 ) as Record<keyof typeof WETH9_ADDRESS, Token>;
 
 export const WNATIVE = {
-  [ChainId.INK]: WETH9[ChainId.INK],
-  [ChainId.BASE]: WETH9[ChainId.BASE],
+  [ChainId.ETHEREUM]: WETH9[ChainId.ETHEREUM],
   [ChainId.OP]: WETH9[ChainId.OP],
+  [ChainId.BASE]: WETH9[ChainId.BASE],
+  [ChainId.ARBITRUM]: WETH9[ChainId.ARBITRUM],
+  [ChainId.INK]: WETH9[ChainId.INK],
 } as const;
 
 export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {

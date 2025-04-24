@@ -156,7 +156,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 functionName: "balanceOf",
                 args: [address],
               });
-          const wethBalanceBefore = await originPublicClient.readContract({
+          const wethBalanceBefore = await destPublicClient.readContract({
             abi: erc20Abi,
             address: WETH9[tokenOut.chainId].address,
             functionName: "balanceOf",
@@ -164,39 +164,6 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
           });
 
           const currentDestBlock = await destPublicClient.getBlockNumber();
-
-          console.log(
-            {
-              tokenIn: trade.data.originalData.calldata.tokenIn,
-              amountIn: trade.data.originalData.calldata.amountIn,
-              tokenOut: trade.data.originalData.calldata.tokenOut,
-              amountOutMin: trade.data.originalData.calldata.amountOutMin,
-              routeCode: trade.data.originalData.calldata.routeCode,
-            },
-            {
-              depositor: addressToBytes32(address),
-              destinationChainId: BigInt(
-                trade.data.depositData.destinationChainId
-              ),
-              exclusiveRelayer: addressToBytes32(
-                trade.data.depositData.exclusiveRelayer
-              ),
-              exclusivityDeadline: trade.data.depositData.exclusivityDeadline,
-              fillDeadline: trade.data.depositData.fillDeadline,
-              inputAmount: trade.data.depositData.inputAmount,
-              inputToken: addressToBytes32(trade.data.depositData.inputToken),
-              message: trade.data.depositData.message,
-              outputAmount: trade.data.depositData.outputAmount,
-              outputToken: addressToBytes32(trade.data.depositData.outputToken),
-              quoteTimestamp: trade.data.depositData.quoteTimestamp,
-              recipient: addressToBytes32(trade.data.depositData.recipient),
-            },
-            {
-              value: tokenIn.isNative
-                ? trade.data.originalData.calldata.amountIn
-                : 0n,
-            }
-          );
 
           const { request } = await originPublicClient.simulateContract({
             abi: acrossPortalAbi,
@@ -272,7 +239,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ trade }) => {
                 functionName: "balanceOf",
                 args: [address],
               });
-          const wethBalanceAfter = await originPublicClient.readContract({
+          const wethBalanceAfter = await destPublicClient.readContract({
             abi: erc20Abi,
             address: WETH9[tokenOut.chainId].address,
             functionName: "balanceOf",

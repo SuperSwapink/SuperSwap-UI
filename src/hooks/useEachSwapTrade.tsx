@@ -48,7 +48,7 @@ const useEachSwapTrade = () => {
             (network) => network === tokenIn.chainId
           ) === undefined
         ) {
-          return undefined
+          return null
         }
 
         const bestSwap = await getBestSwap(

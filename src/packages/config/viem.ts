@@ -1,6 +1,6 @@
 import { ChainId } from "../chain";
 import { defineChain, http, type PublicClientConfig } from "viem";
-import { optimism } from "viem/chains";
+import { optimism, mainnet, arbitrum } from "viem/chains";
 
 export const ink = defineChain({
   id: 57073,
@@ -70,13 +70,27 @@ export const base = /*#__PURE__*/ defineChain({
   sourceId: 1,
 });
 
-export { optimism };
+export { optimism, mainnet, arbitrum };
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
-  [ChainId.INK]: [
+  [ChainId.ETHEREUM]: [
     {
-      chain: ink,
-      transport: http(`https://rpc-qnd.inkonchain.com`),
+      chain: mainnet,
+      transport: http("https://eth.llamarpc.com"),
+    },
+  ],
+  [ChainId.ARBITRUM]: [
+    {
+      chain: arbitrum,
+      transport: http(
+        "https://lb.drpc.org/ogrpc?network=arbitrum&dkey=AlvgkjhrKE6ynMGgm4YMvAxCBsIiIT0R8L-sEjfP07KJ"
+      ),
+    },
+  ],
+  [ChainId.OP]: [
+    {
+      chain: optimism,
+      transport: http(`https://mainnet.optimism.io`),
     },
   ],
   [ChainId.BASE]: [
@@ -87,10 +101,10 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
       ),
     },
   ],
-  [ChainId.OP]: [
+  [ChainId.INK]: [
     {
-      chain: optimism,
-      transport: http(`https://mainnet.optimism.io`),
+      chain: ink,
+      transport: http(`https://rpc-qnd.inkonchain.com`),
     },
   ],
 } as const;

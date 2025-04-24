@@ -354,6 +354,62 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Stablecoin",
     chainId: ChainId.OP,
   },
+
+  {
+    address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    symbol: "WETH",
+    name: "Wrapped Ether",
+    decimals: 18,
+    icon: "/media/weth.png",
+    category: "Native",
+    chainId: ChainId.ETHEREUM,
+  },
+  {
+    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    symbol: "USDC",
+    name: "USDC",
+    decimals: 6,
+    icon: "/media/usdc.png",
+    category: "Stablecoin",
+    chainId: ChainId.ETHEREUM,
+  },
+  {
+    address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    symbol: "USDT",
+    name: "USDT",
+    decimals: 6,
+    icon: "/media/usdt.png",
+    category: "Stablecoin",
+    chainId: ChainId.ETHEREUM,
+  },
+
+  {
+    address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    symbol: "WETH",
+    name: "Wrapped Ether",
+    decimals: 18,
+    icon: "/media/weth.png",
+    category: "Native",
+    chainId: ChainId.ARBITRUM,
+  },
+  {
+    address: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    symbol: "USDC",
+    name: "USDC",
+    decimals: 6,
+    icon: "/media/usdc.png",
+    category: "Stablecoin",
+    chainId: ChainId.ARBITRUM,
+  },
+  {
+    address: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    symbol: "USDT",
+    name: "USDT",
+    decimals: 6,
+    icon: "/media/usdt.png",
+    category: "Stablecoin",
+    chainId: ChainId.ARBITRUM,
+  },
 ];
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];

@@ -13,12 +13,12 @@ import {
 export const BASES_TO_CHECK_TRADES_AGAINST: {
   readonly [chainId: number]: Token[];
 } = {
-  [ChainId.INK]: [
-    WNATIVE[ChainId.INK],
-    USDC[ChainId.INK],
-    USDT0[ChainId.INK],
-    KBTC[ChainId.INK],
+  [ChainId.ETHEREUM]: [
+    WNATIVE[ChainId.ETHEREUM],
+    USDC[ChainId.ETHEREUM],
+    USDT[ChainId.ETHEREUM],
   ],
+  [ChainId.OP]: [WNATIVE[ChainId.OP], USDC[ChainId.OP], USDT[ChainId.OP]],
   [ChainId.BASE]: [
     WNATIVE[ChainId.BASE],
     USDC[ChainId.BASE],
@@ -26,5 +26,15 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     CBBTC[ChainId.BASE],
     VIRTUAL[ChainId.BASE],
   ],
-  [ChainId.OP]: [WNATIVE[ChainId.OP], USDC[ChainId.OP], USDT[ChainId.OP]],
+  [ChainId.ARBITRUM]: [
+    WNATIVE[ChainId.ARBITRUM],
+    USDC[ChainId.ARBITRUM],
+    USDT[ChainId.ARBITRUM],
+  ],
+  [ChainId.INK]: [
+    WNATIVE[ChainId.INK],
+    USDC[ChainId.INK],
+    USDT0[ChainId.INK],
+    KBTC[ChainId.INK],
+  ],
 };

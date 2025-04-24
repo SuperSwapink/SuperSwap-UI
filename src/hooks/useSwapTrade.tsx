@@ -1,18 +1,13 @@
 import { useAccount } from "wagmi";
 import useSwapParams from "./useSwapParams";
 import { useDebounce } from "./useDebounce";
-import {
-  defaultQuoteCurrency,
-  Native,
-  tryParseAmount,
-} from "@/packages/currency";
+import { tryParseAmount } from "@/packages/currency";
 import { ZERO } from "@/packages/math";
 import useSettings from "./useSettings";
 import { useQuery } from "@tanstack/react-query";
 import { getXFusionTrade } from "@/utils/trade";
 import { usePoolsCodeMap } from "@/packages/pools";
 import { ChainId } from "@/packages/chain";
-import { LiquidityProviders } from "@/packages/router";
 import { fetchBestAcross } from "@/packages/across";
 import { SUPPORTED_ACROSS_ASSETS } from "@/packages/across/constants";
 
@@ -83,7 +78,7 @@ const useSwapTrade = () => {
           !parsedAmount.greaterThan(ZERO) ||
           !poolsCodeMapIn
         ) {
-          return undefined;
+          return null;
         }
 
         if (tokenIn.chainId === tokenOut.chainId) {
@@ -112,6 +107,7 @@ const useSwapTrade = () => {
         }
       } catch (err) {
         console.log(err);
+        return null;
       }
     },
     refetchInterval: 15000,
