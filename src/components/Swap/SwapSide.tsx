@@ -62,7 +62,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
 
   const { data: price } = usePrice({
     address: token?.wrapped?.address,
-    chainId: ChainId.INK,
+    chainId: token?.chainId,
     enabled: Number(amount) > 0,
   })
 

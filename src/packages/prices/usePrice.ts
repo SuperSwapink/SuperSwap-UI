@@ -19,8 +19,13 @@ export const usePrice = ({ chainId, address, enabled }: UsePrice) => {
       if (
         chainId === 1 &&
         address?.toLowerCase() === USDC[ChainId.ETHEREUM].address.toLowerCase()
-      )
+      ) {
+        setPrices((prices: any) => ({
+          ...prices,
+          [`${chainId}:${address?.toLowerCase()}`]: 1,
+        }));
         return 1;
+      }
       const { data } = await axios.get(
         `https://api.dexscreener.com/latest/dex/tokens/${address}`
       );
