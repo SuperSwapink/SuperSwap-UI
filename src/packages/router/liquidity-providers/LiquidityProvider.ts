@@ -1,8 +1,8 @@
-import { ChainId, chainShortName } from "../../chain"
-import type { Token } from "../../currency"
-import { PublicClient } from "viem"
+import { ChainId, chainShortName } from "../../chain";
+import type { Token } from "../../currency";
+import { PublicClient } from "viem";
 
-import type { PoolCode } from "../pools/PoolCode"
+import type { PoolCode } from "../pools/PoolCode";
 
 export enum LiquidityProviders {
   InkSwap = "InkSwap",
@@ -21,31 +21,33 @@ export enum LiquidityProviders {
   SushiSwapV3 = "SushiSwapV3",
   AerodromeSwapV2 = "AerodromeSwapV2",
   AerodromeSwapV3 = "AerodromeSwapV3",
+  CamelotSwapV2 = "CamelotSwapV2",
+  CamelotSwapV3 = "CamelotSwapV3",
 }
 
 export abstract class LiquidityProvider {
-  chainId: ChainId
-  client: PublicClient
-  lastUpdateBlock = 0
-  readonly ON_DEMAND_POOLS_LIFETIME_IN_SECONDS = 60
-  readonly FETCH_AVAILABLE_POOLS_AFTER_SECONDS = 900
+  chainId: ChainId;
+  client: PublicClient;
+  lastUpdateBlock = 0;
+  readonly ON_DEMAND_POOLS_LIFETIME_IN_SECONDS = 60;
+  readonly FETCH_AVAILABLE_POOLS_AFTER_SECONDS = 900;
 
   constructor(chainId: ChainId, client: PublicClient) {
-    this.chainId = chainId
-    this.client = client
+    this.chainId = chainId;
+    this.client = client;
   }
 
-  abstract getType(): LiquidityProviders
+  abstract getType(): LiquidityProviders;
 
   /**
    * The name of liquidity provider to be used for pool naming. For example, 'SushiSwap'
    */
-  abstract getPoolProviderName(): string
+  abstract getPoolProviderName(): string;
 
   /**
    * Initiates event listeners for top pools
    */
-  abstract startFetchPoolsData(): void
+  abstract startFetchPoolsData(): void;
 
   /**
    * Fetches relevant pools for the given tokens
@@ -56,7 +58,7 @@ export abstract class LiquidityProvider {
     t0: Token,
     t1: Token,
     excludePools?: Set<string>
-  ): Promise<void>
+  ): Promise<void>;
 
   /**
    * Returns a list of PoolCode
@@ -64,16 +66,16 @@ export abstract class LiquidityProvider {
    * @param t1 Token
    * @returns PoolCode[]
    */
-  abstract getCurrentPoolList(t0: Token, t1: Token): PoolCode[]
+  abstract getCurrentPoolList(t0: Token, t1: Token): PoolCode[];
 
-  abstract stopFetchPoolsData(): void
+  abstract stopFetchPoolsData(): void;
 
   /**
    * Returns last processed block number
    * @returns last processed block number
    */
   getLastUpdateBlock(): number {
-    return this.lastUpdateBlock
+    return this.lastUpdateBlock;
   }
 
   /**
@@ -85,11 +87,11 @@ export abstract class LiquidityProvider {
   getLogPrefix(): string {
     return `${chainShortName[this.chainId]}/${this.chainId}~${
       this.lastUpdateBlock
-    }~${this.getType()}`
+    }~${this.getType()}`;
   }
 
   getTradeId = (t0: Token, t1: Token) =>
     [t0.address.toLowerCase(), t1.address.toLowerCase()]
       .sort((first, second) => (first > second ? -1 : 1))
-      .join(":")
+      .join(":");
 }

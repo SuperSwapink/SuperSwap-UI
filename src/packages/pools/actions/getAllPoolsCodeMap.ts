@@ -1,6 +1,6 @@
-import { DataFetcher, LiquidityProviders, PoolCode } from "../../router"
+import { DataFetcher, LiquidityProviders, PoolCode } from "../../router";
 
-import { UsePoolsParams } from "../types"
+import { UsePoolsParams } from "../types";
 
 export const getAllPoolsCodeMap = async ({
   currencyA,
@@ -9,7 +9,7 @@ export const getAllPoolsCodeMap = async ({
   providers,
 }: Omit<UsePoolsParams, "enabled"> & { providers?: LiquidityProviders[] }) => {
   if (!currencyA || !currencyB || !chainId) {
-    return new Map<string, PoolCode>()
+    return new Map<string, PoolCode>();
   }
 
   const liquidityProviders = providers
@@ -30,15 +30,17 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.SushiSwapV3,
         LiquidityProviders.AerodromeSwapV2,
         LiquidityProviders.AerodromeSwapV3,
-      ]
+        LiquidityProviders.CamelotSwapV2,
+        LiquidityProviders.CamelotSwapV3,
+      ];
 
-  const dataFetcher = DataFetcher.onChain(chainId)
+  const dataFetcher = DataFetcher.onChain(chainId);
   // console.log('dataFetcher startDataFetching')
-  dataFetcher.startDataFetching(liquidityProviders)
+  dataFetcher.startDataFetching(liquidityProviders);
 
-  await dataFetcher.fetchPoolsForToken(currencyA, currencyB)
+  await dataFetcher.fetchPoolsForToken(currencyA, currencyB);
   // console.log('dataFetcher stopDataFetching')
-  dataFetcher.stopDataFetching()
+  dataFetcher.stopDataFetching();
 
-  return dataFetcher.getCurrentPoolCodeMap(currencyA, currencyB)
-}
+  return dataFetcher.getCurrentPoolCodeMap(currencyA, currencyB);
+};

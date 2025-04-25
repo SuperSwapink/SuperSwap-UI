@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { DEFAULT_IMAGE_URL } from "@/constants"
-import { ChainId, isChainId } from "@/packages/chain"
-import { Amount, Token, Type } from "@/packages/currency"
-import { usePrice } from "@/packages/prices"
-import Image from "next/image"
-import { useAccount, useBalance } from "wagmi"
-import TokenImportWarningModal from "./TokenImportWarningModal"
-import { useState } from "react"
-import useLocalTokenStorage from "@/hooks/useLocalTokenStorage"
-import CurrencyIcon from "./CurrencyIcon"
+import { DEFAULT_IMAGE_URL } from "@/constants";
+import { ChainId, isChainId } from "@/packages/chain";
+import { Amount, Token, Type } from "@/packages/currency";
+import { usePrice } from "@/packages/prices";
+import Image from "next/image";
+import { useAccount, useBalance } from "wagmi";
+import TokenImportWarningModal from "./TokenImportWarningModal";
+import { useState } from "react";
+import useLocalTokenStorage from "@/hooks/useLocalTokenStorage";
+import CurrencyIcon from "./CurrencyIcon";
 
 interface TokenListItemProps {
-  token: Type
-  onSelectItem: any
-  balance?: bigint
-  className?: string
+  token: Type;
+  onSelectItem: any;
+  balance?: bigint;
+  className?: string;
 }
 
 const TokenListItem: React.FC<TokenListItemProps> = ({
@@ -24,7 +24,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
   balance,
   className,
 }) => {
-  const { address, chainId } = useAccount()
+  const { address, chainId } = useAccount();
   // const { data: balance } = useBalance({
   //   address,
   //   chainId: token.chainId,
@@ -32,14 +32,14 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
   //   query: { enabled: Boolean(address), refetchInterval: 30000 },
   // })
   // const balance = { value: 0n }
-  const [warningOpen, setWarningOpen] = useState(false)
-  const { importToken } = useLocalTokenStorage()
+  const [warningOpen, setWarningOpen] = useState(false);
+  const { importToken } = useLocalTokenStorage();
 
   const { data: price } = usePrice({
     address: token.wrapped.address,
     chainId: token.chainId,
     enabled: (balance ?? 0n) > 0n,
-  })
+  });
 
   return (
     <>
@@ -48,7 +48,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
           className ?? ""
         }`}
         onClick={() => {
-          token.isCustom ? setWarningOpen(true) : onSelectItem(token)
+          token.isCustom ? setWarningOpen(true) : onSelectItem(token);
         }}
       >
         <div className="flex items-center">
@@ -61,7 +61,7 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
           />
           <div className="ml-2 md:ml-4">
             <div className="flex items-center">
-              <span className="text-[#222] dark:text-white font-semibold text-sm md:text-base">
+              <span className="text-[#222] dark:text-white font-semibold text-sm md:text-base max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
                 {token.name}
               </span>
               <span className="text-[#222] dark:text-white text-xs md:text-sm ml-2">
@@ -111,15 +111,15 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
               decimals: token.decimals,
               category: token.category,
               icon: token.icon,
-            })
-            onSelectItem(token)
+            });
+            onSelectItem(token);
           }}
           token={token}
           isCustom={token.isCustom}
         />
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default TokenListItem
+export default TokenListItem;
