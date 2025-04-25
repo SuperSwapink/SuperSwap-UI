@@ -4,6 +4,7 @@ import {
   KBTC,
   Token,
   USDC,
+  USDCe,
   USDT,
   USDT0,
   VIRTUAL,
@@ -30,6 +31,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     WNATIVE[ChainId.ARBITRUM],
     USDC[ChainId.ARBITRUM],
     USDT[ChainId.ARBITRUM],
+    USDCe[ChainId.ARBITRUM]
   ],
   [ChainId.INK]: [
     WNATIVE[ChainId.INK],

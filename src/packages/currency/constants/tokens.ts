@@ -7,6 +7,7 @@ import {
   CBBTC_ADDRESS,
   KBTC_ADDRESS,
   USDC_ADDRESS,
+  USDCe_ADDRESS,
   USDT0_ADDRESS,
   USDT_ADDRESS,
   VIRTUAL_ADDRESS,
@@ -41,6 +42,18 @@ export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {
     },
     USDC_ADDRESS
   ) as Record<keyof typeof USDC_ADDRESS, Token>),
+} as const;
+
+export const USDCe: Record<keyof typeof USDCe_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 6,
+      symbol: "USDC.e",
+      name: "USDC.e",
+      icon: "/media/usdc.png",
+    },
+    USDCe_ADDRESS
+  ) as Record<keyof typeof USDCe_ADDRESS, Token>),
 } as const;
 
 export const USDT0: Record<keyof typeof USDT0_ADDRESS, Token> = {
