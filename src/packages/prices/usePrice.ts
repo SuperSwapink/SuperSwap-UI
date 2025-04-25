@@ -28,13 +28,14 @@ export const usePrice = ({ chainId, address, enabled }: UsePrice) => {
         `https://api.dexscreener.com/tokens/v1/${dexChainId[chainId]}/${address}`
       );
       let price = 0;
+      console.log(data);
       if (data.length) {
         if (
           data[0].baseToken.address.toLowerCase() === address?.toLowerCase()
         ) {
           price = Number(data[0].priceUsd);
         } else {
-          price = Number(data[0].priceUsd) * Number(data[0].priceNative);
+          price = Number(data[0].priceUsd) / Number(data[0].priceNative);
         }
         setPrices((prices: any) => ({
           ...prices,

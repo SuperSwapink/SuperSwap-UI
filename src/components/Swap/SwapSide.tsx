@@ -84,12 +84,6 @@ const SwapSide: React.FC<SwapSideProps> = ({
   };
 
   const onAmountInput = (e: string) => {
-    console.log(
-      e,
-      RegExp(`^\\d*(?:\\\\[.])?\\d*$`).test(
-        e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      )
-    );
     if (
       e === "" ||
       RegExp(`^\\d*(?:\\\\[.])?\\d*$`).test(
