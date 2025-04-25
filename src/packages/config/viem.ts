@@ -104,7 +104,7 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.INK]: [
     {
       chain: ink,
-      transport: http(`https://rpc-qnd.inkonchain.com`),
+      transport: http(`https://ink.drpc.org`),
     },
   ],
 } as const;
