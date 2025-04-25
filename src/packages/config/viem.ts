@@ -76,7 +76,7 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.ETHEREUM]: [
     {
       chain: mainnet,
-      transport: http("https://eth.llamarpc.com"),
+      transport: http("https://mainnet.infura.io/v3/b6bf7d3508c941499b10025c0776eaf8"),
     },
   ],
   [ChainId.ARBITRUM]: [
