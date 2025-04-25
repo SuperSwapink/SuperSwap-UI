@@ -87,7 +87,9 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
                 chainId: ChainId.ETHEREUM,
                 name: item.name,
                 symbol: item.symbol,
-                icon: item.logoURI?.replace("ipfs://", "https://ipfs.io/ipfs/"),
+                icon: item.logoURI
+                  ?.replace("ipfs://", "https://ipfs.io/ipfs/")
+                  ?.replace("/thumb/", "/standard/"),
               })
           );
       } catch (err) {

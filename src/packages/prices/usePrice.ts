@@ -10,30 +10,37 @@ interface UsePrice {
   enabled?: boolean;
 }
 
+const dexChainId = {
+  [ChainId.ETHEREUM]: "ethereum",
+  [ChainId.OP]: "optimism",
+  [ChainId.BASE]: "base",
+  [ChainId.ARBITRUM]: "arbitrum",
+  [ChainId.INK]: "ink",
+};
+
 export const usePrice = ({ chainId, address, enabled }: UsePrice) => {
   const { setPrices } = useTokenPrices();
   return useQuery({
     queryKey: [chainId, address],
     queryFn: async () => {
       if (!chainId) return 0;
-      if (
-        chainId === 1 &&
-        address?.toLowerCase() === USDC[ChainId.ETHEREUM].address.toLowerCase()
-      ) {
+      const { data } = await axios.get(
+        `https://api.dexscreener.com/tokens/v1/${dexChainId[chainId]}/${address}`
+      );
+      let price = 0;
+      if (data.length) {
+        if (
+          data[0].baseToken.address.toLowerCase() === address?.toLowerCase()
+        ) {
+          price = Number(data[0].priceUsd);
+        } else {
+          price = Number(data[0].priceUsd) * Number(data[0].priceNative);
+        }
         setPrices((prices: any) => ({
           ...prices,
-          [`${chainId}:${address?.toLowerCase()}`]: 1,
+          [`${chainId}:${address?.toLowerCase()}`]: price,
         }));
-        return 1;
       }
-      const { data } = await axios.get(
-        `https://api.dexscreener.com/latest/dex/tokens/${address}`
-      );
-      const price = Number(data?.pairs?.[0]?.priceUsd ?? "0");
-      setPrices((prices: any) => ({
-        ...prices,
-        [`${chainId}:${address?.toLowerCase()}`]: price,
-      }));
       return price;
     },
     enabled: Boolean(chainId && address) && Boolean(enabled),
