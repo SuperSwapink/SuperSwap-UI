@@ -5,6 +5,7 @@ import { UniswapV2BaseProvider } from "./UniswapV2Base";
 import { ChainId } from "@/packages/chain";
 
 export class CamelotSwapV2Provider extends UniswapV2BaseProvider {
+//   override fee = 0.00005;
   constructor(chainId: ChainId, web3Client: PublicClient) {
     const factory = {
       [ChainId.ARBITRUM]: "0x6EcCab422D763aC031210895C81787E87B43A652",

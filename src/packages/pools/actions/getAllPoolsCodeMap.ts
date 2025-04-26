@@ -30,7 +30,6 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.SushiSwapV3,
         LiquidityProviders.AerodromeSwapV2,
         LiquidityProviders.AerodromeSwapV3,
-        LiquidityProviders.CamelotSwapV2,
         LiquidityProviders.CamelotSwapV3,
       ];
 
