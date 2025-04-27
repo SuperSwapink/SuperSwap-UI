@@ -1,12 +1,12 @@
-import type { Metadata } from "next"
-import localFont from "next/font/local"
-import "./globals.css"
-import Provider from "./providers"
-import Header from "@/components/layout/Header"
-import Footer from "@/components/layout/Footer"
-import { Toaster } from "react-hot-toast"
-import { Suspense } from "react"
-import "react-tooltip/dist/react-tooltip.css"
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
+import Provider from "./providers";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
+import "react-tooltip/dist/react-tooltip.css";
 
 const roobert = localFont({
   src: [
@@ -21,7 +21,7 @@ const roobert = localFont({
       style: "normal",
     },
   ],
-})
+});
 
 export const metadata: Metadata = {
   title: "SuperSwap",
@@ -37,12 +37,12 @@ export const metadata: Metadata = {
       },
     ],
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className="dark">
@@ -94,10 +94,10 @@ export default function RootLayout({
               {children}
               <Footer />
             </main>
-            <Toaster position="top-right" />
+            <Toaster position="top-right" toastOptions={{ duration: 6000 }} />
           </Provider>
         </Suspense>
       </body>
     </html>
-  )
+  );
 }

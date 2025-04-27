@@ -1,4 +1,6 @@
 import {
+  Dialog,
+  DialogPanel,
   Menu,
   MenuButton,
   MenuItem,
@@ -9,9 +11,11 @@ import TwoLine from "./svgs/TwoLine";
 import Close from "./svgs/Close";
 import useSettings from "@/hooks/useSettings";
 import HelpToolTip from "./HelpToolTip";
+import { useState } from "react";
 
 const SettingPopup = () => {
   const { deadline, slippage, setDeadline, setSlippage } = useSettings();
+  const [open, setOpen] = useState(false);
 
   const warning =
     slippage < 0.5
@@ -23,31 +27,32 @@ const SettingPopup = () => {
       : undefined;
 
   return (
-    <Menu>
-      <MenuButton className="flex items-center justify-center w-12 h-12 text-[#222] dark:text-white rounded-full bg-white dark:bg-[#131823] transition-all">
-        <TwoLine />
-      </MenuButton>
-      <Transition
-        enter="transition ease-out duration-75"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
+    <>
+      <button
+        className="flex items-center justify-center w-12 h-12 text-[#222] dark:text-white rounded-full bg-white dark:bg-[#131823] transition-all"
+        onClick={() => setOpen(!open)}
       >
-        <MenuItems
-          anchor="bottom"
-          className="relative mt-2 rounded-xl bg-white dark:bg-[#131823] shadow-[0px_8px_24px_-8px_rgba(175,178,237,0.24)] dark:shadow-none w-[375px] !overflow-visible"
+        <TwoLine />
+      </button>
+      <Transition appear show={open}>
+        <Dialog
+          as="div"
+          className="relative z-10 focus:outline-none"
+          onClose={() => setOpen(false)}
         >
-          <MenuItem>
-            {({ close }) => (
-              <>
+          <div
+            className="fixed inset-0 bg-black/10 backdrop-blur"
+            aria-hidden="true"
+          />
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center">
+              <DialogPanel className="relative mt-2 rounded-xl bg-white dark:bg-[#131823] shadow-[0px_8px_24px_-8px_rgba(175,178,237,0.24)] dark:shadow-none w-[375px] !overflow-visible">
                 <h4 className="px-3 py-2 text-[#222] dark:text-white">
                   Settings
                 </h4>
                 <button
                   className="flex items-center justify-center absolute top-2 right-2 w-6 h-6 hover:bg-black/5 transition-all rounded-md text-[#222] dark:text-white"
-                  onClick={close}
+                  onClick={() => setOpen(false)}
                 >
                   <Close className="w-2.5 h-2.5" />
                 </button>
@@ -143,12 +148,12 @@ const SettingPopup = () => {
                     </div>
                   </div>
                 </div>
-              </>
-            )}
-          </MenuItem>
-        </MenuItems>
+              </DialogPanel>
+            </div>
+          </div>
+        </Dialog>
       </Transition>
-    </Menu>
+    </>
   );
 };
 
