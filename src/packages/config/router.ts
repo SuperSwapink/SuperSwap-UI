@@ -8,6 +8,7 @@ import {
   USDT,
   USDT0,
   VIRTUAL,
+  WETH9,
   WNATIVE,
 } from "../currency";
 
@@ -20,6 +21,22 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     USDT[ChainId.ETHEREUM],
   ],
   [ChainId.OP]: [WNATIVE[ChainId.OP], USDC[ChainId.OP], USDT[ChainId.OP]],
+  [ChainId.UNICHAIN]: [
+    WNATIVE[ChainId.UNICHAIN],
+    USDC[ChainId.UNICHAIN],
+    USDT0[ChainId.UNICHAIN],
+  ],
+  [ChainId.POLYGON]: [
+    WNATIVE[ChainId.POLYGON],
+    WETH9[ChainId.POLYGON],
+    USDC[ChainId.POLYGON],
+    USDT[ChainId.POLYGON],
+  ],
+  [ChainId.SONEIUM]: [
+    WNATIVE[ChainId.SONEIUM],
+    USDCe[ChainId.SONEIUM],
+    USDT[ChainId.SONEIUM],
+  ],
   [ChainId.BASE]: [
     WNATIVE[ChainId.BASE],
     USDC[ChainId.BASE],
@@ -31,7 +48,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     WNATIVE[ChainId.ARBITRUM],
     USDC[ChainId.ARBITRUM],
     USDT[ChainId.ARBITRUM],
-    USDCe[ChainId.ARBITRUM]
+    USDCe[ChainId.ARBITRUM],
   ],
   [ChainId.INK]: [
     WNATIVE[ChainId.INK],
