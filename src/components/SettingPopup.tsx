@@ -1,12 +1,4 @@
-import {
-  Dialog,
-  DialogPanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  Transition,
-} from "@headlessui/react";
+import { Dialog, DialogPanel, Transition } from "@headlessui/react";
 import TwoLine from "./svgs/TwoLine";
 import Close from "./svgs/Close";
 import useSettings from "@/hooks/useSettings";

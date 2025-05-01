@@ -28,6 +28,12 @@ import { PancakeSwapV3Provider } from "./liquidity-providers/PancakeSwapV3";
 import { AerodromeSwapV3Provider } from "./liquidity-providers/AerodromeSwapV3";
 import { CamelotSwapV2Provider } from "./liquidity-providers/CamelotSwapV2";
 import { CamelotSwapV3Provider } from "./liquidity-providers/CamelotSwapV3";
+import { QuickSwapV2Provider } from "./liquidity-providers/QuickSwapV2";
+import { QuickSwapV3Provider } from "./liquidity-providers/QuickSwapV3";
+import { KyoFinanceV3Provider } from "./liquidity-providers/KyoFinanceV3";
+import { SonexProvider } from "./liquidity-providers/Sonex";
+import { SonusV2Provider } from "./liquidity-providers/SonusV2";
+import { SonusV3Provider } from "./liquidity-providers/SonusV3";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -266,6 +272,63 @@ export class DataFetcher {
           this.chainId,
           this.web3Client
         );
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.QuickSwapV2, providers)) {
+      try {
+        const provider = new QuickSwapV2Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.QuickSwapV3, providers)) {
+      try {
+        const provider = new QuickSwapV3Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.KyoFinanceV3, providers)) {
+      try {
+        const provider = new KyoFinanceV3Provider(
+          this.chainId,
+          this.web3Client
+        );
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.Sonex, providers)) {
+      try {
+        const provider = new SonexProvider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.SonusV2, providers)) {
+      try {
+        const provider = new SonusV2Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.SonusV3, providers)) {
+      try {
+        const provider = new SonusV3Provider(this.chainId, this.web3Client);
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

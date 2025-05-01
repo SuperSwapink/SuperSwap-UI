@@ -12,6 +12,7 @@ import {
   USDT_ADDRESS,
   VIRTUAL_ADDRESS,
   WETH9_ADDRESS,
+  WPOL_ADDRESS,
 } from "./token-addresses";
 
 export const WETH9 = addressMapToTokenMap(
@@ -24,9 +25,22 @@ export const WETH9 = addressMapToTokenMap(
   WETH9_ADDRESS
 ) as Record<keyof typeof WETH9_ADDRESS, Token>;
 
+export const WPOL = addressMapToTokenMap(
+  {
+    decimals: 18,
+    symbol: "WPOL",
+    name: "Wrapped POL",
+    icon: "/media/wpol.png",
+  },
+  WPOL_ADDRESS
+) as Record<keyof typeof WPOL_ADDRESS, Token>;
+
 export const WNATIVE = {
   [ChainId.ETHEREUM]: WETH9[ChainId.ETHEREUM],
   [ChainId.OP]: WETH9[ChainId.OP],
+  [ChainId.UNICHAIN]: WETH9[ChainId.UNICHAIN],
+  [ChainId.POLYGON]: WPOL[ChainId.POLYGON],
+  [ChainId.SONEIUM]: WETH9[ChainId.SONEIUM],
   [ChainId.BASE]: WETH9[ChainId.BASE],
   [ChainId.ARBITRUM]: WETH9[ChainId.ARBITRUM],
   [ChainId.INK]: WETH9[ChainId.INK],

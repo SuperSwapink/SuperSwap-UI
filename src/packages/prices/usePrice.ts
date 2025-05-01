@@ -13,6 +13,9 @@ interface UsePrice {
 const dexChainId = {
   [ChainId.ETHEREUM]: "ethereum",
   [ChainId.OP]: "optimism",
+  [ChainId.UNICHAIN]: 'unichain',
+  [ChainId.POLYGON]: 'polygon',
+  [ChainId.SONEIUM]: 'soneium',
   [ChainId.BASE]: "base",
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",

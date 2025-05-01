@@ -31,6 +31,11 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.AerodromeSwapV2,
         LiquidityProviders.AerodromeSwapV3,
         LiquidityProviders.CamelotSwapV3,
+        LiquidityProviders.QuickSwapV2,
+        LiquidityProviders.QuickSwapV3,
+        LiquidityProviders.KyoFinanceV3,
+        LiquidityProviders.Sonex,
+        LiquidityProviders.SonusV2,
       ];
 
   const dataFetcher = DataFetcher.onChain(chainId);

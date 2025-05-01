@@ -211,6 +211,8 @@ export const getBestAcrossByMediumToken = async ({
       100
     );
 
+    console.log(route);
+
     if (route.status !== RouteStatus.Success) {
       console.log("dest", route);
       return { status: ACROSS_STATUS.NO_ROUTE };

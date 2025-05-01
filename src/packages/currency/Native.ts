@@ -10,6 +10,9 @@ import { type SerializedNative, nativeSchema } from "./zod";
 const NATIVE_MEDIAS = {
   [ChainId.ETHEREUM]: "eth",
   [ChainId.OP]: "eth",
+  [ChainId.UNICHAIN]: 'eth',
+  [ChainId.POLYGON]: 'pol',
+  [ChainId.SONEIUM]: 'eth',
   [ChainId.BASE]: "eth",
   [ChainId.ARBITRUM]: "eth",
   [ChainId.INK]: "eth",

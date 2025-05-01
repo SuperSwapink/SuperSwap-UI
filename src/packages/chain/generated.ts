@@ -34,6 +34,57 @@ export default [
     shortName: "op",
   },
   {
+    chainId: 130,
+    explorers: [
+      {
+        name: "Uniscan",
+        url: "https://uniscan.xyz/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Unichain",
+    shortName: "uni",
+  },
+  {
+    chainId: 137,
+    explorers: [
+      {
+        name: "PolygonScan",
+        url: "https://polygonscan.com/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "POL",
+      symbol: "POL",
+      decimals: 18,
+    },
+    name: "Polygon",
+    shortName: "pol",
+  },
+  {
+    chainId: 1868,
+    explorers: [
+      {
+        name: "Blockscout",
+        url: "https://soneium.blockscout.com/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Soneium",
+    shortName: "soneium",
+  },
+  {
     chainId: 8453,
     explorers: [
       {
