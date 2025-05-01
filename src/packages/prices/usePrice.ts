@@ -31,7 +31,6 @@ export const usePrice = ({ chainId, address, enabled }: UsePrice) => {
         `https://api.dexscreener.com/tokens/v1/${dexChainId[chainId]}/${address}`
       );
       let price = 0;
-      console.log(data);
       if (data.length) {
         if (
           data[0].baseToken.address.toLowerCase() === address?.toLowerCase()

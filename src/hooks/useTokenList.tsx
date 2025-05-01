@@ -6,6 +6,7 @@ import { useReadContract } from "wagmi";
 import useLocalTokenStorage from "./useLocalTokenStorage";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { getAddress } from "viem";
 
 const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
   const { localTokenList } = useLocalTokenStorage();
@@ -63,7 +64,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     },
   });
 
-  const { data: uniswapData } = useQuery({
+  const { data: ethUniswapData } = useQuery({
     queryKey: ["uniswap-tokens"],
     queryFn: async () => {
       try {
@@ -90,6 +91,115 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
                 icon: item.logoURI
                   ?.replace("ipfs://", "https://ipfs.io/ipfs/")
                   ?.replace("/thumb/", "/standard/"),
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
+  const { data: polygonQuickswapData } = useQuery({
+    queryKey: ["quickswap-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://unpkg.com/quickswap-default-token-list@1.3.77/build/quickswap-default.tokenlist.json"
+        );
+        return data.tokens
+          .filter(
+            (token: any) =>
+              token.chainId === ChainId.POLYGON &&
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === token.address.toLowerCase() &&
+                  k.chainId === ChainId.POLYGON
+              )
+          )
+          .map(
+            (token: any) =>
+              new Token({
+                chainId: ChainId.POLYGON,
+                address: token.address,
+                name: token.name,
+                symbol: token.symbol,
+                decimals: token.decimals,
+                icon: token.logoURI,
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
+  const { data: soneiumSonexData } = useQuery({
+    queryKey: ["sonex-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://api-swap.sonex.so/sonex/tokens?orderBy=ALPHABETICAL&pageIndex=1&pageSize=100&noCache=true",
+          {
+            headers: {
+              "X-Chain-Id": 1868,
+            },
+          }
+        );
+        return data.data
+          .filter(
+            (token: any) =>
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === token.address.toLowerCase() &&
+                  k.chainId === ChainId.SONEIUM
+              ) &&
+              token.address !== "0x0000000000000000000000000000000000000000"
+          )
+          .map(
+            (token: any) =>
+              new Token({
+                chainId: ChainId.SONEIUM,
+                address: token.address,
+                name: token.name,
+                symbol: token.symbol,
+                decimals: token.decimals,
+                icon: token.logo,
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
+  const { data: unichainData } = useQuery({
+    queryKey: ["unichain-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://tokens.coingecko.com/unichain/all.json"
+        );
+        return data.tokens
+          .filter(
+            (token: any) =>
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === token.address.toLowerCase() &&
+                  k.chainId === ChainId.UNICHAIN
+              )
+          )
+          .map(
+            (token: any) =>
+              new Token({
+                chainId: ChainId.UNICHAIN,
+                address: getAddress(token.address),
+                name: token.name,
+                symbol: token.symbol,
+                decimals: token.decimals,
+                icon: token.logoURI,
               })
           );
       } catch (err) {
@@ -166,7 +276,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
         ) === i
     );
 
-  const velodromeTokens = filteredOpVelodromeTokens?.map(
+  const opVelodromeTokens = filteredOpVelodromeTokens?.map(
     (item) =>
       new Token({
         address: item.token_address,
@@ -194,10 +304,13 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
   return [
     ...defaultTokens,
     ...(aerodromeTokens ?? []),
-    ...(velodromeTokens ?? []),
+    ...(opVelodromeTokens ?? []),
     ...(localTokens ?? []),
     ...(camelotData ?? []),
-    ...(uniswapData ?? []),
+    ...(ethUniswapData ?? []),
+    ...(polygonQuickswapData ?? []),
+    ...(soneiumSonexData ?? []),
+    ...(unichainData ?? []),
   ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i);
 };
 

@@ -122,7 +122,9 @@ export const unichain = /*#__PURE__*/ defineChain({
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://unichain.drpc.org"],
+      http: [
+        "https://lb.drpc.org/ogrpc?network=unichain&dkey=AlvgkjhrKE6ynMGgm4YMvAxCBsIiIT0R8L-sEjfP07KJ",
+      ],
     },
   },
   blockExplorers: {
@@ -175,7 +177,9 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.UNICHAIN]: [
     {
       chain: unichain,
-      transport: http("https://unichain.drpc.org"),
+      transport: http(
+        "https://lb.drpc.org/ogrpc?network=unichain&dkey=AlvgkjhrKE6ynMGgm4YMvAxCBsIiIT0R8L-sEjfP07KJ"
+      ),
     },
   ],
   [ChainId.POLYGON]: [
