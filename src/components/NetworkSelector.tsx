@@ -29,8 +29,6 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
       ? SUPPORTED_CHAINS[chainId as ChainId]
       : undefined;
 
-      alert(JSON.stringify(Object.values(SUPPORTED_CHAINS).map(item => ({name: item.name}))))
-
   return address ? (
     <Menu>
       <MenuButton
@@ -88,7 +86,8 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
             className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
             onClick={() => onSwitchChain(item.id)}
           >
-            <Image
+            {item.name}
+            {/* <Image
               src={item.icon.src}
               width={item.icon.width}
               height={item.icon.blurHeight}
@@ -108,7 +107,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
             ) : null}
             <span className="text-[#222] dark:text-white font-semibold ml-2">
               {item.name}
-            </span>
+            </span> */}
           </MenuItem>
         ))}
       </MenuItems>
