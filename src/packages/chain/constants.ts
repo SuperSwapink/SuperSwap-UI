@@ -5,7 +5,8 @@ import EthLogo from "@/assets/network/ethereum.png";
 import ArbLogo from "@/assets/network/arbitrum.png";
 import UniLogo from "@/assets/network/unichain.png";
 import PolyLogo from "@/assets/network/polygon.png";
-import SoneiumLogo from "@/assets/network/soneium.svg";
+import SoneiumLogoDark from "@/assets/network/soneium-dark.webp";
+import SoneiumLogoLight from "@/assets/network/soneium-light.webp";
 import { StaticImageData } from "next/image";
 
 export const ChainId = {
@@ -37,7 +38,12 @@ export type ChainKey = (typeof ChainKey)[keyof typeof ChainKey];
 
 export const SUPPORTED_CHAINS: Record<
   ChainId,
-  { id: ChainId; name: string; icon: StaticImageData }
+  {
+    id: ChainId;
+    name: string;
+    icon: StaticImageData;
+    iconLight?: StaticImageData;
+  }
 > = {
   [ChainId.ETHEREUM]: {
     id: ChainId.ETHEREUM,
@@ -61,7 +67,8 @@ export const SUPPORTED_CHAINS: Record<
   },
   [ChainId.SONEIUM]: {
     id: ChainId.SONEIUM,
-    icon: SoneiumLogo,
+    icon: SoneiumLogoDark,
+    iconLight: SoneiumLogoLight,
     name: "Soneium",
   },
   [ChainId.BASE]: {

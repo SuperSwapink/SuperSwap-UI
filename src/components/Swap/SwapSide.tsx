@@ -115,8 +115,21 @@ const SwapSide: React.FC<SwapSideProps> = ({
                     width={SUPPORTED_CHAINS[token.chainId].icon.width}
                     height={SUPPORTED_CHAINS[token.chainId].icon.height}
                     alt="network"
-                    className="size-5 rounded-full"
+                    className={`size-5 rounded-full ${
+                      SUPPORTED_CHAINS[token.chainId].iconLight
+                        ? "hidden dark:block"
+                        : ""
+                    }`}
                   />
+                  {SUPPORTED_CHAINS[token.chainId].iconLight ? (
+                    <Image
+                      src={SUPPORTED_CHAINS[token.chainId].iconLight?.src ?? ""}
+                      width={SUPPORTED_CHAINS[token.chainId].iconLight?.width}
+                      height={SUPPORTED_CHAINS[token.chainId].iconLight?.height}
+                      alt="network"
+                      className={`size-5 rounded-full dark:hidden`}
+                    />
+                  ) : null}
                   <span className="uppercase text-sm ml-1 font-bold">
                     {SUPPORTED_CHAINS[token.chainId].name}
                   </span>

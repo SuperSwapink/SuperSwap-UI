@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 interface ThemeSwitchProps {
-  className?: string
+  className?: string;
 }
 
 const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
-  const [theme, setTheme] = useState(true)
+  const [theme, setTheme] = useState(true);
 
   useEffect(() => {
-    document.documentElement.classList.add("dark")
-  }, [])
+    document.documentElement.classList.add("dark");
+  }, []);
 
   const onSwitch = () => {
-    setTheme(!theme)
-    document.documentElement.classList.toggle("dark")
-  }
+    setTheme(!theme);
+    document.documentElement.classList.toggle("dark");
+  };
 
   return (
     <button
-      className={`flex items-center font-semibold bg-[#2f8af529] hover:bg-[#2f8af51f] rounded-xl text-[#2f8af5] px-4 py-3 outline-none transition-all ${
+      className={`flex items-center justify-center w-12 h-12 text-[#222] dark:text-white rounded-full bg-white dark:bg-[#131823] transition-all ${
         className ?? ""
       }`}
       onClick={onSwitch}
@@ -51,7 +51,7 @@ const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ className }) => {
         </svg>
       )}
     </button>
-  )
-}
+  );
+};
 
-export default ThemeSwitch
+export default ThemeSwitch;

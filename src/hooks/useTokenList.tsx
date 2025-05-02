@@ -157,7 +157,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
                 name: token.name,
                 symbol: token.symbol,
                 decimals: token.decimals,
-                icon: token.logoURI,
+                icon: token.logoURI.replace("thumb", "standard"),
               })
           );
       } catch (err) {
@@ -191,7 +191,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
                 name: token.name,
                 symbol: token.symbol,
                 decimals: token.decimals,
-                icon: token.logoURI,
+                icon: token.logoURI.replace("thumb", "standard"),
               })
           );
       } catch (err) {

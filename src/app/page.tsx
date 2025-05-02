@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
-import SettingPopup from "@/components/SettingPopup"
-import SwapComp from "@/components/Swap/SwapComp"
-import SwapPanel from "@/components/Swap/SwapPanel"
+import SettingPopup from "@/components/SettingPopup";
+import SwapComp from "@/components/Swap/SwapComp";
+import SwapPanel from "@/components/Swap/SwapPanel";
+import ThemeSwitch from "@/components/ThemeSwitch";
 
 export default function Home() {
   return (
@@ -33,11 +34,14 @@ export default function Home() {
               <ExternalLink className="size-4 ml-1" />
             </button> */}
           </div>
-          <SettingPopup />
+          <div className="flex items-center space-x-2">
+            <ThemeSwitch />
+            <SettingPopup />
+          </div>
         </div>
         <SwapPanel />
         <SwapComp />
       </div>
     </div>
-  )
+  );
 }

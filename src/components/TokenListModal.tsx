@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
-import { Dialog, DialogPanel, Transition } from "@headlessui/react"
-import Close from "./svgs/Close"
-import Magnifier from "./svgs/Magnifier"
-import TokenListItem from "./TokenListItem"
-import useTokenList from "../hooks/useTokenList"
-import { Amount, Token, Type } from "@/packages/currency"
-import { useEffect, useState } from "react"
-import { useAccount, useReadContracts } from "wagmi"
-import { Address, erc20Abi, getAddress, isAddress } from "viem"
-import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
-import Image from "next/image"
-import useTokenBalances from "@/hooks/useTokenBalances"
-import useTokenPrices from "@/hooks/useTokenPrices"
+import { Dialog, DialogPanel, Transition } from "@headlessui/react";
+import Close from "./svgs/Close";
+import Magnifier from "./svgs/Magnifier";
+import TokenListItem from "./TokenListItem";
+import useTokenList from "../hooks/useTokenList";
+import { Amount, Token, Type } from "@/packages/currency";
+import { useEffect, useState } from "react";
+import { useAccount, useReadContracts } from "wagmi";
+import { Address, erc20Abi, getAddress, isAddress } from "viem";
+import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain";
+import Image from "next/image";
+import useTokenBalances from "@/hooks/useTokenBalances";
+import useTokenPrices from "@/hooks/useTokenPrices";
 
 interface TokenListModalProps {
-  currentToken?: Type
-  setToken: any
-  open: boolean
-  onClose: any
-  primaryTokens?: boolean
+  currentToken?: Type;
+  setToken: any;
+  open: boolean;
+  onClose: any;
+  primaryTokens?: boolean;
 }
 
 const TokenListModal: React.FC<TokenListModalProps> = ({
@@ -29,22 +29,22 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
   onClose,
   primaryTokens,
 }) => {
-  const [filter, setFilter] = useState("")
-  const { address } = useAccount()
-  const [selectedChain, setSelectedChain] = useState<ChainId>(ChainId.INK)
-  const tokenList = useTokenList(selectedChain, primaryTokens)
-  const { prices } = useTokenPrices()
+  const [filter, setFilter] = useState("");
+  const { address } = useAccount();
+  const [selectedChain, setSelectedChain] = useState<ChainId>(ChainId.INK);
+  const tokenList = useTokenList(selectedChain, primaryTokens);
+  const { prices } = useTokenPrices();
   const { data: balances } = useTokenBalances(
     selectedChain,
     address,
     tokenList,
     open
-  )
+  );
 
   useEffect(() => {
-    setFilter("")
-    setSelectedChain(currentToken?.chainId ?? ChainId.INK)
-  }, [open])
+    setFilter("");
+    setSelectedChain(currentToken?.chainId ?? ChainId.INK);
+  }, [open]);
 
   const { data: tokenInfo } = useReadContracts({
     contracts: [
@@ -71,16 +71,16 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
       enabled: isAddress(filter),
       refetchInterval: 10000,
     },
-  })
+  });
 
   const onSelectItem = (token: Type) => {
-    setToken(token)
-    onClose()
-  }
+    setToken(token);
+    onClose();
+  };
 
   const onChainChange = (id: ChainId) => {
-    setSelectedChain(id)
-  }
+    setSelectedChain(id);
+  };
 
   const tokens = [
     ...tokenList.filter(
@@ -109,7 +109,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
           }),
         ]
       : []),
-  ]
+  ];
 
   const sortedTokens = tokens
     .filter((item) => item.chainId === selectedChain)
@@ -142,7 +142,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
         ] ?? 0)
         ? -1
         : 1
-    )
+    );
 
   return (
     <>
@@ -204,8 +204,19 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                             width={chain.icon.width}
                             height={chain.icon.height}
                             alt={chain.name}
-                            className="size-5 rounded-full"
+                            className={`size-5 rounded-full ${
+                              chain.iconLight ? "hidden dark:block" : ""
+                            }`}
                           />
+                          {chain.iconLight ? (
+                            <Image
+                              src={chain.iconLight.src}
+                              width={chain.iconLight.width}
+                              height={chain.iconLight.height}
+                              alt={chain.name}
+                              className={`size-5 rounded-full dark:hidden`}
+                            />
+                          ) : null}
                           <span className="ml-1 md:ml-2 text-[10px] md:text-sm uppercase">
                             {chain.name}
                           </span>
@@ -236,7 +247,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
         </Dialog>
       </Transition>
     </>
-  )
-}
+  );
+};
 
-export default TokenListModal
+export default TokenListModal;

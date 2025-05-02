@@ -1,34 +1,33 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Ink from "@/assets/network/ink.png"
-import { useAccount, useSwitchChain } from "wagmi"
+import Image from "next/image";
+import { useAccount, useSwitchChain } from "wagmi";
 import {
   Menu,
   MenuButton,
   MenuItem,
   MenuItems,
   Transition,
-} from "@headlessui/react"
-import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain"
+} from "@headlessui/react";
+import { ChainId, SUPPORTED_CHAINS } from "@/packages/chain";
 
 interface NetworkSelectorProps {
-  className?: string
+  className?: string;
 }
 
 const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
-  const { address, chainId } = useAccount()
-  const { switchChainAsync } = useSwitchChain()
+  const { address, chainId } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
 
   const onSwitchChain = (chainId: ChainId) => {
-    switchChainAsync?.({ chainId })
-  }
+    switchChainAsync?.({ chainId });
+  };
 
   const activeChain =
     chainId &&
     Object.keys(SUPPORTED_CHAINS).findIndex((k) => Number(k) === chainId) > -1
       ? SUPPORTED_CHAINS[chainId as ChainId]
-      : undefined
+      : undefined;
 
   return address ? (
     <Menu>
@@ -45,8 +44,19 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
               width={activeChain.icon.width}
               height={activeChain.icon.blurHeight}
               alt={activeChain.name}
-              className="w-5 h-5 rounded-full"
+              className={`w-5 h-5 rounded-full ${
+                activeChain.iconLight ? "hidden dark:block" : ""
+              }`}
             />
+            {activeChain.iconLight ? (
+              <Image
+                src={activeChain.iconLight.src}
+                width={activeChain.iconLight.width}
+                height={activeChain.iconLight.blurHeight}
+                alt={activeChain.name}
+                className={`w-5 h-5 rounded-full dark:hidden`}
+              />
+            ) : null}
             <span className="text-[#2f8af5] font-semibold ml-2">
               {activeChain.name}
             </span>
@@ -81,8 +91,19 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
                 width={item.icon.width}
                 height={item.icon.blurHeight}
                 alt={item.name}
-                className="w-5 h-5 rounded-full"
+                className={`w-5 h-5 rounded-full ${
+                  item.iconLight ? "hidden dark:block" : ""
+                }`}
               />
+              {item.iconLight ? (
+                <Image
+                  src={item.iconLight.src}
+                  width={item.iconLight.width}
+                  height={item.iconLight.blurHeight}
+                  alt={item.name}
+                  className={`w-5 h-5 rounded-full dark:hidden`}
+                />
+              ) : null}
               <span className="text-[#222] dark:text-white font-semibold ml-2">
                 {item.name}
               </span>
@@ -91,7 +112,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         </MenuItems>
       </Transition>
     </Menu>
-  ) : null
-}
+  ) : null;
+};
 
-export default NetworkSelector
+export default NetworkSelector;
