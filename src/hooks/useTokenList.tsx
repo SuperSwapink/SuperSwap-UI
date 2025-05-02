@@ -88,9 +88,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
                 chainId: ChainId.ETHEREUM,
                 name: item.name,
                 symbol: item.symbol,
-                icon: item.logoURI
-                  ?.replace("ipfs://", "https://ipfs.io/ipfs/")
-                  ?.replace("/thumb/", "/standard/"),
+                icon: `https://cdn.sushi.com/image/upload/f_auto,c_limit,w_80,q_auto/tokens/1/${item.address.toLowerCase()}.jpg`,
               })
           );
       } catch (err) {
@@ -125,7 +123,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
                 name: token.name,
                 symbol: token.symbol,
                 decimals: token.decimals,
-                icon: token.logoURI,
+                icon: `https://cdn.sushi.com/image/upload/f_auto,c_limit,w_80,q_auto/tokens/137/${token.address.toLowerCase()}.jpg`,
               })
           );
       } catch (err) {
