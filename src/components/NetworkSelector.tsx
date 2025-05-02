@@ -33,7 +33,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
     <Menu>
       <MenuButton
         data-wrong={activeChain === undefined}
-        className={`flex items-center text-[#2f8af5] bg-[#2f8af529] rounded-xl px-4 py-3 outline-none hover:bg-[#2f8af51f] transition-all ${
+        className={`flex items-center text-[#2f8af5] bg-[#2f8af529] rounded-xl px-4 py-3 outline-none hover:bg-[#2f8af51f] transition-all z-10 ${
           className ?? ""
         }`}
       >
@@ -67,6 +67,14 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
           </span>
         )}
       </MenuButton>
+      <MenuItems>
+        <MenuItem>
+          <div
+            className="fixed inset-0 bg-black/10 backdrop-blur z-[1]"
+            aria-hidden="true"
+          />
+        </MenuItem>
+      </MenuItems>
       <Transition
         enter="transition ease-out duration-75"
         enterFrom="opacity-0 scale-95"
@@ -77,7 +85,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
       >
         <MenuItems
           anchor="bottom"
-          className="rounded-xl mt-2 bg-white dark:bg-[#131823]"
+          className="rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
         >
           {Object.values(SUPPORTED_CHAINS).map((item) => (
             <MenuItem

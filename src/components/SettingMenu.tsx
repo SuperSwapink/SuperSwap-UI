@@ -25,21 +25,29 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ className }) => {
     <>
       <Menu>
         <MenuButton
-          className={`bg-[#2f8af529] hover:bg-[#2f8af51f] rounded-xl text-[#2f8af5] px-4 py-3 outline-none ${
+          className={`bg-[#2f8af529] hover:bg-[#2f8af51f] rounded-xl text-[#2f8af5] px-4 py-3 outline-none z-10 ${
             className ?? ""
           }`}
         >
           <ThreeDots className="size-6" />
         </MenuButton>
+        <MenuItems>
+          <MenuItem>
+            <div
+              className="fixed inset-0 bg-black/10 backdrop-blur z-[1]"
+              aria-hidden="true"
+            />
+          </MenuItem>
+        </MenuItems>
         <MenuItems
           anchor="bottom"
           className={
-            "mt-2 origin-top-right bg-[#d5e4fa] dark:bg-[#0f2139] py-2 px-3 rounded-lg z-100 space-y-2"
+            "mt-2 origin-top-right bg-[#d5e4fa] dark:bg-[#0f2139] py-2 px-3 rounded-lg z-50 space-y-2"
           }
         >
           <MenuItem>
             <button
-              className="flex items-center text-[#2f8af5]"
+              className="flex items-center text-[#2f8af5] z-10"
               onClick={() => setShowSecureModal(true)}
             >
               <Alert className="size-4" />
