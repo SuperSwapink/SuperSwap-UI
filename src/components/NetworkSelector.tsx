@@ -67,10 +67,17 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
           </span>
         )}
       </MenuButton>
-
+      <MenuItems>
+        <MenuItem>
+          <div
+            className="fixed inset-0 bg-black/10 backdrop-blur z-[1]"
+            aria-hidden="true"
+          />
+        </MenuItem>
+      </MenuItems>
       <MenuItems
         anchor="bottom"
-        className="rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
+        className="origin-top-right rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
       >
         {Object.values(SUPPORTED_CHAINS).map((item) => (
           <MenuItem
