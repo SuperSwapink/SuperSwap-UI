@@ -135,37 +135,31 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     },
   });
 
-  const { data: soneiumSonexData } = useQuery({
-    queryKey: ["sonex-tokens"],
+  const { data: soneiumData } = useQuery({
+    queryKey: ["soneium-tokens"],
     queryFn: async () => {
       try {
         const { data } = await axios.get(
-          "https://api-swap.sonex.so/sonex/tokens?orderBy=ALPHABETICAL&pageIndex=1&pageSize=100&noCache=true",
-          {
-            headers: {
-              "X-Chain-Id": 1868,
-            },
-          }
+          "https://tokens.coingecko.com/soneium/all.json"
         );
-        return data.data
+        return data.tokens
           .filter(
             (token: any) =>
               !PRIMARY_TOKEN_LIST.find(
                 (k) =>
                   k.address.toLowerCase() === token.address.toLowerCase() &&
                   k.chainId === ChainId.SONEIUM
-              ) &&
-              token.address !== "0x0000000000000000000000000000000000000000"
+              )
           )
           .map(
             (token: any) =>
               new Token({
                 chainId: ChainId.SONEIUM,
-                address: token.address,
+                address: getAddress(token.address),
                 name: token.name,
                 symbol: token.symbol,
                 decimals: token.decimals,
-                icon: token.logo,
+                icon: token.logoURI,
               })
           );
       } catch (err) {
@@ -309,7 +303,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     ...(camelotData ?? []),
     ...(ethUniswapData ?? []),
     ...(polygonQuickswapData ?? []),
-    ...(soneiumSonexData ?? []),
+    ...(soneiumData ?? []),
     ...(unichainData ?? []),
   ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i);
 };

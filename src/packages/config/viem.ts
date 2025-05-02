@@ -76,7 +76,9 @@ export const soneium = /*#__PURE__*/ defineChain({
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://rpc.soneium.org"],
+      http: [
+        "https://lb.drpc.org/ogrpc?network=soneium&dkey=AlvgkjhrKE6ynMGgm4YMvAxCBsIiIT0R8L-sEjfP07KJ",
+      ],
     },
   },
   blockExplorers: {
@@ -193,7 +195,9 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.SONEIUM]: [
     {
       chain: soneium,
-      transport: http("https://rpc.soneium.org"),
+      transport: http(
+        "https://lb.drpc.org/ogrpc?network=soneium&dkey=AlvgkjhrKE6ynMGgm4YMvAxCBsIiIT0R8L-sEjfP07KJ"
+      ),
     },
   ],
   [ChainId.BASE]: [
