@@ -79,7 +79,10 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         anchor="bottom"
         className="origin-top-right rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
       >
-        {Object.values(SUPPORTED_CHAINS).map((item) => (
+      <MenuItem>
+      <div>asdfsadf</div>
+      </MenuItem>
+        {/* {Object.values(SUPPORTED_CHAINS).map((item) => (
           <MenuItem
             as={"button"}
             key={item.name}
@@ -108,7 +111,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
               {item.name}
             </span>
           </MenuItem>
-        ))}
+        ))} */}
       </MenuItems>
     </Menu>
   ) : null;
