@@ -75,50 +75,41 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
           />
         </MenuItem>
       </MenuItems>
-      <Transition
-        enter="transition ease-out duration-75"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
+      <MenuItems
+        anchor="bottom"
+        className="rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
       >
-        <MenuItems
-          anchor="bottom"
-          className="rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
-        >
-          {Object.values(SUPPORTED_CHAINS).map((item) => (
-            <MenuItem
-              as={"button"}
-              key={item.name}
-              className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
-              onClick={() => onSwitchChain(item.id)}
-            >
+        {Object.values(SUPPORTED_CHAINS).map((item) => (
+          <MenuItem
+            as={"button"}
+            key={item.name}
+            className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
+            onClick={() => onSwitchChain(item.id)}
+          >
+            <Image
+              src={item.icon.src}
+              width={item.icon.width}
+              height={item.icon.blurHeight}
+              alt={item.name}
+              className={`w-5 h-5 rounded-full ${
+                item.iconLight ? "hidden dark:block" : ""
+              }`}
+            />
+            {item.iconLight ? (
               <Image
-                src={item.icon.src}
-                width={item.icon.width}
-                height={item.icon.blurHeight}
+                src={item.iconLight.src}
+                width={item.iconLight.width}
+                height={item.iconLight.blurHeight}
                 alt={item.name}
-                className={`w-5 h-5 rounded-full ${
-                  item.iconLight ? "hidden dark:block" : ""
-                }`}
+                className={`w-5 h-5 rounded-full dark:hidden`}
               />
-              {item.iconLight ? (
-                <Image
-                  src={item.iconLight.src}
-                  width={item.iconLight.width}
-                  height={item.iconLight.blurHeight}
-                  alt={item.name}
-                  className={`w-5 h-5 rounded-full dark:hidden`}
-                />
-              ) : null}
-              <span className="text-[#222] dark:text-white font-semibold ml-2">
-                {item.name}
-              </span>
-            </MenuItem>
-          ))}
-        </MenuItems>
-      </Transition>
+            ) : null}
+            <span className="text-[#222] dark:text-white font-semibold ml-2">
+              {item.name}
+            </span>
+          </MenuItem>
+        ))}
+      </MenuItems>
     </Menu>
   ) : null;
 };
