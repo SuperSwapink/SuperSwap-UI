@@ -80,13 +80,13 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         className="origin-top-right rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
       >
         {Object.values(SUPPORTED_CHAINS).map((item) => (
-          <MenuItem
-            as={"button"}
-            key={item.name}
-            className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
-            onClick={() => onSwitchChain(item.id)}
-          >
-            {item.name}
+          <MenuItem key={item.name}>
+            <button
+              className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
+              onClick={() => onSwitchChain(item.id)}
+            >
+              {item.name}
+            </button>
             {/* <Image
               src={item.icon.src}
               width={item.icon.width}
