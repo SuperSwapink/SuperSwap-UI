@@ -26,3 +26,11 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: #0004;
 }
+
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(8px);
+}
