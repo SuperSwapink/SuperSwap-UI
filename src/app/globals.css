@@ -34,3 +34,11 @@ img {
 .backdrop-blur {
   -webkit-backdrop-filter: blur(8px);
 }
+
+input {
+  -webkit-text-fill-color: #000;
+}
+
+.dark input {
+  -webkit-text-fill-color: #fff;
+}
