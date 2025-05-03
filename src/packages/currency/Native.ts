@@ -8,14 +8,14 @@ import { WNATIVE } from "./constants/tokens";
 import { type SerializedNative, nativeSchema } from "./zod";
 
 const NATIVE_MEDIAS = {
-  [ChainId.ETHEREUM]: "eth",
-  [ChainId.OP]: "eth",
-  [ChainId.UNICHAIN]: 'eth',
-  [ChainId.POLYGON]: 'pol',
-  [ChainId.SONEIUM]: 'eth',
-  [ChainId.BASE]: "eth",
-  [ChainId.ARBITRUM]: "eth",
-  [ChainId.INK]: "eth",
+  [ChainId.ETHEREUM]: "eth.svg",
+  [ChainId.OP]: "eth.svg",
+  [ChainId.UNICHAIN]: "eth.svg",
+  [ChainId.POLYGON]: "pol.png",
+  [ChainId.SONEIUM]: "eth.svg",
+  [ChainId.BASE]: "eth.svg",
+  [ChainId.ARBITRUM]: "eth.svg",
+  [ChainId.INK]: "eth.svg",
 };
 
 export class Native extends Currency {
@@ -32,7 +32,7 @@ export class Native extends Currency {
   }) {
     super({
       ...native,
-      icon: `/media/${NATIVE_MEDIAS[native.chainId as ChainId]}.svg`,
+      icon: `/media/${NATIVE_MEDIAS[native.chainId as ChainId]}`,
       category: "Native",
     });
     this.id = `${native.chainId}:NATIVE`;
