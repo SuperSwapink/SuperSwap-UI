@@ -217,7 +217,7 @@ const TokenListModal: React.FC<TokenListModalProps> = ({
                               className={`size-5 rounded-full dark:hidden`}
                             />
                           ) : null}
-                          <span className="ml-1 md:ml-2 text-[10px] md:text-sm uppercase">
+                          <span className="ml-1 md:ml-2 text-[10px] md:text-sm uppercase font-bold">
                             {chain.name}
                           </span>
                         </div>
