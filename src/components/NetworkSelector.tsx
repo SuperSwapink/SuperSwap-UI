@@ -79,20 +79,19 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
         anchor="bottom"
         className="origin-top-right rounded-xl mt-2 bg-white dark:bg-[#131823] z-50"
       >
-        <MenuItem>asdfdsf</MenuItem>
-        <MenuItem>asdfdsf</MenuItem>
-        <MenuItem>asdfdsf</MenuItem>
-        {Object.values(SUPPORTED_CHAINS).map((item) => {
-          alert(item.name);
-          return (
-            <MenuItem key={item.id}>
-              {/* <button
-                className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
-                onClick={() => onSwitchChain(item.id)}
-              > */}
-                {item.name}
-              {/* </button> */}
-              {/* <Image
+        <MenuItem>asfdasdf</MenuItem>
+        <MenuItem>asfdasdf</MenuItem>
+        <MenuItem>asfdasdf</MenuItem>
+        <MenuItem>asfdasdf</MenuItem>
+        <MenuItem>asfdasdf</MenuItem>
+        {/* {Object.values(SUPPORTED_CHAINS).map((item) => (
+          <MenuItem
+            as={"button"}
+            key={item.name}
+            className="flex items-center max-sm:hidden py-3 px-4 hover:bg-[#2f8af51f] transition-all w-full"
+            onClick={() => onSwitchChain(item.id)}
+          >
+            <Image
               src={item.icon.src}
               width={item.icon.width}
               height={item.icon.blurHeight}
@@ -112,10 +111,9 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ className }) => {
             ) : null}
             <span className="text-[#222] dark:text-white font-semibold ml-2">
               {item.name}
-            </span> */}
-            </MenuItem>
-          );
-        })}
+            </span>
+          </MenuItem>
+        ))} */}
       </MenuItems>
     </Menu>
   ) : null;
