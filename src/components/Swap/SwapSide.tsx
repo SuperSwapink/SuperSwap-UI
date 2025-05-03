@@ -158,6 +158,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
             onChange={(e) => onAmountInput(e.target.value)}
             ref={amountInputRef}
             data-fast={fastTokens}
+            disabled={side === "To"}
             className="w-full h-12 max-sm:data-[fast=true]:h-[72px] outline-none text-[30px] bg-transparent text-[#222] dark:text-white font-semibold placeholder:text-[#6c86ad]"
             placeholder="0.0"
           />

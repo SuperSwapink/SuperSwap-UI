@@ -33,7 +33,7 @@ const SettingPopup = () => {
           onClose={() => setOpen(false)}
         >
           <div
-            className="fixed inset-0 bg-black/10 backdrop-blur"
+            className="fixed inset-0 bg-black/10 backdrop-blur z-[2]"
             aria-hidden="true"
           />
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">

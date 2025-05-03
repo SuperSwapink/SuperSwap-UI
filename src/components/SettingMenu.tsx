@@ -34,7 +34,7 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ className }) => {
         <MenuItems>
           <MenuItem>
             <div
-              className="fixed inset-0 bg-black/10 backdrop-blur z-[1]"
+              className="fixed inset-0 bg-black/10 backdrop-blur z-[2]"
               aria-hidden="true"
             />
           </MenuItem>
