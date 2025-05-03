@@ -158,7 +158,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
             onChange={(e) => onAmountInput(e.target.value)}
             ref={amountInputRef}
             data-fast={fastTokens}
-            disabled={side === "To"}
+            onFocus={(e) => (side === "To" ? e.target.blur() : null)}
             className="w-full h-12 max-sm:data-[fast=true]:h-[72px] outline-none text-[30px] bg-transparent text-[#222] dark:text-white font-semibold placeholder:text-[#6c86ad]"
             placeholder="0.0"
           />
@@ -198,8 +198,8 @@ const SwapSide: React.FC<SwapSideProps> = ({
                 <>
                   <CurrencyIcon
                     src={token?.icon ?? DEFAULT_IMAGE_URL}
-                    width={20}
-                    height={20}
+                    width={64}
+                    height={64}
                     className="h-5 w-5 rounded-full mr-2"
                     alt=""
                   />
