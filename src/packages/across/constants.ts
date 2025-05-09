@@ -1,5 +1,5 @@
 import { ChainId } from "../chain";
-import { Token, USDC, USDCe, WETH9 } from "../currency";
+import { Token, USDC, USDCe, USDT, WETH9 } from "../currency";
 
 export const SPOKE_POOL_ADDRESS: Record<ChainId, `0x${string}`> = {
   [ChainId.ETHEREUM]: "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
@@ -16,7 +16,7 @@ export const SPOKE_POOL_ADDRESS: Record<ChainId, `0x${string}`> = {
   [ChainId.ZORA]: "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
 };
 
-export type SUPPORTED_ACROSS_ASSET_TYPE = "WETH" | "USDC";
+export type SUPPORTED_ACROSS_ASSET_TYPE = "WETH" | "USDC" | "USDT";
 
 export const SUPPORTED_ACROSS_ASSETS: Record<
   ChainId,
@@ -25,6 +25,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   [ChainId.ETHEREUM]: {
     WETH: WETH9[ChainId.ETHEREUM],
     USDC: USDC[ChainId.ETHEREUM],
+    USDT: USDT[ChainId.ETHEREUM],
   },
   [ChainId.OP]: {
     WETH: WETH9[ChainId.OP],
@@ -37,6 +38,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   [ChainId.POLYGON]: {
     WETH: WETH9[ChainId.POLYGON],
     USDC: USDC[ChainId.POLYGON],
+    USDT: USDT[ChainId.POLYGON],
   },
   // [ChainId.ZKSYNC]: {
   //   WETH: WETH9[ChainId.ZKSYNC],
@@ -63,6 +65,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   },
   [ChainId.LINEA]: {
     WETH: WETH9[ChainId.LINEA],
+    USDT: USDT[ChainId.LINEA],
   },
   [ChainId.ZORA]: {
     WETH: WETH9[ChainId.ZORA],
