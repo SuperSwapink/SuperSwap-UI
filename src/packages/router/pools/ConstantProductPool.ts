@@ -43,7 +43,7 @@ export class ConstantProductPoolCode extends PoolCode {
       .address(this.pool.address)
       .bool(leg.tokenFrom.address === this.pool.token0.address)
       .address(to)
-      .uint24(3000)
+      .uint24(Math.round(leg.poolFee * 1_000_000))
       //.bool(presended)
       .toString()
     return code

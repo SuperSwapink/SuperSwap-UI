@@ -1,9 +1,9 @@
-import { BASES_TO_CHECK_TRADES_AGAINST } from "../../config"
-import { ConstantProductRPool, RToken, VeloRPool } from "../../tines"
-import { add, getUnixTime } from "date-fns"
-import { getReservesAbi } from "../../abi"
-import { ChainId } from "../../chain"
-import { Token } from "../../currency"
+import { BASES_TO_CHECK_TRADES_AGAINST } from "../../config";
+import { ConstantProductRPool, RToken, VeloRPool } from "../../tines";
+import { add, getUnixTime } from "date-fns";
+import { getReservesAbi } from "../../abi";
+import { ChainId } from "../../chain";
+import { Token } from "../../currency";
 import {
   Address,
   Hex,
@@ -15,57 +15,57 @@ import {
   hexToBigInt,
   keccak256,
   toHex,
-} from "viem"
+} from "viem";
 
-import { getCurrencyCombinations } from "../getCurrencyCombinations"
+import { getCurrencyCombinations } from "../getCurrencyCombinations";
 import {
   PoolResponse2,
   filterOnDemandPools,
   filterTopPools,
   mapToken,
-} from "../lib/api"
-import type { PoolCode } from "../pools/PoolCode"
-import { LiquidityProvider } from "./LiquidityProvider"
-import { VeloPoolCode } from "../pools/VeloPool"
+} from "../lib/api";
+import type { PoolCode } from "../pools/PoolCode";
+import { LiquidityProvider } from "./LiquidityProvider";
+import { VeloPoolCode } from "../pools/VeloPool";
 interface PoolInfo {
-  poolCode: PoolCode
-  validUntilTimestamp: number
+  poolCode: PoolCode;
+  validUntilTimestamp: number;
 }
 
 interface StaticPool {
-  address: Address
-  token0: Token
-  token1: Token
-  fee: number
+  address: Address;
+  token0: Token;
+  token1: Token;
+  fee: number;
 }
 
 export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
-  readonly TOP_POOL_SIZE = 155
-  readonly TOP_POOL_LIQUIDITY_THRESHOLD = 5000
-  readonly ON_DEMAND_POOL_SIZE = 20
-  readonly REFRESH_INITIAL_POOLS_INTERVAL = 60 // SECONDS
+  readonly TOP_POOL_SIZE = 155;
+  readonly TOP_POOL_LIQUIDITY_THRESHOLD = 5000;
+  readonly ON_DEMAND_POOL_SIZE = 20;
+  readonly REFRESH_INITIAL_POOLS_INTERVAL = 60; // SECONDS
 
-  topPools: Map<Address, PoolCode> = new Map()
-  poolsByTrade: Map<string, Address[]> = new Map()
-  onDemandPools: Map<Address, PoolInfo> = new Map()
-  availablePools: Map<Address, PoolResponse2> = new Map()
-  staticPools: Map<Address, PoolResponse2> = new Map()
+  topPools: Map<Address, PoolCode> = new Map();
+  poolsByTrade: Map<string, Address[]> = new Map();
+  onDemandPools: Map<Address, PoolInfo> = new Map();
+  availablePools: Map<Address, PoolResponse2> = new Map();
+  staticPools: Map<Address, PoolResponse2> = new Map();
 
-  blockListener?: () => void
-  unwatchBlockNumber?: () => void
+  blockListener?: () => void;
+  unwatchBlockNumber?: () => void;
 
-  fee = 0.003
-  isInitialized = false
-  factory: Record<number, Address> = {}
-  implementation: Record<number, Address> = {}
-  initCodeHash: Record<number, Hex> = {}
-  latestPoolCreatedAtTimestamp = new Date()
+  fee = 0.003;
+  isInitialized = false;
+  factory: Record<number, Address> = {};
+  implementation: Record<number, Address> = {};
+  initCodeHash: Record<number, Hex> = {};
+  latestPoolCreatedAtTimestamp = new Date();
   discoverNewPoolsTimestamp = getUnixTime(
     add(Date.now(), { seconds: this.REFRESH_INITIAL_POOLS_INTERVAL })
-  )
+  );
   refreshAvailablePoolsTimestamp = getUnixTime(
     add(Date.now(), { seconds: this.FETCH_AVAILABLE_POOLS_AFTER_SECONDS })
-  )
+  );
 
   constructor(
     chainId: ChainId,
@@ -75,11 +75,11 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
     initCodeHash: Record<number, Hex>,
     fee: number
   ) {
-    super(chainId, web3Client)
-    this.factory = factory
-    this.implementation = implementation
-    this.initCodeHash = initCodeHash
-    this.fee = fee
+    super(chainId, web3Client);
+    this.factory = factory;
+    this.implementation = implementation;
+    this.initCodeHash = initCodeHash;
+    this.fee = fee;
     if (
       !(chainId in this.factory) ||
       !(chainId in this.implementation) ||
@@ -87,22 +87,22 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
     ) {
       throw new Error(
         `${this.getType()} cannot be instantiated for chainid ${chainId}, no factory or implementation or initCodeHash`
-      )
+      );
     }
   }
 
   async initialize() {
     // TODO: retry logic, every X seconds? dont flag as true until the end of the function ideally. add isInitalizing? to avoid it being called twice before completed.
-    this.isInitialized = true
-    const availablePools = await this.getInitialPools()
+    this.isInitialized = true;
+    const availablePools = await this.getInitialPools();
     //console.debug(`${this.getLogPrefix()} - TOTAL POOLS: ${availablePools.size}`)
 
-    this.availablePools = availablePools
+    this.availablePools = availablePools;
 
     const topPools = filterTopPools(
       Array.from(availablePools.values()),
       this.TOP_POOL_SIZE
-    )
+    );
 
     if (topPools.length > 0) {
       //console.debug(`${this.getLogPrefix()} - INIT: top pools found: ${topPools.length}`)
@@ -131,17 +131,17 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           `${this.getLogPrefix()} - INIT: multicall failed, message: ${
             e.message
           }`
-        )
-        return undefined
-      })
+        );
+        return undefined;
+      });
 
     topPools.forEach((pool, i) => {
-      const res0 = results?.[i]?.result?.[0]
-      const res1 = results?.[i]?.result?.[1]
+      const res0 = results?.[i]?.result?.[0];
+      const res1 = results?.[i]?.result?.[1];
 
       if (res0 && res1) {
-        const token0 = mapToken(this.chainId, pool.token0) as RToken
-        const token1 = mapToken(this.chainId, pool.token1) as RToken
+        const token0 = mapToken(this.chainId, pool.token0) as RToken;
+        const token1 = mapToken(this.chainId, pool.token1) as RToken;
         const rPool = new VeloRPool(
           pool.address,
           token0,
@@ -149,27 +149,27 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           this.fee,
           res0,
           res1
-        )
+        );
         const pc = new VeloPoolCode(
           rPool,
           this.getType(),
           this.getPoolProviderName()
-        )
-        this.topPools.set(pool.address, pc)
+        );
+        this.topPools.set(pool.address, pc);
       } else {
         console.error(
           `${this.getLogPrefix()} - ERROR INIT SYNC, Failed to fetch reserves for pool: ${
             pool.address
           }`
-        )
+        );
       }
-    })
+    });
 
     //console.debug(`${this.getLogPrefix()} - INIT, WATCHING ${this.topPools.size} POOLS`)
   }
 
   private async getInitialPools(): Promise<Map<Address, PoolResponse2>> {
-    return new Map()
+    return new Map();
   }
 
   async getOnDemandPools(
@@ -177,7 +177,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
     t1: Token,
     excludePools?: Set<string>
   ): Promise<void> {
-    const topPoolAddresses = Array.from(this.topPools.keys())
+    const topPoolAddresses = Array.from(this.topPools.keys());
     let pools =
       topPoolAddresses.length > 0
         ? filterOnDemandPools(
@@ -187,36 +187,36 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
             topPoolAddresses,
             this.ON_DEMAND_POOL_SIZE
           )
-        : this.getStaticPools(t0, t1)
+        : this.getStaticPools(t0, t1);
 
     if (excludePools)
       pools = (pools as StaticPool[]).filter(
         (p) => !excludePools.has(p.address)
-      )
+      );
 
-    console.debug("staticPools v2 base", pools.length)
+    console.debug("staticPools v2 base", pools.length);
 
     if (pools.length === 0) {
       //console.info(`${this.getLogPrefix()} - No on demand pools found for ${t0.symbol}/${t1.symbol}`)
-      return
+      return;
     }
 
     this.poolsByTrade.set(
       this.getTradeId(t0, t1),
       pools.map((pool) => pool.address)
-    )
+    );
     const validUntilTimestamp = getUnixTime(
       add(Date.now(), { seconds: this.ON_DEMAND_POOLS_LIFETIME_IN_SECONDS })
-    )
+    );
 
     // let created = 0
     // let updated = 0
-    const poolCodesToCreate: PoolCode[] = []
+    const poolCodesToCreate: PoolCode[] = [];
     pools.forEach((pool) => {
-      const existingPool = this.onDemandPools.get(pool.address)
+      const existingPool = this.onDemandPools.get(pool.address);
       if (existingPool === undefined) {
-        const token0 = pool.token0 as RToken
-        const token1 = pool.token1 as RToken
+        const token0 = pool.token0 as RToken;
+        const token1 = pool.token1 as RToken;
 
         const rPool = new ConstantProductRPool(
           pool.address,
@@ -225,18 +225,68 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           this.fee,
           0n,
           0n
-        )
+        );
         const pc = new VeloPoolCode(
           rPool,
           this.getType(),
           this.getPoolProviderName()
-        )
-        poolCodesToCreate.push(pc)
+        );
+        poolCodesToCreate.push(pc);
       } else {
-        existingPool.validUntilTimestamp = validUntilTimestamp
+        existingPool.validUntilTimestamp = validUntilTimestamp;
         // ++updated
       }
-    })
+    });
+
+    const fees = await this.client
+      .multicall({
+        multicallAddress: this.client.chain?.contracts?.multicall3
+          ?.address as Address,
+        allowFailure: true,
+        contracts: poolCodesToCreate.map(
+          (poolCode) =>
+            ({
+              address: this.factory[this.chainId as keyof typeof this.factory],
+              chainId: this.chainId,
+              abi: [
+                {
+                  inputs: [
+                    {
+                      internalType: "address",
+                      name: "pool",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "_stable",
+                      type: "bool",
+                    },
+                  ],
+                  name: "getFee",
+                  outputs: [
+                    {
+                      internalType: "uint256",
+                      name: "",
+                      type: "uint256",
+                    },
+                  ],
+                  stateMutability: "view",
+                  type: "function",
+                },
+              ] as const,
+              functionName: "getFee",
+              args: [poolCode.pool.address as Address, false],
+            } as const)
+        ),
+      })
+      .catch((e) => {
+        console.warn(
+          `${this.getLogPrefix()} - UPDATE: on-demand pools multicall failed, message: ${
+            e.message
+          }`
+        );
+        return undefined;
+      });
 
     const reserves = await this.client
       .multicall({
@@ -258,18 +308,23 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           `${this.getLogPrefix()} - UPDATE: on-demand pools multicall failed, message: ${
             e.message
           }`
-        )
-        return undefined
-      })
+        );
+        return undefined;
+      });
 
     poolCodesToCreate.forEach((poolCode, i) => {
-      const pool = poolCode.pool
-      const res0 = reserves?.[i]?.result?.[0]
-      const res1 = reserves?.[i]?.result?.[1]
+      const pool = poolCode.pool;
+      const res0 = reserves?.[i]?.result?.[0];
+      const res1 = reserves?.[i]?.result?.[1];
+      const fee = fees?.[i]?.result;
+
+      if (fee !== undefined) {
+        pool.updateFee(Number(fee) / 10000);
+      }
 
       if (res0 !== undefined && res1 !== undefined) {
-        pool.updateReserves(res0, res1)
-        this.onDemandPools.set(pool.address, { poolCode, validUntilTimestamp })
+        pool.updateReserves(res0, res1);
+        this.onDemandPools.set(pool.address, { poolCode, validUntilTimestamp });
         // console.debug(
         //   `${this.getLogPrefix()} - ON DEMAND CREATION: ${pool.address} (${pool.token0.symbol}/${pool.token1.symbol})`
         // )
@@ -278,7 +333,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
         // Pool doesn't exist?
         // console.error(`${this.getLogPrefix()} - ERROR FETCHING RESERVES, initialize on demand pool: ${pool.address}`)
       }
-    })
+    });
 
     // console.debug(
     //   `${this.getLogPrefix()} - ON DEMAND: Created and fetched reserves for ${created} pools, extended 'lifetime' for ${updated} pools`
@@ -287,18 +342,18 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
 
   async updatePools() {
     if (this.isInitialized) {
-      this.removeStalePools()
+      this.removeStalePools();
       // The two calls below are Async functions, but we do not want them to block. If they find any pools they will be updated next interval
-      this.discoverNewPools()
-      this.updateAvailablePools()
+      this.discoverNewPools();
+      this.updateAvailablePools();
 
-      const initialPools = Array.from(this.topPools.values())
+      const initialPools = Array.from(this.topPools.values());
       const onDemandPools = Array.from(this.onDemandPools.values()).map(
         (pi) => pi.poolCode
-      )
+      );
 
       if (initialPools.length === 0 && onDemandPools.length === 0) {
-        return
+        return;
       }
 
       const [initialPoolsReserves, onDemandPoolsReserves] = await Promise.all([
@@ -322,8 +377,8 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
               `${this.getLogPrefix()} - UPDATE: initPools multicall failed, message: ${
                 e.message
               }`
-            )
-            return undefined
+            );
+            return undefined;
           }),
         this.client
           .multicall({
@@ -345,69 +400,73 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
               `${this.getLogPrefix()} - UPDATE: on-demand pools multicall failed, message: ${
                 e.message
               }`
-            )
-            return undefined
+            );
+            return undefined;
           }),
-      ])
+      ]);
 
-      this.updatePoolWithReserves(initialPools, initialPoolsReserves, "INITIAL")
+      this.updatePoolWithReserves(
+        initialPools,
+        initialPoolsReserves,
+        "INITIAL"
+      );
       this.updatePoolWithReserves(
         onDemandPools,
         onDemandPoolsReserves,
         "ON_DEMAND"
-      )
+      );
     }
   }
 
   private async discoverNewPools() {
-    return
+    return;
   }
 
   private async updateAvailablePools() {
     if (this.refreshAvailablePoolsTimestamp > getUnixTime(Date.now())) {
-      return
+      return;
     }
 
     this.refreshAvailablePoolsTimestamp = getUnixTime(
       add(Date.now(), { seconds: this.FETCH_AVAILABLE_POOLS_AFTER_SECONDS })
-    )
+    );
 
-    const freshInitPools = await this.getInitialPools()
+    const freshInitPools = await this.getInitialPools();
 
     freshInitPools.forEach((updatedPool) => {
       // Don't do `this.availablePools = freshInitPools`, in case the db requests for any reason fail, it shouldn't be completely overwritten.
-      this.availablePools.set(updatedPool.address, updatedPool)
-    })
-    this.prioritizeTopPools()
+      this.availablePools.set(updatedPool.address, updatedPool);
+    });
+    this.prioritizeTopPools();
   }
 
   private prioritizeTopPools() {
     const newTopPools = filterTopPools(
       Array.from(this.availablePools.values()),
       this.TOP_POOL_SIZE
-    )
+    );
 
-    const currentTopPoolAddresses = Array.from(this.topPools.keys())
+    const currentTopPoolAddresses = Array.from(this.topPools.keys());
     const newTopPoolAddresses = Array.from(
       newTopPools.map((pool) => pool.address)
-    )
+    );
     const poolsToRemove = currentTopPoolAddresses.filter(
       (x) => !newTopPoolAddresses.includes(x)
-    )
+    );
     const poolsToAdd = newTopPoolAddresses.filter(
       (x) => !currentTopPoolAddresses.includes(x)
-    )
+    );
 
     poolsToRemove.forEach((address) => {
-      this.topPools.delete(address)
+      this.topPools.delete(address);
       //console.log(`${this.getLogPrefix()} - PRIORITIZE POOLS: Removed ${address} from top pools`)
-    })
+    });
 
     poolsToAdd.forEach((address) => {
-      const poolsToCreate = this.availablePools.get(address)
+      const poolsToCreate = this.availablePools.get(address);
       if (poolsToCreate) {
-        const token0 = mapToken(this.chainId, poolsToCreate.token0) as RToken
-        const token1 = mapToken(this.chainId, poolsToCreate.token1) as RToken
+        const token0 = mapToken(this.chainId, poolsToCreate.token0) as RToken;
+        const token1 = mapToken(this.chainId, poolsToCreate.token1) as RToken;
         const rPool = new ConstantProductRPool(
           poolsToCreate.address,
           token0,
@@ -415,21 +474,21 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           this.fee,
           0n,
           0n
-        )
+        );
         const pc = new VeloPoolCode(
           rPool,
           this.getType(),
           this.getPoolProviderName()
-        )
-        this.topPools.set(poolsToCreate.address, pc)
+        );
+        this.topPools.set(poolsToCreate.address, pc);
 
         //console.log(`${this.getLogPrefix()} - PRIORITIZE POOLS: Added ${address} to top pools`)
       } else {
         console.warn(
           `${this.getLogPrefix()} - PRIORITIZE POOLS: Could not find pool, unexpected state.`
-        )
+        );
       }
-    })
+    });
   }
 
   private updatePoolWithReserves(
@@ -437,28 +496,28 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
     reserves:
       | (
           | {
-              error: Error
-              result?: undefined
-              status: "failure"
+              error: Error;
+              result?: undefined;
+              status: "failure";
             }
           | {
-              error?: undefined
-              result: readonly [bigint, bigint, number]
-              status: "success"
+              error?: undefined;
+              result: readonly [bigint, bigint, number];
+              status: "success";
             }
         )[]
       | undefined,
     type: "INITIAL" | "ON_DEMAND"
   ) {
-    if (!reserves) return
+    if (!reserves) return;
     pools.forEach((poolCode, i) => {
-      const pool = poolCode.pool
-      const res0 = reserves?.[i]?.result?.[0]
-      const res1 = reserves?.[i]?.result?.[1]
+      const pool = poolCode.pool;
+      const res0 = reserves?.[i]?.result?.[0];
+      const res1 = reserves?.[i]?.result?.[1];
 
       if (res0 && res1) {
         if (pool.reserve0 !== res0 || pool.reserve1 !== res1) {
-          pool.updateReserves(res0, res1)
+          pool.updateReserves(res0, res1);
           // console.info(
           //   `${this.getLogPrefix()} - SYNC, ${type}: ${pool.address} ${pool.token0.symbol}/${
           //     pool.token1.symbol
@@ -470,9 +529,9 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           `${this.getLogPrefix()} - ERROR UPDATING RESERVES for a ${type} pool, Failed to fetch reserves for pool: ${
             pool.address
           }`
-        )
+        );
       }
-    })
+    });
   }
 
   _getPoolAddress(t1: Token, t2: Token): Address {
@@ -481,7 +540,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
         ["address", "address", "bool"],
         [t1.address, t2.address, false]
       )
-    )
+    );
 
     let data = `0x0000000000000000000000003d602d80600a3d3981f3363d3d373d3d3d363d73${this.implementation[
       this.chainId as keyof typeof this.implementation
@@ -491,15 +550,15 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
       this.chainId as keyof typeof this.factory
     ]
       .slice(2)
-      .toLowerCase()}${salt.slice(2).toLowerCase()}`
+      .toLowerCase()}${salt.slice(2).toLowerCase()}`;
 
-    let data1 = keccak256(("0x" + data.slice(26, 136)) as Hex)
+    let data1 = keccak256(("0x" + data.slice(26, 136)) as Hex);
 
-    data = `${data}${data1.slice(2)}`
+    data = `${data}${data1.slice(2)}`;
 
-    const data2 = keccak256(("0x" + data.slice(136, 306)) as Hex)
+    const data2 = keccak256(("0x" + data.slice(136, 306)) as Hex);
 
-    return ("0x" + data2.slice(-40)) as Address
+    return ("0x" + data2.slice(-40)) as Address;
   }
 
   // TODO: Decide if this is worth keeping as fallback in case fetching top pools fails? only used on initial load.
@@ -508,8 +567,8 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
       t0,
       t1,
       ...BASES_TO_CHECK_TRADES_AGAINST[this.chainId],
-    ])
-    return Array.from(set)
+    ]);
+    return Array.from(set);
   }
 
   getStaticPools(t1: Token, t2: Token): StaticPool[] {
@@ -517,26 +576,26 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
       this.chainId,
       t1,
       t2
-    ).map(([c0, c1]) => (c0.sortsBefore(c1) ? [c0, c1] : [c1, c0]))
+    ).map(([c0, c1]) => (c0.sortsBefore(c1) ? [c0, c1] : [c1, c0]));
     return currencyCombination.map((combination) => ({
       address: this._getPoolAddress(combination[0], combination[1]),
       token0: combination[0],
       token1: combination[1],
       fee: this.fee,
-    }))
+    }));
     // return pools
   }
 
   startFetchPoolsData() {
-    this.stopFetchPoolsData()
-    this.topPools = new Map()
+    this.stopFetchPoolsData();
+    this.topPools = new Map();
     this.unwatchBlockNumber = this.client.watchBlockNumber({
       onBlockNumber: (blockNumber) => {
-        this.lastUpdateBlock = Number(blockNumber)
+        this.lastUpdateBlock = Number(blockNumber);
         if (!this.isInitialized) {
-          this.initialize()
+          this.initialize();
         } else {
-          this.updatePools()
+          this.updatePools();
         }
       },
       onError: (error) => {
@@ -544,18 +603,18 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
           `${this.getLogPrefix()} - Error watching block number: ${
             error.message
           }`
-        )
+        );
       },
-    })
+    });
   }
 
   private removeStalePools() {
-    let removed = 0
-    const now = getUnixTime(Date.now())
+    let removed = 0;
+    const now = getUnixTime(Date.now());
     for (const poolInfo of this.onDemandPools.values()) {
       if (poolInfo.validUntilTimestamp < now) {
-        this.onDemandPools.delete(poolInfo.poolCode.pool.address)
-        removed++
+        this.onDemandPools.delete(poolInfo.poolCode.pool.address);
+        removed++;
       }
     }
     if (removed > 0) {
@@ -568,7 +627,7 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
     t1: Token,
     excludePools?: Set<string>
   ): Promise<void> {
-    await this.getOnDemandPools(t0, t1, excludePools)
+    await this.getOnDemandPools(t0, t1, excludePools);
   }
 
   /**
@@ -578,19 +637,19 @@ export abstract class VelodrmoeV2BaseProvider extends LiquidityProvider {
    * @returns
    */
   getCurrentPoolList(t0: Token, t1: Token): PoolCode[] {
-    const tradeId = this.getTradeId(t0, t1)
-    const poolsByTrade = this.poolsByTrade.get(tradeId) ?? []
+    const tradeId = this.getTradeId(t0, t1);
+    const poolsByTrade = this.poolsByTrade.get(tradeId) ?? [];
     const onDemandPoolCodes = poolsByTrade
       ? Array.from(this.onDemandPools)
           .filter(([poolAddress]) => poolsByTrade.includes(poolAddress))
           .map(([, p]) => p.poolCode)
-      : []
+      : [];
 
-    return [...this.topPools.values(), onDemandPoolCodes].flat()
+    return [...this.topPools.values(), onDemandPoolCodes].flat();
   }
 
   stopFetchPoolsData() {
-    if (this.unwatchBlockNumber) this.unwatchBlockNumber()
-    this.blockListener = undefined
+    if (this.unwatchBlockNumber) this.unwatchBlockNumber();
+    this.blockListener = undefined;
   }
 }

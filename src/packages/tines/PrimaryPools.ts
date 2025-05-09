@@ -26,7 +26,7 @@ export abstract class RPool {
   readonly address: Address;
   token0: RToken;
   token1: RToken;
-  readonly fee: number;
+  fee: number;
   reserve0: bigint;
   reserve1: bigint;
   readonly minLiquidity: number;
@@ -59,6 +59,9 @@ export abstract class RPool {
   updateReserves(res0: bigint, res1: bigint) {
     this.reserve0 = res0;
     this.reserve1 = res1;
+  }
+  updateFee(fee: number) {
+    this.fee = fee;
   }
   getReserve0() {
     return this.reserve0;

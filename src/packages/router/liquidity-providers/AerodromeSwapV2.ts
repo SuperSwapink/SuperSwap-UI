@@ -5,7 +5,7 @@ import { LiquidityProviders } from "./LiquidityProvider";
 import { VelodrmoeV2BaseProvider } from "./VelodrmoeV2Base";
 
 export class AerodromeSwapV2Provider extends VelodrmoeV2BaseProvider {
-  override fee = 0.01;
+  override fee = 0.003;
   constructor(chainId: ChainId, web3Client: PublicClient) {
     const factory = {
       [ChainId.BASE]: "0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
