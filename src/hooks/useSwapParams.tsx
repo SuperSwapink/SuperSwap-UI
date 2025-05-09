@@ -53,8 +53,6 @@ export const SwapParamsProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   const tokenList = useTokenList(ChainId.INK);
 
-  console.log(tokenList)
-
   useEffect(() => {
     if (publicClient) {
       const token0 = params.get("token0");

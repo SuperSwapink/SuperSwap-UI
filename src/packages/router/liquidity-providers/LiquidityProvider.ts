@@ -29,6 +29,10 @@ export enum LiquidityProviders {
   Sonex = "Sonex",
   SonusV2 = "SonusV2",
   SonusV3 = "SonusV3",
+  LynexV3 = "LynexV3",
+  PharaohV2 = "PharaohV2",
+  ZKSwapV2 = "ZKSwapV2",
+  ZKSwapV3 = "ZKSwapV3",
 }
 
 export abstract class LiquidityProvider {

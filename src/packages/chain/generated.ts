@@ -67,6 +67,40 @@ export default [
     name: "Polygon",
     shortName: "pol",
   },
+  // {
+  //   chainId: 324,
+  //   explorers: [
+  //     {
+  //       name: "Etherscan",
+  //       url: "https://era.zksync.network/",
+  //       standard: "EIP3091",
+  //     },
+  //   ],
+  //   nativeCurrency: {
+  //     name: "Ether",
+  //     symbol: "ETH",
+  //     decimals: 18,
+  //   },
+  //   name: "ZKsync Era",
+  //   shortName: "zksync",
+  // },
+  {
+    chainId: 480,
+    explorers: [
+      {
+        name: "Worldscan",
+        url: "https://worldscan.org/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "World Chain",
+    shortName: "worldchain",
+  },
   {
     chainId: 1868,
     explorers: [
@@ -134,5 +168,39 @@ export default [
     },
     name: "Ink",
     shortName: "ink",
+  },
+  {
+    chainId: 59144,
+    explorers: [
+      {
+        name: "Etherscan",
+        url: "https://lineascan.build/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Linea Mainnet",
+    shortName: "linea",
+  },
+  {
+    chainId: 7777777,
+    explorers: [
+      {
+        name: "Explorer",
+        url: "https://explorer.zora.energy/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Zora",
+    shortName: "zora",
   },
 ] as const;

@@ -1,6 +1,15 @@
 import { ChainId } from "../chain";
 import { defineChain, http, type PublicClientConfig } from "viem";
-import { optimism, mainnet, arbitrum, polygon } from "viem/chains";
+import {
+  optimism,
+  mainnet,
+  arbitrum,
+  polygon,
+  zora,
+  linea,
+  // zkSync,
+  zksync,
+} from "viem/chains";
 
 export const ink = defineChain({
   id: 57073,
@@ -159,7 +168,56 @@ export const unichain = /*#__PURE__*/ defineChain({
   },
 });
 
-export { optimism, mainnet, arbitrum, polygon };
+export const worldchain = /*#__PURE__*/ defineChain({
+  id: 480,
+  name: "World Chain",
+  network: "worldchain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://worldchain-mainnet.g.alchemy.com/public"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Worldscan",
+      url: "https://worldscan.org",
+      apiUrl: "https://api.worldscan.org/api",
+    },
+    blockscout: {
+      name: "Blockscout",
+      url: "https://worldchain-mainnet.explorer.alchemy.com",
+      apiUrl: "https://worldchain-mainnet.explorer.alchemy.com/api",
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: "0xca11bde05977b3631167028862be2a173976ca11",
+      blockCreated: 0,
+    },
+    disputeGameFactory: {
+      [1]: {
+        address: "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea",
+      },
+    },
+    l2OutputOracle: {
+      [1]: {
+        address: "0x19A6d1E9034596196295CF148509796978343c5D",
+      },
+    },
+    portal: {
+      [1]: {
+        address: "0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C",
+      },
+    },
+    l1StandardBridge: {
+      [1]: {
+        address: "0x470458C91978D2d929704489Ad730DC3E3001113",
+      },
+    },
+  },
+  testnet: false,
+});
+
+export { optimism, mainnet, arbitrum, polygon, /*zkSync,*/ linea, zora };
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.ETHEREUM]: [
@@ -192,6 +250,18 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
       ),
     },
   ],
+  // [ChainId.ZKSYNC]: [
+  //   {
+  //     chain: zksync,
+  //     transport: http("https://zksync.api.onfinality.io/public"),
+  //   },
+  // ],
+  [ChainId.WORLDCHAIN]: [
+    {
+      chain: worldchain,
+      transport: http(),
+    },
+  ],
   [ChainId.SONEIUM]: [
     {
       chain: soneium,
@@ -220,6 +290,18 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
     {
       chain: ink,
       transport: http(`https://ink.drpc.org`),
+    },
+  ],
+  [ChainId.LINEA]: [
+    {
+      chain: linea,
+      transport: http(),
+    },
+  ],
+  [ChainId.ZORA]: [
+    {
+      chain: zora,
+      transport: http(),
     },
   ],
 } as const;

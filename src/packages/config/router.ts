@@ -32,6 +32,16 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     USDC[ChainId.POLYGON],
     USDT[ChainId.POLYGON],
   ],
+  // [ChainId.ZKSYNC]: [
+  //   WNATIVE[ChainId.ZKSYNC],
+  //   USDC[ChainId.ZKSYNC],
+  //   USDT[ChainId.ZKSYNC],
+  //   USDCe[ChainId.ZKSYNC],
+  // ],
+  [ChainId.WORLDCHAIN]: [
+    WNATIVE[ChainId.WORLDCHAIN],
+    USDCe[ChainId.WORLDCHAIN],
+  ],
   [ChainId.SONEIUM]: [
     WNATIVE[ChainId.SONEIUM],
     USDCe[ChainId.SONEIUM],
@@ -56,4 +66,10 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     USDT0[ChainId.INK],
     KBTC[ChainId.INK],
   ],
+  [ChainId.LINEA]: [
+    WNATIVE[ChainId.LINEA],
+    USDC[ChainId.LINEA],
+    USDT[ChainId.LINEA],
+  ],
+  [ChainId.ZORA]: [WNATIVE[ChainId.ZORA], USDC[ChainId.ZORA]],
 };

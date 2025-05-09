@@ -4,10 +4,11 @@ import {
   getContractAddress,
   keccak256,
   parseAbiParameters,
-} from "viem"
-import { Token } from "../../currency"
+} from "viem";
+import { Token } from "../../currency";
 
-import { FeeAmount } from "../constants"
+import { FeeAmount } from "../constants";
+import { getContractAddressZkSync } from "@/utils";
 
 /**
  * Computes a pool address
@@ -24,41 +25,48 @@ export function computePoolAddress({
   tokenB,
   fee,
   initCodeHashManualOverride,
+  zkSync,
 }: {
-  factoryAddress: string
-  tokenA: Token | string
-  tokenB: Token | string
-  fee: number
-  initCodeHashManualOverride: string
+  factoryAddress: string;
+  tokenA: Token | string;
+  tokenB: Token | string;
+  fee: number;
+  initCodeHashManualOverride: string;
+  zkSync?: boolean;
 }): string {
+  let salt;
   if (typeof tokenA !== "string" && typeof tokenB !== "string") {
     const [token0, token1] = tokenA.sortsBefore(tokenB)
       ? [tokenA, tokenB]
-      : [tokenB, tokenA] // does safety checks
-    return getContractAddress({
-      from: factoryAddress as `0x${string}`,
-      bytecodeHash: initCodeHashManualOverride as `0x${string}`,
-      salt: keccak256(
-        encodeAbiParameters(parseAbiParameters("address, address, uint24"), [
-          token0.address,
-          token1.address,
-          fee,
-        ])
-      ),
-      opcode: "CREATE2",
-    })
-  }
+      : [tokenB, tokenA]; // does safety checks
 
-  return getContractAddress({
-    from: factoryAddress as `0x${string}`,
-    bytecodeHash: initCodeHashManualOverride as `0x${string}`,
-    salt: keccak256(
+    salt = keccak256(
+      encodeAbiParameters(parseAbiParameters("address, address, uint24"), [
+        token0.address,
+        token1.address,
+        fee,
+      ])
+    );
+  } else {
+    salt = keccak256(
       encodeAbiParameters(parseAbiParameters("address, address, uint24"), [
         tokenA as `0x${string}`,
         tokenB as `0x${string}`,
         fee,
       ])
-    ),
-    opcode: "CREATE2",
-  })
+    );
+  }
+
+  return zkSync
+    ? getContractAddressZkSync({
+        from: factoryAddress as `0x${string}`,
+        bytecodeHash: initCodeHashManualOverride as `0x${string}`,
+        salt,
+      })
+    : getContractAddress({
+        from: factoryAddress as `0x${string}`,
+        bytecodeHash: initCodeHashManualOverride as `0x${string}`,
+        salt,
+        opcode: "CREATE2",
+      });
 }

@@ -12,10 +12,14 @@ const NATIVE_MEDIAS = {
   [ChainId.OP]: "eth.svg",
   [ChainId.UNICHAIN]: "eth.svg",
   [ChainId.POLYGON]: "pol.png",
+  // [ChainId.ZKSYNC]: "eth.svg",
+  [ChainId.WORLDCHAIN]: "eth.svg",
   [ChainId.SONEIUM]: "eth.svg",
   [ChainId.BASE]: "eth.svg",
   [ChainId.ARBITRUM]: "eth.svg",
   [ChainId.INK]: "eth.svg",
+  [ChainId.LINEA]: "eth.svg",
+  [ChainId.ZORA]: "eth.svg",
 };
 
 export class Native extends Currency {

@@ -40,10 +40,14 @@ export const WNATIVE = {
   [ChainId.OP]: WETH9[ChainId.OP],
   [ChainId.UNICHAIN]: WETH9[ChainId.UNICHAIN],
   [ChainId.POLYGON]: WPOL[ChainId.POLYGON],
+  // [ChainId.ZKSYNC]: WETH9[ChainId.ZKSYNC],
+  [ChainId.WORLDCHAIN]: WETH9[ChainId.WORLDCHAIN],
   [ChainId.SONEIUM]: WETH9[ChainId.SONEIUM],
   [ChainId.BASE]: WETH9[ChainId.BASE],
   [ChainId.ARBITRUM]: WETH9[ChainId.ARBITRUM],
   [ChainId.INK]: WETH9[ChainId.INK],
+  [ChainId.LINEA]: WETH9[ChainId.LINEA],
+  [ChainId.ZORA]: WETH9[ChainId.ZORA],
 } as const;
 
 export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {

@@ -7,6 +7,10 @@ import UniLogo from "@/assets/network/unichain.png";
 import PolyLogo from "@/assets/network/polygon.png";
 import SoneiumLogoDark from "@/assets/network/soneium-dark.webp";
 import SoneiumLogoLight from "@/assets/network/soneium-light.webp";
+import ZKLogo from '@/assets/network/zksync.png'
+import WLCLogo from '@/assets/network/worldchain.png'
+import ZoraLogo from '@/assets/network/zora.svg'
+import LineaLogo from '@/assets/network/linea.svg'
 import { StaticImageData } from "next/image";
 
 export const ChainId = {
@@ -14,10 +18,14 @@ export const ChainId = {
   OP: 10,
   UNICHAIN: 130,
   POLYGON: 137,
+  // ZKSYNC: 324,
+  WORLDCHAIN: 480,
   SONEIUM: 1868,
   BASE: 8453,
   ARBITRUM: 42161,
   INK: 57073,
+  LINEA: 59144,
+  ZORA: 7777777,
 } as const;
 export type ChainId = (typeof ChainId)[keyof typeof ChainId];
 
@@ -29,10 +37,14 @@ export const ChainKey = {
   [ChainId.OP]: "op",
   [ChainId.UNICHAIN]: "unichain",
   [ChainId.POLYGON]: "polygon",
+  // [ChainId.ZKSYNC]: 'zksync',
+  [ChainId.WORLDCHAIN]: 'worldchain',
   [ChainId.SONEIUM]: "soneium",
   [ChainId.BASE]: "base",
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",
+  [ChainId.LINEA]: 'linea',
+  [ChainId.ZORA]: 'zora'
 } as const;
 export type ChainKey = (typeof ChainKey)[keyof typeof ChainKey];
 
@@ -65,6 +77,16 @@ export const SUPPORTED_CHAINS: Record<
     icon: PolyLogo,
     name: "Polygon",
   },
+  // [ChainId.ZKSYNC]: {
+  //   id: ChainId.ZKSYNC,
+  //   icon: ZKLogo,
+  //   name: 'zkSync'
+  // },
+  [ChainId.WORLDCHAIN]: {
+    id: ChainId.WORLDCHAIN,
+    icon: WLCLogo,
+    name: 'World Chain'
+  },
   [ChainId.SONEIUM]: {
     id: ChainId.SONEIUM,
     icon: SoneiumLogoDark,
@@ -86,4 +108,14 @@ export const SUPPORTED_CHAINS: Record<
     icon: InkLogo,
     name: "Ink",
   },
+  [ChainId.LINEA]: {
+    id: ChainId.LINEA,
+    icon: LineaLogo,
+    name: 'Linea'
+  },
+  [ChainId.ZORA]: {
+    id: ChainId.ZORA,
+    icon: ZoraLogo,
+    name: 'Zora'
+  }
 } as const;

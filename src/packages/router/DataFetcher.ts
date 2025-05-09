@@ -34,6 +34,10 @@ import { KyoFinanceV3Provider } from "./liquidity-providers/KyoFinanceV3";
 import { SonexProvider } from "./liquidity-providers/Sonex";
 import { SonusV2Provider } from "./liquidity-providers/SonusV2";
 import { SonusV3Provider } from "./liquidity-providers/SonusV3";
+import { LynexV3Provider } from "./liquidity-providers/LynexV3";
+import { PharaohV2Provider } from "./liquidity-providers/PharaohV2";
+import { ZKSwapV2Provider } from "./liquidity-providers/ZKSwapV2";
+import { ZKSwapV3Provider } from "./liquidity-providers/ZKSwapV3";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -329,6 +333,42 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.SonusV3, providers)) {
       try {
         const provider = new SonusV3Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.LynexV3, providers)) {
+      try {
+        const provider = new LynexV3Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.PharaohV2, providers)) {
+      try {
+        const provider = new PharaohV2Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.ZKSwapV2, providers)) {
+      try {
+        const provider = new ZKSwapV2Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.ZKSwapV3, providers)) {
+      try {
+        const provider = new ZKSwapV3Provider(this.chainId, this.web3Client);
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

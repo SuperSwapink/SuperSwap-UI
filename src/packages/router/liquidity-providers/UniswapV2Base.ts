@@ -8,9 +8,12 @@ import {
   Address,
   Hex,
   PublicClient,
+  concat,
   encodePacked,
+  getAddress,
   getContractAddress,
   keccak256,
+  pad,
 } from "viem";
 
 import { getCurrencyCombinations } from "../getCurrencyCombinations";
@@ -187,6 +190,8 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
       //console.info(`${this.getLogPrefix()} - No on demand pools found for ${t0.symbol}/${t1.symbol}`)
       return;
     }
+
+    console.log(pools);
 
     this.poolsByTrade.set(
       this.getTradeId(t0, t1),
@@ -467,14 +472,29 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
   }
 
   _getPoolAddress(t1: Token, t2: Token): Address {
+    const from = this.factory[this.chainId as keyof typeof this.factory];
+    const bytecodeHash =
+      this.initCodeHash[this.chainId as keyof typeof this.initCodeHash];
+    const salt = keccak256(
+      encodePacked(["address", "address"], [t1.address, t2.address])
+    );
+    // return t1.chainId === ChainId.ZKSYNC
+    //   ? getAddress(
+    //       `0x${keccak256(
+    //         concat([
+    //           "0x2020dba91b30cc0006188af794c2fb30dd8520db7e2c088b7fc7c103c00ca494",
+    //           pad(from, { size: 32 }),
+    //           salt,
+    //           bytecodeHash,
+    //           "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+    //         ])
+    //       ).slice(26)}`
+    //     ) :
     return getContractAddress({
-      from: this.factory[this.chainId as keyof typeof this.factory],
-      bytecodeHash:
-        this.initCodeHash[this.chainId as keyof typeof this.initCodeHash],
+      from,
+      bytecodeHash,
       opcode: "CREATE2",
-      salt: keccak256(
-        encodePacked(["address", "address"], [t1.address, t2.address])
-      ),
+      salt,
     }) as Address;
   }
 

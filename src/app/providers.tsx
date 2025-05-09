@@ -13,6 +13,10 @@ import {
   polygon,
   unichain,
   soneium,
+  // zkSync,
+  worldchain,
+  linea,
+  zora,
 } from "@/packages/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
@@ -40,6 +44,10 @@ const chains = [
   polygon,
   unichain,
   soneium,
+  // zkSync,
+  worldchain,
+  linea,
+  zora,
 ] as const;
 export const config = defaultWagmiConfig({
   chains,

@@ -10,15 +10,18 @@ interface UsePrice {
   enabled?: boolean;
 }
 
-const dexChainId = {
+const dexChainId: Record<ChainId, string> = {
   [ChainId.ETHEREUM]: "ethereum",
   [ChainId.OP]: "optimism",
-  [ChainId.UNICHAIN]: 'unichain',
-  [ChainId.POLYGON]: 'polygon',
-  [ChainId.SONEIUM]: 'soneium',
+  [ChainId.UNICHAIN]: "unichain",
+  [ChainId.POLYGON]: "polygon",
+  [ChainId.WORLDCHAIN]: "worldchain",
+  [ChainId.SONEIUM]: "soneium",
   [ChainId.BASE]: "base",
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",
+  [ChainId.LINEA]: "linea",
+  [ChainId.ZORA]: "zora",
 };
 
 export const usePrice = ({ chainId, address, enabled }: UsePrice) => {
