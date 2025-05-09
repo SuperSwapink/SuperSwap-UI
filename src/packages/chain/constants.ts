@@ -85,7 +85,7 @@ export const SUPPORTED_CHAINS: Record<
   [ChainId.WORLDCHAIN]: {
     id: ChainId.WORLDCHAIN,
     icon: WLCLogo,
-    name: 'World Chain'
+    name: 'World'
   },
   [ChainId.SONEIUM]: {
     id: ChainId.SONEIUM,
