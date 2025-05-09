@@ -82,3 +82,7 @@ export const CBBTC_ADDRESS = {
 export const VIRTUAL_ADDRESS = {
   [ChainId.BASE]: "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
 } as const;
+
+export const AERO_ADDRESS = {
+  [ChainId.BASE]: "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+};

@@ -1,5 +1,6 @@
 import { ChainId } from "../chain";
 import {
+  AERO,
   CBBTC,
   KBTC,
   Token,
@@ -53,6 +54,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     USDT[ChainId.BASE],
     CBBTC[ChainId.BASE],
     VIRTUAL[ChainId.BASE],
+    AERO[ChainId.BASE],
   ],
   [ChainId.ARBITRUM]: [
     WNATIVE[ChainId.ARBITRUM],

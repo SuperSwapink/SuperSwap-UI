@@ -4,6 +4,7 @@ import { Token } from "../Token";
 import { addressMapToTokenMap } from "../functions/address-map-to-token-map";
 
 import {
+  AERO_ADDRESS,
   CBBTC_ADDRESS,
   KBTC_ADDRESS,
   USDC_ADDRESS,
@@ -132,4 +133,16 @@ export const VIRTUAL: Record<keyof typeof VIRTUAL_ADDRESS, Token> = {
     },
     VIRTUAL_ADDRESS
   ) as Record<keyof typeof VIRTUAL_ADDRESS, Token>),
+} as const;
+
+export const AERO: Record<keyof typeof AERO_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 8,
+      symbol: "AERO",
+      name: "Aerodrome",
+      icon: "/media/aero.svg",
+    },
+    AERO_ADDRESS
+  ) as Record<keyof typeof AERO_ADDRESS, Token>),
 } as const;
