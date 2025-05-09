@@ -31,6 +31,8 @@ export enum LiquidityProviders {
   SonusV3 = "SonusV3",
   LynexV3 = "LynexV3",
   PharaohV2 = "PharaohV2",
+  Nile = "Nile",
+  SyncSwapV2 = "SyncSwapV2",
   ZKSwapV2 = "ZKSwapV2",
   ZKSwapV3 = "ZKSwapV3",
 }

@@ -559,6 +559,24 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Stablecoin",
     chainId: ChainId.WORLDCHAIN,
   },
+  {
+    address: "0x2cFc85d8E48F8EAB294be644d9E25C3030863003",
+    symbol: "WLD",
+    name: "Worldcoin",
+    decimals: 18,
+    icon: "https://coin-images.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+    category: "Top",
+    chainId: ChainId.WORLDCHAIN,
+  },
+  {
+    address: "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+    symbol: "WBTC",
+    name: "Wrapped Bitcoin",
+    decimals: 8,
+    icon: "https://coin-images.coingecko.com/coins/images/51159/large/wbtc_28.png?1730242311",
+    category: "Bitcoin",
+    chainId: ChainId.WORLDCHAIN,
+  },
 
   {
     address: "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f",

@@ -38,6 +38,8 @@ import { LynexV3Provider } from "./liquidity-providers/LynexV3";
 import { PharaohV2Provider } from "./liquidity-providers/PharaohV2";
 import { ZKSwapV2Provider } from "./liquidity-providers/ZKSwapV2";
 import { ZKSwapV3Provider } from "./liquidity-providers/ZKSwapV3";
+import { NileProvider } from "./liquidity-providers/Nile";
+import { SyncSwapV2Provider } from "./liquidity-providers/SyncSwapV2";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -369,6 +371,24 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.ZKSwapV3, providers)) {
       try {
         const provider = new ZKSwapV3Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.Nile, providers)) {
+      try {
+        const provider = new NileProvider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.SyncSwapV2, providers)) {
+      try {
+        const provider = new SyncSwapV2Provider(this.chainId, this.web3Client);
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

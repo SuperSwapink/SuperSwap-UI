@@ -201,6 +201,40 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     },
   });
 
+  const { data: linearData } = useQuery({
+    queryKey: ["linea-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://tokens.coingecko.com/linea/all.json"
+        );
+        return data.tokens
+          .filter(
+            (token: any) =>
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === token.address.toLowerCase() &&
+                  k.chainId === ChainId.LINEA
+              )
+          )
+          .map(
+            (token: any) =>
+              new Token({
+                chainId: ChainId.LINEA,
+                address: getAddress(token.address),
+                name: token.name,
+                symbol: token.symbol,
+                decimals: token.decimals,
+                icon: token.logoURI.replace("thumb", "standard"),
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
   const defaultTokens = [
     Native.onChain(chainId),
     ...(primaryTokens ? PRIMARY_TOKEN_LIST : DEFAULT_TOKEN_LIST)
@@ -303,6 +337,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     ...(polygonQuickswapData ?? []),
     ...(soneiumData ?? []),
     ...(unichainData ?? []),
+    ...(linearData ?? []),
   ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i);
 };
 
