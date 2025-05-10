@@ -191,8 +191,6 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
       return;
     }
 
-    console.log(pools);
-
     this.poolsByTrade.set(
       this.getTradeId(t0, t1),
       pools.map((pool) => pool.address)

@@ -176,6 +176,44 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
 
     if (existingPools.length === 0) return;
 
+    const fees = await this.client.multicall({
+      multicallAddress: this.client.chain?.contracts?.multicall3
+        ?.address as Address,
+      allowFailure: true,
+      contracts: existingPools.map(
+        (pool) =>
+          ({
+            chainId: this.chainId,
+            address: this.factory[this.chainId as keyof typeof this.factory],
+            abi: [
+              {
+                inputs: [
+                  {
+                    internalType: "address",
+                    name: "pool",
+                    type: "address",
+                  },
+                ],
+                name: "getSwapFee",
+                outputs: [
+                  {
+                    internalType: "uint24",
+                    name: "",
+                    type: "uint24",
+                  },
+                ],
+                stateMutability: "view",
+                type: "function",
+              },
+            ],
+            functionName: "getSwapFee",
+            args: [pool.address],
+          } as const)
+      ),
+    });
+
+    console.log(fees);
+
     const liquidityContracts = this.client.multicall({
       multicallAddress: this.client.chain?.contracts?.multicall3
         ?.address as Address,
@@ -297,6 +335,7 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
       const balance0 = token0Balances[i].result;
       const balance1 = token1Balances[i].result;
       const liquidity = liquidityResults[i].result;
+      const fee = fees[i].result;
       if (
         balance0 === undefined ||
         balance1 === undefined ||
@@ -337,7 +376,7 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
         pool.address,
         pool.token0 as RToken,
         pool.token1 as RToken,
-        pool.fee / 1_000_000,
+        Number(fee) / 1_000_000,
         balance0,
         balance1,
         pool.activeTick,

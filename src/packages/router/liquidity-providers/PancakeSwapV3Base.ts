@@ -169,8 +169,6 @@ export abstract class PancakeSwapV3BaseProvider extends LiquidityProvider {
         return undefined;
       });
 
-    console.log(slot0);
-
     const existingPools: V3Pool[] = [];
 
     staticPools.forEach((pool, i) => {
@@ -189,8 +187,6 @@ export abstract class PancakeSwapV3BaseProvider extends LiquidityProvider {
     });
 
     if (existingPools.length === 0) return;
-
-    console.log(staticPools);
 
     const liquidityContracts = this.client.multicall({
       multicallAddress: this.client.chain?.contracts?.multicall3
