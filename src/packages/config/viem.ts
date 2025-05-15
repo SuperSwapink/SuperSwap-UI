@@ -284,7 +284,7 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.LISK]: [
     {
       chain: lisk,
-      transport: http(),
+      transport: http("https://lisk.gateway.tenderly.co"),
     },
   ],
   [ChainId.SONEIUM]: [
