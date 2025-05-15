@@ -9,6 +9,9 @@ import {
   linea,
   // zkSync,
   zksync,
+  // lens,
+  lisk,
+  mode,
 } from "viem/chains";
 
 export const ink = defineChain({
@@ -217,7 +220,17 @@ export const worldchain = /*#__PURE__*/ defineChain({
   testnet: false,
 });
 
-export { optimism, mainnet, arbitrum, polygon, /*zkSync,*/ linea, zora };
+export {
+  optimism,
+  mainnet,
+  arbitrum,
+  polygon,
+  /*zkSync,*/ linea,
+  zora,
+  lisk,
+  // lens,
+  mode,
+};
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.ETHEREUM]: [
@@ -250,6 +263,12 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
       ),
     },
   ],
+  // [ChainId.LENS]: [
+  //   {
+  //     chain: lens,
+  //     transport: http(),
+  //   },
+  // ],
   // [ChainId.ZKSYNC]: [
   //   {
   //     chain: zksync,
@@ -259,6 +278,12 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.WORLDCHAIN]: [
     {
       chain: worldchain,
+      transport: http(),
+    },
+  ],
+  [ChainId.LISK]: [
+    {
+      chain: lisk,
       transport: http(),
     },
   ],
@@ -276,6 +301,12 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
       transport: http(
         `https://lb.drpc.org/ogrpc?network=base&dkey=Ag7pbj02QkWPimVQN29ULVsYiB5VCJQR8I-DssvAG40d`
       ),
+    },
+  ],
+  [ChainId.MODE]: [
+    {
+      chain: mode,
+      transport: http(),
     },
   ],
   [ChainId.ARBITRUM]: [

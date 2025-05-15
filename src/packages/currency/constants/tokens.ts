@@ -7,12 +7,14 @@ import {
   AERO_ADDRESS,
   CBBTC_ADDRESS,
   KBTC_ADDRESS,
+  MODE_ADDRESS,
   USDC_ADDRESS,
   USDCe_ADDRESS,
   USDT0_ADDRESS,
   USDT_ADDRESS,
   VIRTUAL_ADDRESS,
   WETH9_ADDRESS,
+  WGHO_ADDRESS,
   WPOL_ADDRESS,
 } from "./token-addresses";
 
@@ -36,15 +38,28 @@ export const WPOL = addressMapToTokenMap(
   WPOL_ADDRESS
 ) as Record<keyof typeof WPOL_ADDRESS, Token>;
 
+export const WGHO = addressMapToTokenMap(
+  {
+    decimals: 18,
+    symbol: "WGHO",
+    name: "Wrapped GHO",
+    icon: "/media/wgho.png",
+  },
+  WGHO_ADDRESS
+) as Record<keyof typeof WGHO_ADDRESS, Token>;
+
 export const WNATIVE = {
   [ChainId.ETHEREUM]: WETH9[ChainId.ETHEREUM],
   [ChainId.OP]: WETH9[ChainId.OP],
   [ChainId.UNICHAIN]: WETH9[ChainId.UNICHAIN],
   [ChainId.POLYGON]: WPOL[ChainId.POLYGON],
+  // [ChainId.LENS]: WGHO[ChainId.LENS],
   // [ChainId.ZKSYNC]: WETH9[ChainId.ZKSYNC],
   [ChainId.WORLDCHAIN]: WETH9[ChainId.WORLDCHAIN],
+  [ChainId.LISK]: WETH9[ChainId.LISK],
   [ChainId.SONEIUM]: WETH9[ChainId.SONEIUM],
   [ChainId.BASE]: WETH9[ChainId.BASE],
+  [ChainId.MODE]: WETH9[ChainId.MODE],
   [ChainId.ARBITRUM]: WETH9[ChainId.ARBITRUM],
   [ChainId.INK]: WETH9[ChainId.INK],
   [ChainId.LINEA]: WETH9[ChainId.LINEA],
@@ -138,11 +153,23 @@ export const VIRTUAL: Record<keyof typeof VIRTUAL_ADDRESS, Token> = {
 export const AERO: Record<keyof typeof AERO_ADDRESS, Token> = {
   ...(addressMapToTokenMap(
     {
-      decimals: 8,
+      decimals: 18,
       symbol: "AERO",
       name: "Aerodrome",
       icon: "/media/aero.svg",
     },
     AERO_ADDRESS
   ) as Record<keyof typeof AERO_ADDRESS, Token>),
+} as const;
+
+export const MODE: Record<keyof typeof MODE_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 18,
+      symbol: "MODE",
+      name: "Mode",
+      icon: "/media/mode.jpg",
+    },
+    MODE_ADDRESS
+  ) as Record<keyof typeof MODE_ADDRESS, Token>),
 } as const;

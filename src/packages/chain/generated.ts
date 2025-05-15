@@ -68,6 +68,19 @@ export default [
     shortName: "pol",
   },
   // {
+  //   chainId: 232,
+  //   name: "Lens",
+  //   shortName: "lens",
+  //   nativeCurrency: { name: "GHO", symbol: "GHO", decimals: 18 },
+  //   explorers: [
+  //     {
+  //       name: "Lens Block Explorer",
+  //       url: "https://explorer.lens.xyz",
+  //       standard: "EIP3091",
+  //     },
+  //   ],
+  // },
+  // {
   //   chainId: 324,
   //   explorers: [
   //     {
@@ -102,6 +115,23 @@ export default [
     shortName: "worldchain",
   },
   {
+    chainId: 1135,
+    name: "Lisk",
+    shortName: "lisk",
+    nativeCurrency: {
+      decimals: 18,
+      name: "Ether",
+      symbol: "ETH",
+    },
+    explorers: [
+      {
+        name: "Blockscout",
+        url: "https://blockscout.lisk.com",
+        standard: "EIP3091",
+      },
+    ],
+  },
+  {
     chainId: 1868,
     explorers: [
       {
@@ -134,6 +164,23 @@ export default [
     },
     name: "Base",
     shortName: "base",
+  },
+  {
+    chainId: 34443,
+    name: "Mode",
+    shortName: "mode",
+    nativeCurrency: {
+      decimals: 18,
+      name: "Ether",
+      symbol: "ETH",
+    },
+    explorers: [
+      {
+        name: "Modescan",
+        url: "https://modescan.io",
+        standard: "EIP3091",
+      },
+    ],
   },
   {
     chainId: 42161,

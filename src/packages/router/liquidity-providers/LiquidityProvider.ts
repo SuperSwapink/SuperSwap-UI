@@ -35,6 +35,8 @@ export enum LiquidityProviders {
   SyncSwapV2 = "SyncSwapV2",
   ZKSwapV2 = "ZKSwapV2",
   ZKSwapV3 = "ZKSwapV3",
+  KimV4 = "KimV4",
+  OkuTrade = "OkuTrade",
 }
 
 export abstract class LiquidityProvider {

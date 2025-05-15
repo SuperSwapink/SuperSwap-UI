@@ -3,6 +3,7 @@ import {
   AERO,
   CBBTC,
   KBTC,
+  MODE,
   Token,
   USDC,
   USDCe,
@@ -33,6 +34,11 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     USDC[ChainId.POLYGON],
     USDT[ChainId.POLYGON],
   ],
+  // [ChainId.LENS]: [
+  //   WNATIVE[ChainId.LENS],
+  //   WETH9[ChainId.LENS],
+  //   USDC[ChainId.LENS],
+  // ],
   // [ChainId.ZKSYNC]: [
   //   WNATIVE[ChainId.ZKSYNC],
   //   USDC[ChainId.ZKSYNC],
@@ -43,6 +49,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     WNATIVE[ChainId.WORLDCHAIN],
     USDCe[ChainId.WORLDCHAIN],
   ],
+  [ChainId.LISK]: [WNATIVE[ChainId.LISK], USDT[ChainId.LISK]],
   [ChainId.SONEIUM]: [
     WNATIVE[ChainId.SONEIUM],
     USDCe[ChainId.SONEIUM],
@@ -55,6 +62,12 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     CBBTC[ChainId.BASE],
     VIRTUAL[ChainId.BASE],
     AERO[ChainId.BASE],
+  ],
+  [ChainId.MODE]: [
+    WNATIVE[ChainId.MODE],
+    USDC[ChainId.MODE],
+    USDT[ChainId.MODE],
+    MODE[ChainId.MODE],
   ],
   [ChainId.ARBITRUM]: [
     WNATIVE[ChainId.ARBITRUM],

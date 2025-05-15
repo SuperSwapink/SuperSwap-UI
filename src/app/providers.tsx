@@ -17,6 +17,9 @@ import {
   worldchain,
   linea,
   zora,
+  lisk,
+  // lens,
+  mode,
 } from "@/packages/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
@@ -48,6 +51,9 @@ const chains = [
   worldchain,
   linea,
   zora,
+  lisk,
+  // lens,
+  mode,
 ] as const;
 export const config = defaultWagmiConfig({
   chains,

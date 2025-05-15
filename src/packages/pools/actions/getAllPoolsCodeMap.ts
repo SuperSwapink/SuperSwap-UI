@@ -42,6 +42,8 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.SyncSwapV2,
         LiquidityProviders.ZKSwapV2,
         LiquidityProviders.ZKSwapV3,
+        LiquidityProviders.KimV4,
+        // LiquidityProviders.OkuTrade,
       ];
 
   const dataFetcher = DataFetcher.onChain(chainId);
