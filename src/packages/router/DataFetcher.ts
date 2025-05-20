@@ -42,6 +42,7 @@ import { NileProvider } from "./liquidity-providers/Nile";
 import { SyncSwapV2Provider } from "./liquidity-providers/SyncSwapV2";
 import { KimV4Provider } from "./liquidity-providers/KimV4";
 import { OkuTradeProvider } from "./liquidity-providers/OkuTrade";
+import { SwapModeV2Provider } from "./liquidity-providers/SwapModeV2";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -409,6 +410,15 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.OkuTrade, providers)) {
       try {
         const provider = new OkuTradeProvider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.SwapModeV2, providers)) {
+      try {
+        const provider = new SwapModeV2Provider(this.chainId, this.web3Client);
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

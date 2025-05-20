@@ -31,6 +31,7 @@ export const ChainId = {
   ARBITRUM: 42161,
   INK: 57073,
   LINEA: 59144,
+  // BLAST: 81457,
   ZORA: 7777777,
 } as const;
 export type ChainId = (typeof ChainId)[keyof typeof ChainId];
@@ -53,6 +54,7 @@ export const ChainKey = {
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",
   [ChainId.LINEA]: "linea",
+  // [ChainId.BLAST]: 'blast',
   [ChainId.ZORA]: "zora",
 } as const;
 export type ChainKey = (typeof ChainKey)[keyof typeof ChainKey];

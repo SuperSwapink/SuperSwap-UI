@@ -26,6 +26,22 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     chainId: ChainId.OP,
   });
 
+  const { data: liskVelodromeData } = useReadContract({
+    abi: aerodromeSugarAbi,
+    functionName: "tokens",
+    args: [5000n, 0n, "0x0000000000000000000000000000000000000000", []],
+    address: "0x2DCD9B33F0721000Dc1F8f84B804d4CFA23d7713",
+    chainId: ChainId.LISK,
+  });
+
+  const { data: modeVelodromeData } = useReadContract({
+    abi: aerodromeSugarAbi,
+    functionName: "tokens",
+    args: [5000n, 0n, "0x0000000000000000000000000000000000000000", []],
+    address: "0x9ECd2f44f72E969fa3F3C4e4F63bc61E0C08F31F",
+    chainId: ChainId.MODE,
+  });
+
   const { data: camelotData } = useQuery({
     queryKey: ["camelot-tokens"],
     queryFn: async () => {
@@ -314,6 +330,66 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
       })
   );
 
+  const filteredLiskVelodromeTokens = liskVelodromeData
+    ?.filter(
+      (item) =>
+        !defaultTokens.find(
+          (k) =>
+            k.chainId === ChainId.LISK &&
+            !k.isNative &&
+            k.address.toLowerCase() === item.token_address.toLowerCase()
+        ) && item.listed
+    )
+    ?.filter(
+      (item, i, data) =>
+        data.findIndex(
+          (k) =>
+            k.token_address.toLowerCase() === item.token_address.toLowerCase()
+        ) === i
+    );
+
+  const liskVelodromeTokens = filteredLiskVelodromeTokens?.map(
+    (item) =>
+      new Token({
+        address: item.token_address,
+        chainId: ChainId.LISK,
+        decimals: item.decimals,
+        name: item.symbol,
+        symbol: item.symbol,
+        icon: `https://raw.githubusercontent.com/SmolDapp/tokenAssets/main/tokens/1135/${item.token_address.toLowerCase()}/logo.svg`,
+      })
+  );
+
+  const filteredModeVelodromeTokens = modeVelodromeData
+    ?.filter(
+      (item) =>
+        !defaultTokens.find(
+          (k) =>
+            k.chainId === ChainId.MODE &&
+            !k.isNative &&
+            k.address.toLowerCase() === item.token_address.toLowerCase()
+        ) && item.listed
+    )
+    ?.filter(
+      (item, i, data) =>
+        data.findIndex(
+          (k) =>
+            k.token_address.toLowerCase() === item.token_address.toLowerCase()
+        ) === i
+    );
+
+  const modeVelodromeTokens = filteredModeVelodromeTokens?.map(
+    (item) =>
+      new Token({
+        address: item.token_address,
+        chainId: ChainId.MODE,
+        decimals: item.decimals,
+        name: item.symbol,
+        symbol: item.symbol,
+        icon: `https://raw.githubusercontent.com/SmolDapp/tokenAssets/main/tokens/34443/${item.token_address.toLowerCase()}/logo.svg`,
+      })
+  );
+
   const localTokens = localTokenList?.map(
     (item) =>
       new Token({
@@ -331,6 +407,8 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     ...defaultTokens,
     ...(aerodromeTokens ?? []),
     ...(opVelodromeTokens ?? []),
+    ...(liskVelodromeTokens ?? []),
+    ...(modeVelodromeTokens ?? []),
     ...(localTokens ?? []),
     ...(camelotData ?? []),
     ...(ethUniswapData ?? []),
