@@ -58,6 +58,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   [ChainId.LISK]: {
     WETH: WETH9[ChainId.LISK],
     USDT: USDT[ChainId.LISK],
+    USDC: USDCe[ChainId.LISK],
   },
   [ChainId.SONEIUM]: {
     WETH: WETH9[ChainId.SONEIUM],
@@ -82,6 +83,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   [ChainId.LINEA]: {
     WETH: WETH9[ChainId.LINEA],
     USDT: USDT[ChainId.LINEA],
+    USDC: USDC[ChainId.LINEA],
   },
   [ChainId.ZORA]: {
     WETH: WETH9[ChainId.ZORA],
