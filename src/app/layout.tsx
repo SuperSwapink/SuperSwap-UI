@@ -94,7 +94,7 @@ export default function RootLayout({
               {children}
               <Footer />
             </main>
-            <Toaster position="top-right" toastOptions={{ duration: 6000 }} />
+            <Toaster position="top-right" toastOptions={{ duration: 12000 }} />
           </Provider>
         </Suspense>
       </body>
