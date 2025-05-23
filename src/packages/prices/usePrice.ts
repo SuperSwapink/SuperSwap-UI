@@ -24,6 +24,8 @@ const dexChainId: Record<ChainId, string> = {
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",
   [ChainId.LINEA]: "linea",
+  [ChainId.BLAST]: 'blast',
+  [ChainId.SCROLL]: 'scroll',
   [ChainId.ZORA]: "zora",
 };
 

@@ -234,6 +234,40 @@ export default [
     shortName: "linea",
   },
   {
+    chainId: 81457,
+    explorers: [
+      {
+        name: "Blastscan",
+        url: "https://blastscan.io/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Blast",
+    shortName: "blast",
+  },
+  {
+    chainId: 534352,
+    explorers: [
+      {
+        name: "Scrollscan",
+        url: "https://scrollscan.com/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Scroll",
+    shortName: "scroll",
+  },
+  {
     chainId: 7777777,
     explorers: [
       {

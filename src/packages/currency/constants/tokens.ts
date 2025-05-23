@@ -5,9 +5,12 @@ import { addressMapToTokenMap } from "../functions/address-map-to-token-map";
 
 import {
   AERO_ADDRESS,
+  BLAST_ADDRES,
   CBBTC_ADDRESS,
   KBTC_ADDRESS,
   MODE_ADDRESS,
+  SCR_ADDRESS,
+  USDB_ADDRESS,
   USDC_ADDRESS,
   USDCe_ADDRESS,
   USDT0_ADDRESS,
@@ -63,6 +66,8 @@ export const WNATIVE = {
   [ChainId.ARBITRUM]: WETH9[ChainId.ARBITRUM],
   [ChainId.INK]: WETH9[ChainId.INK],
   [ChainId.LINEA]: WETH9[ChainId.LINEA],
+  [ChainId.BLAST]: WETH9[ChainId.BLAST],
+  [ChainId.SCROLL]: WETH9[ChainId.SCROLL],
   [ChainId.ZORA]: WETH9[ChainId.ZORA],
 } as const;
 
@@ -112,6 +117,18 @@ export const USDT: Record<keyof typeof USDT_ADDRESS, Token> = {
     },
     USDT_ADDRESS
   ) as Record<keyof typeof USDT_ADDRESS, Token>),
+} as const;
+
+export const USDB: Record<keyof typeof USDB_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 18,
+      symbol: "USDB",
+      name: "USDB",
+      icon: "/media/usdb.svg",
+    },
+    USDB_ADDRESS
+  ) as Record<keyof typeof USDB_ADDRESS, Token>),
 } as const;
 
 export const KBTC: Record<keyof typeof KBTC_ADDRESS, Token> = {
@@ -172,4 +189,28 @@ export const MODE: Record<keyof typeof MODE_ADDRESS, Token> = {
     },
     MODE_ADDRESS
   ) as Record<keyof typeof MODE_ADDRESS, Token>),
+} as const;
+
+export const SCR: Record<keyof typeof SCR_ADDRESS, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 18,
+      symbol: "SCR",
+      name: "Scroll",
+      icon: "/media/scr.png",
+    },
+    SCR_ADDRESS
+  ) as Record<keyof typeof SCR_ADDRESS, Token>),
+} as const;
+
+export const BLAST: Record<keyof typeof BLAST_ADDRES, Token> = {
+  ...(addressMapToTokenMap(
+    {
+      decimals: 18,
+      symbol: "BLAST",
+      name: "Blast",
+      icon: "/media/blast.jpg",
+    },
+    BLAST_ADDRES
+  ) as Record<keyof typeof BLAST_ADDRES, Token>),
 } as const;

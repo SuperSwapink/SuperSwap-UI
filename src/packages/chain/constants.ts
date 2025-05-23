@@ -14,6 +14,8 @@ import LiskLogo from "@/assets/network/lisk.webp";
 import ModeLogo from "@/assets/network/mode.jpg";
 import ZoraLogo from "@/assets/network/zora.svg";
 import LineaLogo from "@/assets/network/linea.svg";
+import BlastLogo from "@/assets/network/blast.jpg";
+import ScrollLogo from "@/assets/network/scroll.png";
 import { StaticImageData } from "next/image";
 
 export const ChainId = {
@@ -31,7 +33,8 @@ export const ChainId = {
   ARBITRUM: 42161,
   INK: 57073,
   LINEA: 59144,
-  // BLAST: 81457,
+  BLAST: 81457,
+  SCROLL: 534352,
   ZORA: 7777777,
 } as const;
 export type ChainId = (typeof ChainId)[keyof typeof ChainId];
@@ -54,7 +57,8 @@ export const ChainKey = {
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",
   [ChainId.LINEA]: "linea",
-  // [ChainId.BLAST]: 'blast',
+  [ChainId.BLAST]: "blast",
+  [ChainId.SCROLL]: "scroll",
   [ChainId.ZORA]: "zora",
 } as const;
 export type ChainKey = (typeof ChainKey)[keyof typeof ChainKey];
@@ -138,6 +142,16 @@ export const SUPPORTED_CHAINS: Record<
     id: ChainId.LINEA,
     icon: LineaLogo,
     name: "Linea",
+  },
+  [ChainId.BLAST]: {
+    id: ChainId.BLAST,
+    icon: BlastLogo,
+    name: "Blast",
+  },
+  [ChainId.SCROLL]: {
+    id: ChainId.SCROLL,
+    icon: ScrollLogo,
+    name: "Scroll",
   },
   [ChainId.ZORA]: {
     id: ChainId.ZORA,

@@ -38,6 +38,10 @@ export enum LiquidityProviders {
   KimV4 = "KimV4",
   OkuTrade = "OkuTrade",
   SwapModeV2 = "SwapModeV2",
+  ThrusterV3 = "ThrusterV3",
+  ThrusterV21 = "ThrusterV21",
+  ThrusterV22 = "ThrusterV22",
+  NuriV2 = "NuriV2",
 }
 
 export abstract class LiquidityProvider {

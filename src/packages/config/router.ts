@@ -1,10 +1,13 @@
 import { ChainId } from "../chain";
 import {
   AERO,
+  BLAST,
   CBBTC,
   KBTC,
   MODE,
+  SCR,
   Token,
+  USDB,
   USDC,
   USDCe,
   USDT,
@@ -85,6 +88,17 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     WNATIVE[ChainId.LINEA],
     USDC[ChainId.LINEA],
     USDT[ChainId.LINEA],
+  ],
+  [ChainId.BLAST]: [
+    WNATIVE[ChainId.BLAST],
+    USDB[ChainId.BLAST],
+    BLAST[ChainId.BLAST],
+  ],
+  [ChainId.SCROLL]: [
+    WNATIVE[ChainId.SCROLL],
+    USDC[ChainId.SCROLL],
+    USDT[ChainId.SCROLL],
+    SCR[ChainId.SCROLL],
   ],
   [ChainId.ZORA]: [WNATIVE[ChainId.ZORA], USDC[ChainId.ZORA]],
 };

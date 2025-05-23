@@ -22,6 +22,8 @@ const NATIVE_MEDIAS = {
   [ChainId.ARBITRUM]: "eth.svg",
   [ChainId.INK]: "eth.svg",
   [ChainId.LINEA]: "eth.svg",
+  [ChainId.BLAST]: "eth.svg",
+  [ChainId.SCROLL]: "eth.svg",
   [ChainId.ZORA]: "eth.svg",
 };
 

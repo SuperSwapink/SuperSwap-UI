@@ -251,6 +251,76 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     },
   });
 
+  const { data: blastData } = useQuery({
+    queryKey: ["blast-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://tokens.coingecko.com/blast/all.json"
+        );
+        console.log(data);
+        return data.tokens
+          .filter(
+            (token: any) =>
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === token.address.toLowerCase() &&
+                  k.chainId === ChainId.BLAST
+              )
+          )
+          .map(
+            (token: any) =>
+              new Token({
+                chainId: ChainId.BLAST,
+                address: getAddress(token.address),
+                name: token.name,
+                symbol: token.symbol,
+                decimals: token.decimals,
+                icon: token?.logoURI?.replace("thumb", "standard"),
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
+  const { data: scrollData } = useQuery({
+    queryKey: ["scroll-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://tokens.coingecko.com/scroll/all.json"
+        );
+        console.log(data);
+        return data.tokens
+          .filter(
+            (token: any) =>
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === token.address.toLowerCase() &&
+                  k.chainId === ChainId.SCROLL
+              )
+          )
+          .map(
+            (token: any) =>
+              new Token({
+                chainId: ChainId.SCROLL,
+                address: getAddress(token.address),
+                name: token.name,
+                symbol: token.symbol,
+                decimals: token.decimals,
+                icon: token?.logoURI?.replace("thumb", "standard"),
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
   const defaultTokens = [
     Native.onChain(chainId),
     ...(primaryTokens ? PRIMARY_TOKEN_LIST : DEFAULT_TOKEN_LIST)
@@ -416,6 +486,8 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     ...(soneiumData ?? []),
     ...(unichainData ?? []),
     ...(linearData ?? []),
+    ...(blastData ?? []),
+    ...(scrollData ?? []),
   ].filter((item, i, data) => data.findIndex((k) => k.id === item.id) === i);
 };
 

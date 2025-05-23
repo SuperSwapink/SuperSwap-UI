@@ -12,6 +12,8 @@ import {
   // lens,
   lisk,
   mode,
+  blast,
+  scroll,
 } from "viem/chains";
 
 export const ink = defineChain({
@@ -230,6 +232,8 @@ export {
   lisk,
   // lens,
   mode,
+  blast,
+  scroll,
 };
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
@@ -326,6 +330,18 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.LINEA]: [
     {
       chain: linea,
+      transport: http(),
+    },
+  ],
+  [ChainId.BLAST]: [
+    {
+      chain: blast,
+      transport: http(),
+    },
+  ],
+  [ChainId.SCROLL]: [
+    {
+      chain: scroll,
       transport: http(),
     },
   ],

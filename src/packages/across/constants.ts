@@ -16,6 +16,8 @@ export const SPOKE_POOL_ADDRESS: Record<ChainId, `0x${string}`> = {
   [ChainId.ARBITRUM]: "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
   [ChainId.INK]: "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4",
   [ChainId.LINEA]: "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
+  [ChainId.BLAST]: "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
+  [ChainId.SCROLL]: "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
   [ChainId.ZORA]: "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
 };
 
@@ -84,6 +86,14 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
     WETH: WETH9[ChainId.LINEA],
     USDT: USDT[ChainId.LINEA],
     USDC: USDC[ChainId.LINEA],
+  },
+  [ChainId.BLAST]: {
+    WETH: WETH9[ChainId.BLAST],
+  },
+  [ChainId.SCROLL]: {
+    WETH: WETH9[ChainId.SCROLL],
+    USDC: USDC[ChainId.SCROLL],
+    USDT: USDT[ChainId.SCROLL],
   },
   [ChainId.ZORA]: {
     WETH: WETH9[ChainId.ZORA],

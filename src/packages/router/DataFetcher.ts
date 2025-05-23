@@ -43,6 +43,10 @@ import { SyncSwapV2Provider } from "./liquidity-providers/SyncSwapV2";
 import { KimV4Provider } from "./liquidity-providers/KimV4";
 import { OkuTradeProvider } from "./liquidity-providers/OkuTrade";
 import { SwapModeV2Provider } from "./liquidity-providers/SwapModeV2";
+import { ThrusterV3Provider } from "./liquidity-providers/ThrusterV3";
+import { ThrusterV21Provider } from "./liquidity-providers/ThrusterV21";
+import { ThrusterV22Provider } from "./liquidity-providers/ThrusterV22";
+import { NuriV2Provider } from "./liquidity-providers/NuriV2";
 
 // Gathers pools info, creates routing in 'incremental' mode
 // This means that new routing recalculates each time new pool fetching data comes
@@ -419,6 +423,42 @@ export class DataFetcher {
     if (this._providerIsIncluded(LiquidityProviders.SwapModeV2, providers)) {
       try {
         const provider = new SwapModeV2Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.ThrusterV3, providers)) {
+      try {
+        const provider = new ThrusterV3Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.ThrusterV21, providers)) {
+      try {
+        const provider = new ThrusterV21Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.ThrusterV22, providers)) {
+      try {
+        const provider = new ThrusterV22Provider(this.chainId, this.web3Client);
+        this.providers.push(provider);
+      } catch (e: unknown) {
+        console.warn(e);
+      }
+    }
+
+    if (this._providerIsIncluded(LiquidityProviders.NuriV2, providers)) {
+      try {
+        const provider = new NuriV2Provider(this.chainId, this.web3Client);
         this.providers.push(provider);
       } catch (e: unknown) {
         console.warn(e);

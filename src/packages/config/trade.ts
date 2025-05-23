@@ -16,6 +16,8 @@ export const ROUTE_PROCESSOR_3_SUPPORTED_CHAIN_IDS = [
   ChainId.ARBITRUM,
   ChainId.INK,
   ChainId.LINEA,
+  ChainId.BLAST,
+  ChainId.SCROLL,
   ChainId.ZORA,
 ] as const;
 export type RouteProcessor3ChainId =
@@ -37,6 +39,8 @@ export const ROUTE_PROCESSOR_3_ADDRESS: Record<
   [ChainId.ARBITRUM]: "0x459197DAf6114D4A02425F66067d329F9DAc6961",
   [ChainId.INK]: "0x5839389261D1F38aac7c8E91DcDa85646bEcB414",
   [ChainId.LINEA]: "0xbCA08Ef2F02376074f62af2Cc92EedE0ED38cdDd",
+  [ChainId.BLAST]: "0x459197DAf6114D4A02425F66067d329F9DAc6961",
+  [ChainId.SCROLL]: "0x459197DAf6114D4A02425F66067d329F9DAc6961",
   [ChainId.ZORA]: "0xb8eD8F9e2A04ecC70c801d4f05ab8F00599CEfC2",
 } as const;
 export const isRouteProcessor3ChainId = (
@@ -61,6 +65,8 @@ export const ACROSS_PORTAL_SUPPORTED_CHAIN_IDS = [
   ChainId.ARBITRUM,
   ChainId.INK,
   ChainId.LINEA,
+  ChainId.BLAST,
+  ChainId.SCROLL,
   ChainId.ZORA,
 ] as const;
 export type AcrossPortalChainId =
@@ -79,6 +85,8 @@ export const ACROSS_PORTAL_ADDRESS: Record<AcrossPortalChainId, `0x${string}`> =
     [ChainId.ARBITRUM]: "0xbCA08Ef2F02376074f62af2Cc92EedE0ED38cdDd",
     [ChainId.INK]: "0x839072f294FE180aa471e224C26F0172Ff5329E4",
     [ChainId.LINEA]: "0x5F23C13A36Be84671Ffc725E07B2e2028a71a202",
+    [ChainId.BLAST]: "0xb8eD8F9e2A04ecC70c801d4f05ab8F00599CEfC2",
+    [ChainId.SCROLL]: "0xb8eD8F9e2A04ecC70c801d4f05ab8F00599CEfC2",
     [ChainId.ZORA]: "0xaB19a265EDe95c66c9A1159176088f0c9E2B48F7",
   } as const;
 export const isAcrossPortalChainId = (

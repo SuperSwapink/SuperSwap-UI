@@ -18,6 +18,8 @@ import {
   linea,
   zora,
   lisk,
+  blast,
+  scroll,
   // lens,
   mode,
 } from "@/packages/config";
@@ -52,6 +54,8 @@ const chains = [
   linea,
   zora,
   lisk,
+  blast,
+  scroll,
   // lens,
   mode,
 ] as const;

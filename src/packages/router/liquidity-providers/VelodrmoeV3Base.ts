@@ -158,6 +158,7 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
       });
 
     const existingPools: V3Pool[] = [];
+    console.log(staticPools)
 
     staticPools.forEach((pool, i) => {
       if (slot0 === undefined || !slot0[i]) return;
@@ -376,7 +377,7 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
         pool.address,
         pool.token0 as RToken,
         pool.token1 as RToken,
-        Number(fee) / 1_000_000,
+        Number(fee || pool.fee) / 1_000_000,
         balance0,
         balance1,
         pool.activeTick,
