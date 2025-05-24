@@ -35,6 +35,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   [ChainId.OP]: {
     WETH: WETH9[ChainId.OP],
     USDC: USDC[ChainId.OP],
+    USDT: USDT[ChainId.OP],
   },
   [ChainId.UNICHAIN]: {
     WETH: WETH9[ChainId.UNICHAIN],
@@ -69,6 +70,7 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
   [ChainId.BASE]: {
     WETH: WETH9[ChainId.BASE],
     USDC: USDC[ChainId.BASE],
+    USDT: USDT[ChainId.BASE],
   },
   [ChainId.MODE]: {
     WETH: WETH9[ChainId.MODE],
