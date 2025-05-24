@@ -42,6 +42,7 @@ export enum LiquidityProviders {
   ThrusterV21 = "ThrusterV21",
   ThrusterV22 = "ThrusterV22",
   NuriV2 = "NuriV2",
+  FenixV3 = "FenixV3",
 }
 
 export abstract class LiquidityProvider {

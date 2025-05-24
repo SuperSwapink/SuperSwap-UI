@@ -258,7 +258,6 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
         const { data } = await axios.get(
           "https://tokens.coingecko.com/blast/all.json"
         );
-        console.log(data);
         return data.tokens
           .filter(
             (token: any) =>
@@ -293,7 +292,6 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
         const { data } = await axios.get(
           "https://tokens.coingecko.com/scroll/all.json"
         );
-        console.log(data);
         return data.tokens
           .filter(
             (token: any) =>

@@ -48,7 +48,8 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.ThrusterV3,
         LiquidityProviders.ThrusterV21,
         LiquidityProviders.ThrusterV22,
-        LiquidityProviders.NuriV2
+        LiquidityProviders.NuriV2,
+        LiquidityProviders.FenixV3
       ];
 
   const dataFetcher = DataFetcher.onChain(chainId);
