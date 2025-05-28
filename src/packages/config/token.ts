@@ -782,6 +782,25 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Top",
     chainId: ChainId.SCROLL,
   },
+
+  {
+    address: "0x4200000000000000000000000000000000000006",
+    symbol: "WETH",
+    name: "Wrapped Ether",
+    decimals: 18,
+    icon: "/media/weth.png",
+    category: "Ether",
+    chainId: ChainId.REDSTONE,
+  },
+  {
+    address: "0xD5d59fC063e7548b6015A36fEb10B875924A19be",
+    symbol: "USDC.e",
+    name: "USDC (Stargate)",
+    decimals: 6,
+    icon: "/media/usdc.png",
+    category: "Stablecoin",
+    chainId: ChainId.REDSTONE,
+  },
 ];
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];

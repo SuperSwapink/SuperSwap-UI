@@ -1,10 +1,10 @@
 import { PublicClient } from "viem";
 
 import { LiquidityProviders } from "./LiquidityProvider";
-import { UniswapV2BaseProvider } from "./UniswapV2Base";
 import { ChainId } from "@/packages/chain";
+import { SyncSwapV2BaseProvider } from "./SyncSwapV2Base";
 
-export class SyncSwapV2Provider extends UniswapV2BaseProvider {
+export class SyncSwapV2Provider extends SyncSwapV2BaseProvider {
   override fee = 1000;
 
   constructor(chainId: ChainId, web3Client: PublicClient) {

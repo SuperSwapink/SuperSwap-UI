@@ -39,7 +39,7 @@ export const getAllPoolsCodeMap = async ({
         LiquidityProviders.LynexV3,
         LiquidityProviders.PharaohV2,
         LiquidityProviders.Nile,
-        LiquidityProviders.SyncSwapV2,
+        // LiquidityProviders.SyncSwapV2,
         LiquidityProviders.ZKSwapV2,
         LiquidityProviders.ZKSwapV3,
         LiquidityProviders.KimV4,

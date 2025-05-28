@@ -9,7 +9,7 @@ import {
   Hex,
   PublicClient,
   concat,
-  encodePacked,
+  encodeAbiParameters,
   getAddress,
   getContractAddress,
   keccak256,
@@ -38,7 +38,7 @@ interface StaticPool {
   fee: number;
 }
 
-export abstract class UniswapV2BaseProvider extends LiquidityProvider {
+export abstract class SyncSwapV2BaseProvider extends LiquidityProvider {
   readonly TOP_POOL_SIZE = 155;
   readonly TOP_POOL_LIQUIDITY_THRESHOLD = 5000;
   readonly ON_DEMAND_POOL_SIZE = 20;
@@ -179,7 +179,7 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
           )
         : this.getStaticPools(t0, t1);
 
-        console.log(pools)
+    console.log(pools);
 
     if (excludePools)
       pools = (pools as StaticPool[]).filter(
@@ -240,7 +240,26 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
             ({
               address: poolCode.pool.address as Address,
               chainId: this.chainId,
-              abi: getReservesAbi,
+              abi: [
+                {
+                  inputs: [],
+                  name: "getReserves",
+                  outputs: [
+                    {
+                      internalType: "uint",
+                      name: "_reserve0",
+                      type: "uint",
+                    },
+                    {
+                      internalType: "uint",
+                      name: "_reserve1",
+                      type: "uint",
+                    },
+                  ],
+                  stateMutability: "view",
+                  type: "function",
+                },
+              ],
               functionName: "getReserves",
             } as const)
         ),
@@ -254,10 +273,82 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
         return undefined;
       });
 
+    const fees = await this.client
+      .multicall({
+        multicallAddress: this.client.chain?.contracts?.multicall3
+          ?.address as Address,
+        allowFailure: true,
+        contracts: poolCodesToCreate.map(
+          (poolCode) =>
+            ({
+              address: poolCode.pool.address as Address,
+              chainId: this.chainId,
+              abi: [
+                {
+                  inputs: [
+                    {
+                      internalType: "address",
+                      name: "sender",
+                      type: "address",
+                    },
+                    {
+                      internalType: "address",
+                      name: "tokenIn",
+                      type: "address",
+                    },
+                    {
+                      internalType: "address",
+                      name: "tokenOut",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "data",
+                      type: "bytes",
+                    },
+                  ],
+                  name: "getSwapFee",
+                  outputs: [
+                    {
+                      internalType: "uint24",
+                      name: "swapFee",
+                      type: "uint24",
+                    },
+                  ],
+                  stateMutability: "view",
+                  type: "function",
+                },
+              ] as const,
+              functionName: "getSwapFee",
+              args: [
+                "0x0000000000000000000000000000000000000000",
+                t0.address,
+                t1.address,
+                "0x",
+              ],
+            } as const)
+        ),
+      })
+      .catch((e) => {
+        console.warn(
+          `${this.getLogPrefix()} - UPDATE: on-demand pools multicall failed, message: ${
+            e.message
+          }`
+        );
+        return undefined;
+      });
+
+    console.log(fees);
+
     poolCodesToCreate.forEach((poolCode, i) => {
       const pool = poolCode.pool;
       const res0 = reserves?.[i]?.result?.[0];
       const res1 = reserves?.[i]?.result?.[1];
+      const fee = fees?.[i]?.result;
+
+      if (fee !== undefined) {
+        pool.updateFee(fee / 100000);
+      }
 
       if (res0 !== undefined && res1 !== undefined) {
         pool.updateReserves(res0, res1);
@@ -476,7 +567,10 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
     const bytecodeHash =
       this.initCodeHash[this.chainId as keyof typeof this.initCodeHash];
     const salt = keccak256(
-      encodePacked(["address", "address"], [t1.address, t2.address])
+      encodeAbiParameters(
+        [{ type: "address" }, { type: "address" }],
+        [t1.address, t2.address]
+      )
     );
     // return t1.chainId === ChainId.ZKSYNC
     //   ? getAddress(

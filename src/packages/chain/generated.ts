@@ -115,6 +115,23 @@ export default [
     shortName: "worldchain",
   },
   {
+    chainId: 690,
+    explorers: [
+      {
+        name: "Blockscout",
+        url: "https://explorer.redstone.xyz/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    name: "Redstone",
+    shortName: "redstone",
+  },
+  {
     chainId: 1135,
     name: "Lisk",
     shortName: "lisk",

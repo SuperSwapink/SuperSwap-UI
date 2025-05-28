@@ -59,6 +59,7 @@ export const WNATIVE = {
   // [ChainId.LENS]: WGHO[ChainId.LENS],
   // [ChainId.ZKSYNC]: WETH9[ChainId.ZKSYNC],
   [ChainId.WORLDCHAIN]: WETH9[ChainId.WORLDCHAIN],
+  [ChainId.REDSTONE]: WETH9[ChainId.REDSTONE],
   [ChainId.LISK]: WETH9[ChainId.LISK],
   [ChainId.SONEIUM]: WETH9[ChainId.SONEIUM],
   [ChainId.BASE]: WETH9[ChainId.BASE],

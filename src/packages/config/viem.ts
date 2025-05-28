@@ -14,6 +14,7 @@ import {
   mode,
   blast,
   scroll,
+  redstone,
 } from "viem/chains";
 
 export const ink = defineChain({
@@ -234,6 +235,7 @@ export {
   mode,
   blast,
   scroll,
+  redstone,
 };
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
@@ -282,6 +284,12 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.WORLDCHAIN]: [
     {
       chain: worldchain,
+      transport: http(),
+    },
+  ],
+  [ChainId.REDSTONE]: [
+    {
+      chain: redstone,
       transport: http(),
     },
   ],

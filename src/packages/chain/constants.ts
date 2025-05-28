@@ -16,6 +16,7 @@ import ZoraLogo from "@/assets/network/zora.svg";
 import LineaLogo from "@/assets/network/linea.svg";
 import BlastLogo from "@/assets/network/blast.jpg";
 import ScrollLogo from "@/assets/network/scroll.png";
+import RedstoneLogo from "@/assets/network/redstone.webp";
 import { StaticImageData } from "next/image";
 
 export const ChainId = {
@@ -26,6 +27,7 @@ export const ChainId = {
   // LENS: 232,
   // ZKSYNC: 324,
   WORLDCHAIN: 480,
+  REDSTONE: 690,
   LISK: 1135,
   SONEIUM: 1868,
   BASE: 8453,
@@ -50,6 +52,7 @@ export const ChainKey = {
   // [ChainId.LENS]: "lens",
   // [ChainId.ZKSYNC]: 'zksync',
   [ChainId.WORLDCHAIN]: "worldchain",
+  [ChainId.REDSTONE]: "redstone",
   [ChainId.LISK]: "lisk",
   [ChainId.SONEIUM]: "soneium",
   [ChainId.BASE]: "base",
@@ -106,6 +109,11 @@ export const SUPPORTED_CHAINS: Record<
     id: ChainId.WORLDCHAIN,
     icon: WLCLogo,
     name: "World",
+  },
+  [ChainId.REDSTONE]: {
+    id: ChainId.REDSTONE,
+    icon: RedstoneLogo,
+    name: "Redstone",
   },
   [ChainId.LISK]: {
     id: ChainId.LISK,

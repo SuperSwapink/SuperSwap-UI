@@ -15,6 +15,7 @@ const NATIVE_MEDIAS = {
   // [ChainId.LENS]: "lens.png",
   // [ChainId.ZKSYNC]: "eth.svg",
   [ChainId.WORLDCHAIN]: "eth.svg",
+  [ChainId.REDSTONE]: "eth.svg",
   [ChainId.LISK]: "eth.svg",
   [ChainId.SONEIUM]: "eth.svg",
   [ChainId.BASE]: "eth.svg",

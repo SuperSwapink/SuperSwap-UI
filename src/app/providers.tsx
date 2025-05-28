@@ -20,6 +20,7 @@ import {
   lisk,
   blast,
   scroll,
+  redstone,
   // lens,
   mode,
 } from "@/packages/config";
@@ -56,6 +57,7 @@ const chains = [
   lisk,
   blast,
   scroll,
+  redstone,
   // lens,
   mode,
 ] as const;
