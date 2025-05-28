@@ -17,6 +17,7 @@ const dexChainId: Record<ChainId, string> = {
   [ChainId.POLYGON]: "polygon",
   // [ChainId.LENS]: "",
   [ChainId.WORLDCHAIN]: "worldchain",
+  [ChainId.REDSTONE]: "redstone",
   [ChainId.LISK]: "",
   [ChainId.SONEIUM]: "soneium",
   [ChainId.BASE]: "base",
