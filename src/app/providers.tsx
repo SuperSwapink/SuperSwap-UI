@@ -23,6 +23,7 @@ import {
   redstone,
   // lens,
   mode,
+  bsc
 } from "@/packages/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
@@ -60,6 +61,7 @@ const chains = [
   redstone,
   // lens,
   mode,
+  bsc
 ] as const;
 export const config = defaultWagmiConfig({
   chains,

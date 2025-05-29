@@ -4,6 +4,7 @@ import { ChainId } from "../chain";
 export const ROUTE_PROCESSOR_3_SUPPORTED_CHAIN_IDS = [
   ChainId.ETHEREUM,
   ChainId.OP,
+  ChainId.BSC,
   ChainId.UNICHAIN,
   ChainId.POLYGON,
   // ChainId.LENS,
@@ -29,6 +30,7 @@ export const ROUTE_PROCESSOR_3_ADDRESS: Record<
 > = {
   [ChainId.ETHEREUM]: "0x459197DAf6114D4A02425F66067d329F9DAc6961",
   [ChainId.OP]: "0x78e7Bb4D66505D25Cef212Ce49A64261d6f1CddB",
+  [ChainId.BSC]: "0x3Bb640120a942F3eDF8e90a2e164D57E99cc35DD",
   [ChainId.UNICHAIN]: "0xA78d41AB470b34D20401C08A296FF5a7D8C6AC5B",
   [ChainId.POLYGON]: "0xb8eD8F9e2A04ecC70c801d4f05ab8F00599CEfC2",
   // [ChainId.ZKSYNC]: "0x459197DAf6114D4A02425F66067d329F9DAc6961",
@@ -56,6 +58,7 @@ export const isRouteProcessor3ChainId = (
 export const ACROSS_PORTAL_SUPPORTED_CHAIN_IDS = [
   ChainId.ETHEREUM,
   ChainId.OP,
+  ChainId.BSC,
   ChainId.UNICHAIN,
   ChainId.POLYGON,
   // ChainId.LENS,
@@ -78,6 +81,7 @@ export const ACROSS_PORTAL_ADDRESS: Record<AcrossPortalChainId, `0x${string}`> =
   {
     [ChainId.ETHEREUM]: "0xb8eD8F9e2A04ecC70c801d4f05ab8F00599CEfC2",
     [ChainId.OP]: "0xbCA08Ef2F02376074f62af2Cc92EedE0ED38cdDd",
+    [ChainId.BSC]: "0xfe334159749ab7909753d4CeE3d7da6343c0c8eC",
     [ChainId.UNICHAIN]: "0xbCA08Ef2F02376074f62af2Cc92EedE0ED38cdDd",
     [ChainId.POLYGON]: "0xaB19a265EDe95c66c9A1159176088f0c9E2B48F7",
     [ChainId.WORLDCHAIN]: "0xb8eD8F9e2A04ecC70c801d4f05ab8F00599CEfC2",

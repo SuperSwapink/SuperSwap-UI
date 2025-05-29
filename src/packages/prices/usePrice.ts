@@ -13,6 +13,7 @@ interface UsePrice {
 const dexChainId: Record<ChainId, string> = {
   [ChainId.ETHEREUM]: "ethereum",
   [ChainId.OP]: "optimism",
+  [ChainId.BSC]: "bsc",
   [ChainId.UNICHAIN]: "unichain",
   [ChainId.POLYGON]: "polygon",
   // [ChainId.LENS]: "",
@@ -25,8 +26,8 @@ const dexChainId: Record<ChainId, string> = {
   [ChainId.ARBITRUM]: "arbitrum",
   [ChainId.INK]: "ink",
   [ChainId.LINEA]: "linea",
-  [ChainId.BLAST]: 'blast',
-  [ChainId.SCROLL]: 'scroll',
+  [ChainId.BLAST]: "blast",
+  [ChainId.SCROLL]: "scroll",
   [ChainId.ZORA]: "zora",
 };
 

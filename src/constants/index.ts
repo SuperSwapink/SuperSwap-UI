@@ -10,6 +10,7 @@ export const SWAP_FEE = 0n;
 export const ACROSS_ESTIMATED_TIME = {
   [ChainId.ETHEREUM]: {
     [ChainId.OP]: 21,
+    [ChainId.BSC]: 18,
     [ChainId.UNICHAIN]: 19,
     [ChainId.POLYGON]: 22,
     // [ChainId.LENS]: 31,
@@ -29,6 +30,7 @@ export const ACROSS_ESTIMATED_TIME = {
   },
   [ChainId.OP]: {
     [ChainId.ETHEREUM]: 9,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 8,
     // [ChainId.LENS]: 5,
@@ -46,9 +48,30 @@ export const ACROSS_ESTIMATED_TIME = {
     [ChainId.SCROLL]: 2,
     [ChainId.ZORA]: 5,
   },
+  [ChainId.BSC]: {
+    [ChainId.ETHEREUM]: 9,
+    [ChainId.OP]: 3,
+    [ChainId.UNICHAIN]: 3,
+    [ChainId.POLYGON]: 9,
+    // [ChainId.LENS]: 5,
+    // [ChainId.ZKSYNC]: 3,
+    [ChainId.WORLDCHAIN]: 5,
+    [ChainId.REDSTONE]: 5,
+    [ChainId.LISK]: 5,
+    [ChainId.SONEIUM]: 5,
+    [ChainId.BASE]: 3,
+    [ChainId.MODE]: 5,
+    [ChainId.ARBITRUM]: 3,
+    [ChainId.INK]: 5,
+    [ChainId.LINEA]: 3,
+    [ChainId.BLAST]: 3,
+    [ChainId.SCROLL]: 4,
+    [ChainId.ZORA]: 5,
+  },
   [ChainId.UNICHAIN]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.POLYGON]: 8,
     // [ChainId.LENS]: 5,
     // [ChainId.ZKSYNC]: 3,
@@ -68,6 +91,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.POLYGON]: {
     [ChainId.ETHEREUM]: 41,
     [ChainId.OP]: 43,
+    [ChainId.BSC]: 46,
     [ChainId.UNICHAIN]: 43,
     // [ChainId.LENS]: 46,
     // [ChainId.ZKSYNC]: 46,
@@ -116,6 +140,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.WORLDCHAIN]: {
     [ChainId.ETHEREUM]: 11,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 9,
     // [ChainId.LENS]: 7,
@@ -135,6 +160,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.REDSTONE]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 9,
     // [ChainId.LENS]: 7,
@@ -154,6 +180,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.LISK]: {
     [ChainId.ETHEREUM]: 11,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 9,
     // [ChainId.LENS]: 7,
@@ -173,6 +200,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.SONEIUM]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 7,
     // [ChainId.LENS]: 7,
@@ -192,6 +220,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.BASE]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 4,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 8,
     // [ChainId.LENS]: 5,
@@ -211,6 +240,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.MODE]: {
     [ChainId.ETHEREUM]: 11,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 9,
     // [ChainId.LENS]: 7,
@@ -230,6 +260,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.ARBITRUM]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 4,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 8,
     // [ChainId.LENS]: 5,
@@ -249,6 +280,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.INK]: {
     [ChainId.ETHEREUM]: 11,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 9,
     // [ChainId.LENS]: 7,
@@ -268,6 +300,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.LINEA]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 6,
     // [ChainId.LENS]: 5,
@@ -287,6 +320,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.BLAST]: {
     [ChainId.ETHEREUM]: 9,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 6,
     // [ChainId.LENS]: 7,
@@ -306,6 +340,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.SCROLL]: {
     [ChainId.ETHEREUM]: 13,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 12,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 14,
     // [ChainId.LENS]: 7,
@@ -325,6 +360,7 @@ export const ACROSS_ESTIMATED_TIME = {
   [ChainId.ZORA]: {
     [ChainId.ETHEREUM]: 11,
     [ChainId.OP]: 3,
+    [ChainId.BSC]: 5,
     [ChainId.UNICHAIN]: 3,
     [ChainId.POLYGON]: 9,
     // [ChainId.LENS]: 7,

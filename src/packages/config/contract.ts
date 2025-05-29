@@ -4,6 +4,7 @@ import { ChainId } from "../chain";
 export const HELPER_SUPPORTED_CHAIN_IDS = [
   ChainId.ETHEREUM,
   ChainId.OP,
+  ChainId.BSC,
   ChainId.UNICHAIN,
   ChainId.POLYGON,
   // ChainId.LENS,
@@ -25,6 +26,7 @@ export type helperChainId = (typeof HELPER_SUPPORTED_CHAIN_IDS)[number];
 export const HELPER_ADDRESS: Record<helperChainId, `0x${string}`> = {
   [ChainId.ETHEREUM]: "0x78e7Bb4D66505D25Cef212Ce49A64261d6f1CddB",
   [ChainId.OP]: "0xA78d41AB470b34D20401C08A296FF5a7D8C6AC5B",
+  [ChainId.BSC]: "0xDaDa7e761106dFD0d36938BAD09bF0893D070d74",
   [ChainId.UNICHAIN]: "0xaB19a265EDe95c66c9A1159176088f0c9E2B48F7",
   [ChainId.POLYGON]: "0x459197DAf6114D4A02425F66067d329F9DAc6961",
   // [ChainId.ZKSYNC]: "0x78e7Bb4D66505D25Cef212Ce49A64261d6f1CddB",

@@ -801,6 +801,43 @@ export const PRIMARY_TOKEN_LIST = [
     category: "Stablecoin",
     chainId: ChainId.REDSTONE,
   },
+
+  {
+    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    symbol: "WBNB",
+    name: "Wrapped BNB",
+    decimals: 18,
+    icon: "/media/bnb.png",
+    category: "BNB",
+    chainId: ChainId.BSC,
+  },
+  {
+    address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+    symbol: "WETH",
+    name: "Wrapped Ether",
+    decimals: 18,
+    icon: "/media/weth.png",
+    category: "Ether",
+    chainId: ChainId.BSC,
+  },
+  {
+    address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    symbol: "USDC",
+    name: "USDC",
+    decimals: 18,
+    icon: "/media/usdc.png",
+    category: "Stablecoin",
+    chainId: ChainId.BSC,
+  },
+  {
+    address: "0x55d398326f99059fF775485246999027B3197955",
+    symbol: "USDT",
+    name: "USDT",
+    decimals: 18,
+    icon: "/media/usdt.png",
+    category: "Stablecoin",
+    chainId: ChainId.BSC,
+  },
 ];
 
 export const DEFAULT_TOKEN_LIST = [...PRIMARY_TOKEN_LIST];

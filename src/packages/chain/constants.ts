@@ -17,11 +17,13 @@ import LineaLogo from "@/assets/network/linea.svg";
 import BlastLogo from "@/assets/network/blast.jpg";
 import ScrollLogo from "@/assets/network/scroll.png";
 import RedstoneLogo from "@/assets/network/redstone.webp";
+import BscLogo from "@/assets/network/bsc.png";
 import { StaticImageData } from "next/image";
 
 export const ChainId = {
   ETHEREUM: 1,
   OP: 10,
+  BSC: 56,
   UNICHAIN: 130,
   POLYGON: 137,
   // LENS: 232,
@@ -47,6 +49,7 @@ export const isChainId = (chainId: number | undefined): chainId is ChainId =>
 export const ChainKey = {
   [ChainId.ETHEREUM]: "ethereum",
   [ChainId.OP]: "op",
+  [ChainId.BSC]: "bsc",
   [ChainId.UNICHAIN]: "unichain",
   [ChainId.POLYGON]: "polygon",
   // [ChainId.LENS]: "lens",
@@ -84,6 +87,11 @@ export const SUPPORTED_CHAINS: Record<
     id: ChainId.OP,
     icon: OpLogo,
     name: "OP",
+  },
+  [ChainId.BSC]: {
+    id: ChainId.BSC,
+    icon: BscLogo,
+    name: "BSC",
   },
   [ChainId.UNICHAIN]: {
     id: ChainId.UNICHAIN,

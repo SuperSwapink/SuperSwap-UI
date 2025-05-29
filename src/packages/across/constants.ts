@@ -4,6 +4,7 @@ import { Token, USDC, USDCe, USDT, WETH9 } from "../currency";
 export const SPOKE_POOL_ADDRESS: Record<ChainId, `0x${string}`> = {
   [ChainId.ETHEREUM]: "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
   [ChainId.OP]: "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+  [ChainId.BSC]: "0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
   [ChainId.UNICHAIN]: "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
   [ChainId.POLYGON]: "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
   // [ChainId.LENS]: '0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12',
@@ -37,6 +38,11 @@ export const SUPPORTED_ACROSS_ASSETS: Record<
     WETH: WETH9[ChainId.OP],
     USDC: USDC[ChainId.OP],
     USDT: USDT[ChainId.OP],
+  },
+  [ChainId.BSC]: {
+    WETH: WETH9[ChainId.BSC],
+    USDC: USDC[ChainId.BSC],
+    USDT: USDT[ChainId.BSC],
   },
   [ChainId.UNICHAIN]: {
     WETH: WETH9[ChainId.UNICHAIN],

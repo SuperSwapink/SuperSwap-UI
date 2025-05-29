@@ -16,6 +16,7 @@ import {
   USDT0_ADDRESS,
   USDT_ADDRESS,
   VIRTUAL_ADDRESS,
+  WBNB_ADDRESS,
   WETH9_ADDRESS,
   WGHO_ADDRESS,
   WPOL_ADDRESS,
@@ -41,6 +42,16 @@ export const WPOL = addressMapToTokenMap(
   WPOL_ADDRESS
 ) as Record<keyof typeof WPOL_ADDRESS, Token>;
 
+export const WBNB = addressMapToTokenMap(
+  {
+    decimals: 18,
+    symbol: "WBNB",
+    name: "Wrapped BNB",
+    icon: "/media/bnb.png",
+  },
+  WBNB_ADDRESS
+) as Record<keyof typeof WBNB_ADDRESS, Token>;
+
 export const WGHO = addressMapToTokenMap(
   {
     decimals: 18,
@@ -54,6 +65,7 @@ export const WGHO = addressMapToTokenMap(
 export const WNATIVE = {
   [ChainId.ETHEREUM]: WETH9[ChainId.ETHEREUM],
   [ChainId.OP]: WETH9[ChainId.OP],
+  [ChainId.BSC]: WBNB[ChainId.BSC],
   [ChainId.UNICHAIN]: WETH9[ChainId.UNICHAIN],
   [ChainId.POLYGON]: WPOL[ChainId.POLYGON],
   // [ChainId.LENS]: WGHO[ChainId.LENS],
@@ -81,7 +93,15 @@ export const USDC: Record<keyof typeof USDC_ADDRESS, Token> = {
       icon: "/media/usdc.png",
     },
     USDC_ADDRESS
-  ) as Record<keyof typeof USDC_ADDRESS, Token>),
+  ) as Omit<Record<keyof typeof USDC_ADDRESS, Token>, typeof ChainId.BSC>),
+  [ChainId.BSC]: new Token({
+    chainId: ChainId.BSC,
+    address: USDC_ADDRESS[ChainId.BSC],
+    decimals: 18,
+    symbol: "USDC",
+    name: "USDC",
+    icon: "/media/usdc.png",
+  }),
 } as const;
 
 export const USDCe: Record<keyof typeof USDCe_ADDRESS, Token> = {
@@ -117,7 +137,15 @@ export const USDT: Record<keyof typeof USDT_ADDRESS, Token> = {
       icon: "/media/usdt.png",
     },
     USDT_ADDRESS
-  ) as Record<keyof typeof USDT_ADDRESS, Token>),
+  ) as Omit<Record<keyof typeof USDT_ADDRESS, Token>, typeof ChainId.BSC>),
+  [ChainId.BSC]: new Token({
+    chainId: ChainId.BSC,
+    address: USDT_ADDRESS[ChainId.BSC],
+    decimals: 18,
+    symbol: "USDT",
+    name: "USDT",
+    icon: "/media/usdt.png",
+  }),
 } as const;
 
 export const USDB: Record<keyof typeof USDB_ADDRESS, Token> = {

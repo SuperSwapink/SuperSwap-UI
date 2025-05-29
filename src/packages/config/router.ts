@@ -101,4 +101,11 @@ export const BASES_TO_CHECK_TRADES_AGAINST: {
     SCR[ChainId.SCROLL],
   ],
   [ChainId.ZORA]: [WNATIVE[ChainId.ZORA], USDC[ChainId.ZORA]],
+  [ChainId.REDSTONE]: [WNATIVE[ChainId.REDSTONE], USDCe[ChainId.REDSTONE]],
+  [ChainId.BSC]: [
+    WNATIVE[ChainId.BSC],
+    WETH9[ChainId.BSC],
+    USDC[ChainId.BSC],
+    USDT[ChainId.BSC],
+  ],
 };

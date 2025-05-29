@@ -34,6 +34,23 @@ export default [
     shortName: "op",
   },
   {
+    chainId: 56,
+    explorers: [
+      {
+        name: "BscScan",
+        url: "https://bscscan.com/",
+        standard: "EIP3091",
+      },
+    ],
+    nativeCurrency: {
+      name: "BNB",
+      symbol: "BNB",
+      decimals: 18,
+    },
+    name: "BNB Smart Chain",
+    shortName: "bsc",
+  },
+  {
     chainId: 130,
     explorers: [
       {

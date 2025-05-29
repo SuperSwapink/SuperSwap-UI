@@ -15,6 +15,7 @@ import {
   blast,
   scroll,
   redstone,
+  bsc,
 } from "viem/chains";
 
 export const ink = defineChain({
@@ -236,6 +237,7 @@ export {
   blast,
   scroll,
   redstone,
+  bsc,
 };
 
 export const config: Record<ChainId, PublicClientConfig[]> = {
@@ -251,6 +253,12 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
     {
       chain: optimism,
       transport: http(`https://mainnet.optimism.io`),
+    },
+  ],
+  [ChainId.BSC]: [
+    {
+      chain: bsc,
+      transport: http(`https://binance.llamarpc.com`),
     },
   ],
   [ChainId.UNICHAIN]: [
