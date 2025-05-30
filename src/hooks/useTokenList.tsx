@@ -114,6 +114,40 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     },
   });
 
+  const { data: bscPancakeData } = useQuery({
+    queryKey: ["pancake-tokens"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          "https://tokens.pancakeswap.finance/pancakeswap-extended.json"
+        );
+        return data.tokens
+          .filter(
+            (item: any) =>
+              !PRIMARY_TOKEN_LIST.find(
+                (k) =>
+                  k.address.toLowerCase() === item.address.toLowerCase() &&
+                  k.chainId === ChainId.BSC
+              )
+          )
+          .map(
+            (item: any) =>
+              new Token({
+                address: item.address,
+                decimals: item.decimals,
+                chainId: ChainId.BSC,
+                name: item.name,
+                symbol: item.symbol,
+                icon: item.logoURI,
+              })
+          );
+      } catch (err) {
+        console.log(err);
+        return [];
+      }
+    },
+  });
+
   const { data: polygonQuickswapData } = useQuery({
     queryKey: ["quickswap-tokens"],
     queryFn: async () => {
@@ -480,6 +514,7 @@ const useTokenList = (chainId: ChainId, primaryTokens?: boolean) => {
     ...(localTokens ?? []),
     ...(camelotData ?? []),
     ...(ethUniswapData ?? []),
+    ...(bscPancakeData ?? []),
     ...(polygonQuickswapData ?? []),
     ...(soneiumData ?? []),
     ...(unichainData ?? []),

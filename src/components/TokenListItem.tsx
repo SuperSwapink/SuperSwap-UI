@@ -54,8 +54,8 @@ const TokenListItem: React.FC<TokenListItemProps> = ({
         <div className="flex items-center">
           <CurrencyIcon
             src={token?.icon ?? DEFAULT_IMAGE_URL}
-            width={32}
-            height={32}
+            width={64}
+            height={64}
             alt="token"
             className="size-6 md:size-8 rounded-full"
           />

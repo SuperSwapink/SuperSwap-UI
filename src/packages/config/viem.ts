@@ -258,7 +258,9 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.BSC]: [
     {
       chain: bsc,
-      transport: http(`https://binance.llamarpc.com`),
+      transport: http(
+        `https://lb.drpc.org/ogrpc?network=bsc&dkey=AuOj0vRrO0gnl0pA3dArR3mwi3KmPWIR8JKPKiqCbUWs`
+      ),
     },
   ],
   [ChainId.UNICHAIN]: [
