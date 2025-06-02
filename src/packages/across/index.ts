@@ -13,6 +13,7 @@ import {
   SUPPORTED_ACROSS_ASSET_TYPE,
   SUPPORTED_ACROSS_ASSETS,
 } from "./constants";
+import { ChainId } from "../chain";
 
 export const ACROSS_STATUS = {
   SUCCESS: 0,
@@ -192,6 +193,7 @@ export const getBestAcrossByMediumToken = async ({
     !tokenOut.isNative &&
     tokenOut.address.toLowerCase() === mediumTokenOut.address.toLowerCase()
   ) {
+    console.log('!@#!@@@@@@@@@@@@@@@@@@@@@@@@@@', estimatedQuote.deposit.outputAmount)
     destData = {
       amountOut: estimatedQuote.deposit.outputAmount,
       message: new HEXer()
@@ -240,6 +242,14 @@ export const getBestAcrossByMediumToken = async ({
     };
   }
 
+  console.log(originData, estimatedQuote);
+  let inputAmount = originData.amountOutMin;
+  // if (mediumToken !== "WETH") {
+  //   if (tokenIn.chainId === ChainId.BSC) {
+  //     inputAmount = inputAmount / 1000000000000n;
+  //   }
+  // }
+
   const quote = await client.getQuote({
     route: {
       originChainId: tokenIn.chainId,
@@ -248,7 +258,7 @@ export const getBestAcrossByMediumToken = async ({
       outputToken: mediumTokenOut.address,
     },
     recipient: ACROSS_PORTAL_ADDRESS[tokenOut.chainId],
-    inputAmount: originData.amountOutMin,
+    inputAmount: inputAmount,
     crossChainMessage: destData.message,
   });
 

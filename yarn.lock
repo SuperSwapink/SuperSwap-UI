@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@across-protocol/app-sdk@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@across-protocol/app-sdk/-/app-sdk-0.2.0.tgz#67152def5303d87ee17646b7a1c6e504244c6a24"
-  integrity sha512-2evSZQHC+xBvH4gBMDwxwwAgCimjBRId0n/bOAW/EHZv179xdP1wQJu6/bfCbEeCrBwhQaGrZEsUtxrrJ+SJNg==
+"@across-protocol/app-sdk@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@across-protocol/app-sdk/-/app-sdk-0.2.2.tgz#65ecc5bd97051060edd3cba1c31899250d990faa"
+  integrity sha512-jn+tR79L3Ntu7xSsyy3x40k4cTMODMRB+Vu6i04PVhcJFU33JCLNz8w4yttwx0rtOURTXR6xt4KKsndv8SBc1A==
 
 "@adraffy/ens-normalize@1.10.0":
   version "1.10.0"

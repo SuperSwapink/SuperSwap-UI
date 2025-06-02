@@ -179,8 +179,6 @@ export abstract class UniswapV2BaseProvider extends LiquidityProvider {
           )
         : this.getStaticPools(t0, t1);
 
-        console.log(pools)
-
     if (excludePools)
       pools = (pools as StaticPool[]).filter(
         (p) => !excludePools.has(p.address)

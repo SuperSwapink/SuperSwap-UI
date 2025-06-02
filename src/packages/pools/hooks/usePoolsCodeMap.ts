@@ -11,9 +11,7 @@ export const usePoolsCodeMap = ({
   return useQuery({
     queryKey: ["usePoolsCodeMap", { chainId, currencyA, currencyB, providers }],
     queryFn: async () => {
-      console.log(variables)
       const data = await getAllPoolsCodeMap(variables)
-      console.log(data)
 
       return data
     },

@@ -88,8 +88,6 @@ export abstract class UniswapV3BaseProvider extends LiquidityProvider {
 
     console.debug("staticPools v3 base", staticPools.length);
 
-    console.log(staticPools);
-
     const slot0 = await this.client
       .multicall({
         multicallAddress: this.client.chain?.contracts?.multicall3

@@ -158,7 +158,6 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
       });
 
     const existingPools: V3Pool[] = [];
-    console.log(staticPools)
 
     staticPools.forEach((pool, i) => {
       if (slot0 === undefined || !slot0[i]) return;
@@ -212,8 +211,6 @@ export abstract class VelodrmoeV3BaseProvider extends LiquidityProvider {
           } as const)
       ),
     });
-
-    console.log(fees);
 
     const liquidityContracts = this.client.multicall({
       multicallAddress: this.client.chain?.contracts?.multicall3
