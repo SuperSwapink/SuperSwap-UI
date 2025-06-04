@@ -141,7 +141,7 @@ export const getBestAcrossByMediumToken = async ({
       ACROSS_PORTAL_ADDRESS[tokenIn.chainId],
       ROUTE_PROCESSOR_3_ADDRESS[tokenIn.chainId],
       [],
-      isWrap ? 0 : +slippage / 100
+      isWrap ? 0 : +slippage / 200
     );
 
     originData = {
@@ -193,7 +193,6 @@ export const getBestAcrossByMediumToken = async ({
     !tokenOut.isNative &&
     tokenOut.address.toLowerCase() === mediumTokenOut.address.toLowerCase()
   ) {
-    console.log('!@#!@@@@@@@@@@@@@@@@@@@@@@@@@@', estimatedQuote.deposit.outputAmount)
     destData = {
       amountOut: estimatedQuote.deposit.outputAmount,
       message: new HEXer()
@@ -228,7 +227,7 @@ export const getBestAcrossByMediumToken = async ({
       recipient,
       ROUTE_PROCESSOR_3_ADDRESS[tokenOut.chainId],
       [],
-      +slippage / 100
+      +slippage / 200
     );
     destData = {
       amountOut: route.amountOutBI,
