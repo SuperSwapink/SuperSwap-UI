@@ -141,7 +141,7 @@ export const getBestAcrossByMediumToken = async ({
       ACROSS_PORTAL_ADDRESS[tokenIn.chainId],
       ROUTE_PROCESSOR_3_ADDRESS[tokenIn.chainId],
       [],
-      isWrap ? 0 : +slippage / 200
+      isWrap ? 0 : +slippage / 100
     );
 
     originData = {
@@ -227,7 +227,7 @@ export const getBestAcrossByMediumToken = async ({
       recipient,
       ROUTE_PROCESSOR_3_ADDRESS[tokenOut.chainId],
       [],
-      +slippage / 200
+      +slippage / 100
     );
     destData = {
       amountOut: route.amountOutBI,
