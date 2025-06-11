@@ -2,8 +2,8 @@
 
 import WalletConnect from "../WalletConnect"
 // import NetworkSelector from "../NetworkSelector"
-import LogoLight from "../../assets/logo-light.png"
-import LogoDark from "../../assets/logo-dark.png"
+import LogoLight from "../../assets/logo-light.svg"
+import LogoDark from "../../assets/logo-dark.svg"
 import LogoMbLight from "../../assets/logo-mb-light.png"
 import LogoMbDark from "../../assets/logo-mb-dark.png"
 import Image from "next/image"
