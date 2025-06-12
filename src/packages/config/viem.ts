@@ -342,7 +342,7 @@ export const config: Record<ChainId, PublicClientConfig[]> = {
   [ChainId.INK]: [
     {
       chain: ink,
-      transport: http(`https://rpc-gel.inkonchain.com`),
+      transport: http(`https://lb.drpc.org/ogrpc?network=ink&dkey=AuOj0vRrO0gnl0pA3dArR3kOP7AmR6IR8IrQKlzbRHZc`),
     },
   ],
   [ChainId.LINEA]: [
