@@ -12,6 +12,13 @@ export function removeLeadingZeros(value: string): string {
     : cleanedIntegerPart;
 }
 
+export function formatWithCommas(val: string) {
+  if (!val) return "";
+  const [int, dec] = val.replace(/,/g, "").split(".");
+  const intWithCommas = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return dec !== undefined ? `${intWithCommas}.${dec.slice(0, 6)}` : intWithCommas;
+}
+
 export function getContractAddressZkSync({
   from,
   bytecodeHash,
