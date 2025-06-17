@@ -1,3 +1,4 @@
+import { Decimal } from "@/packages/math";
 import { concat, getAddress, keccak256, pad } from "viem";
 
 export function delay(ms: number): Promise<void> {
@@ -12,11 +13,12 @@ export function removeLeadingZeros(value: string): string {
     : cleanedIntegerPart;
 }
 
-export function formatWithCommas(val: string) {
+export function formatWithCommas(val: string, cut: boolean) {
   if (!val) return "";
   const [int, dec] = val.replace(/,/g, "").split(".");
   const intWithCommas = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return dec !== undefined ? `${intWithCommas}.${dec.slice(0, 6)}` : intWithCommas;
+  const rawVal = new Decimal(val).toSignificantDigits(int.length > 6 ? int.length : 6)
+  return cut ? rawVal.toFormat(rawVal.decimalPlaces()) : dec !== undefined ? `${intWithCommas}.${dec}` : intWithCommas;
 }
 
 export function getContractAddressZkSync({

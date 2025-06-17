@@ -154,7 +154,7 @@ const SwapSide: React.FC<SwapSideProps> = ({
           <input
             type="text"
             inputMode="decimal"
-            value={amount ? formatWithCommas(amount) : ""}
+            value={amount ? formatWithCommas(amount, side === "To") : ""}
             pattern="^[0-9]*[.,]?[0-9]*$"
             onChange={(e) => onAmountInput(e.target.value)}
             ref={amountInputRef}
